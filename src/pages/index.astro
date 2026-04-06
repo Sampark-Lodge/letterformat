@@ -1,0 +1,272 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SearchBar from '../components/SearchBar.astro';
+import { pages } from '../content/data/pages';
+import { getCategoryIcon } from '../lib/utils';
+
+const allPages = pages;
+const categories = [
+  { key: 'leave', label: 'Leave Applications', count: allPages.filter(p => p.subcategory === 'leave').length, icon: '📝', href: '/application/leave' },
+  { key: 'complaint', label: 'Complaint Letters', count: allPages.filter(p => p.subcategory === 'complaint').length, icon: '⚠️', href: '/letter/complaint' },
+  { key: 'certificate', label: 'Certificate Requests', count: allPages.filter(p => p.subcategory === 'certificate').length, icon: '📜', href: '/application/certificate' },
+  { key: 'bank', label: 'Bank Letters', count: allPages.filter(p => p.subcategory === 'bank').length, icon: '🏦', href: '/application/bank' },
+  { key: 'government', label: 'Government Applications', count: allPages.filter(p => p.subcategory === 'government').length, icon: '🏛️', href: '/application/government' },
+  { key: 'school', label: 'School Applications', count: allPages.filter(p => p.subcategory === 'school').length, icon: '🎓', href: '/application/school' },
+  { key: 'employment', label: 'Employment Letters', count: allPages.filter(p => p.subcategory === 'employment').length, icon: '💼', href: '/application/employment' },
+];
+
+const recentPages = allPages.slice(0, 8);
+
+const schemaMarkup = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "LetterFormat.in",
+  "url": "https://letterformat.in",
+  "description": "Free, ready-to-use letter and application formats for Indian students, employees, and the general public.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://letterformat.in/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+});
+---
+
+<Layout
+  title="LetterFormat.in — Free Letter & Application Formats | Copy, Fill, Submit"
+  description="Free, ready-to-use letter and application formats for Indian students, employees, and the general public. Copy-paste formats for leave applications, complaint letters, certificates, bank letters, and more."
+  schemaMarkup={schemaMarkup}
+>
+  <Header />
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Free Letter &amp; Application Formats</h1>
+        <p>Copy, fill in your details, and submit. No sign-up, no fees — just clean, professional formats ready to use.</p>
+        <SearchBar pages={allPages.map(p => ({ keyword: p.keyword, slug: p.slug, category: p.category, subcategory: p.subcategory }))} />
+      </div>
+    </section>
+
+    <section class="container section">
+      <h2>Browse by Category</h2>
+      <div class="category-grid">
+        {categories.map(cat => (
+          <a href={cat.href} class="category-card">
+            <span class="category-icon">{cat.icon}</span>
+            <h3>{cat.label}</h3>
+            <p>{cat.count} formats available</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="container section">
+      <h2>Popular Formats</h2>
+      <div class="format-list">
+        {recentPages.map(page => (
+          <a href={`/format/${page.slug}/`} class="format-item">
+            <span class="format-item-icon">{getCategoryIcon(page.subcategory)}</span>
+            <div class="format-item-info">
+              <span class="format-item-title">{page.keyword}</span>
+              <span class="format-item-meta">{page.category} · {page.subcategory}</span>
+            </div>
+            <span class="format-item-arrow">→</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="container section how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <h3>Search</h3>
+          <p>Find the format you need using the search bar or browse by category.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <h3>Copy</h3>
+          <p>Click the copy button to copy the format to your clipboard instantly.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <h3>Fill &amp; Submit</h3>
+          <p>Replace the bracketed details with your information and submit.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: #fff;
+    padding: 3.5rem 1rem 3rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+  .hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+  .section {
+    padding: 2.5rem 1rem;
+  }
+  .section h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #1f2937;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+  .category-card:hover {
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+    transform: translateY(-2px);
+  }
+  .category-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .category-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .category-card p {
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+  .format-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .format-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f2937;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .format-item:hover {
+    border-color: #2563eb;
+    background: #f8fafc;
+  }
+  .format-item-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .format-item-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .format-item-title {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .format-item-meta {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 0.15rem;
+  }
+  .format-item-arrow {
+    color: #9ca3af;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .how-it-works {
+    background: #f8fafc;
+    border-radius: 12px;
+    margin: 0 1rem;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .step {
+    text-align: center;
+    padding: 1rem;
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #2563eb;
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .step h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: #1f2937;
+  }
+  .step p {
+    font-size: 0.85rem;
+    color: #6b7280;
+    line-height: 1.5;
+  }
+  @media (max-width: 600px) {
+    .hero h1 {
+      font-size: 1.5rem;
+    }
+    .hero p {
+      font-size: 0.95rem;
+    }
+    .category-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .steps {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

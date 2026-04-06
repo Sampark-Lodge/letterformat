@@ -1,0 +1,116 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import { pages } from '../../../content/data/pages';
+import { getCategoryLabel, getSubcategoryLabel, getCategoryIcon } from '../../../lib/utils';
+
+export function getStaticPaths() {
+  const subcategories = [...new Set(pages.map(p => `${p.category}|||${p.subcategory}`))];
+  return subcategories.map(sc => {
+    const [category, subcategory] = sc.split('|||');
+    const subPages = pages.filter(p => p.category === category && p.subcategory === subcategory);
+    return {
+      params: { category, subcategory },
+      props: { category, subcategory, pages: subPages },
+    };
+  });
+}
+
+const { category, subcategory, pages: subPages } = Astro.props;
+const title = `${getSubcategoryLabel(subcategory)} — Free Formats & Templates [2026]`;
+const description = `Browse ${subPages.length} free ${getSubcategoryLabel(subcategory).toLowerCase()} formats. Copy-paste ready, no sign-up needed.`;
+---
+
+<Layout title={title} description={description}>
+  <Header />
+
+  <main class="container page-content">
+    <Breadcrumb items={[
+      { label: 'Home', href: '/' },
+      { label: getCategoryLabel(category), href: `/${category}/${subcategory}` },
+      { label: getSubcategoryLabel(subcategory) }
+    ]} />
+
+    <h1>{getCategoryIcon(subcategory)} {getSubcategoryLabel(subcategory)}</h1>
+    <p class="category-desc">
+      Browse {subPages.length} ready-to-use {getSubcategoryLabel(subcategory).toLowerCase()}. Click any format to view, copy, and customize for your needs.
+    </p>
+
+    <div class="format-list">
+      {subPages.map(page => (
+        <a href={`/format/${page.slug}/`} class="format-item">
+          <div class="format-item-info">
+            <span class="format-item-title">{page.keyword}</span>
+            <span class="format-item-meta">For {page.userSegment === 'student' ? 'Students' : page.userSegment === 'employee' ? 'Employees' : 'General Public'}</span>
+          </div>
+          <span class="format-item-arrow">→</span>
+        </a>
+      ))}
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-content {
+    max-width: 800px;
+    padding: 2rem 1rem;
+  }
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+  .category-desc {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .format-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .format-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #1f2937;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .format-item:hover {
+    border-color: #2563eb;
+    background: #f8fafc;
+  }
+  .format-item-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .format-item-title {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .format-item-meta {
+    display: block;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 0.15rem;
+  }
+  .format-item-arrow {
+    color: #9ca3af;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+interface Props {
+  pages: { keyword: string; slug: string; category: string; subcategory: string }[];
+}
+
+const { pages } = Astro.props;
+---
+
+<div class="search-container">
+  <input
+    type="search"
+    id="format-search"
+    placeholder="Search formats... (e.g., fever leave, complaint letter, bonafide)"
+    autocomplete="off"
+  />
+  <div id="search-results" class="search-results"></div>
+</div>
+
+<script define:vars={{ pages }} is:inline>
+const input = document.getElementById('format-search');
+const resultsDiv = document.getElementById('search-results');
+
+if (!input || !resultsDiv) {
+  // fallback: hide search if not rendered
+  const container = document.querySelector('.search-container');
+  if (container) container.style.display = 'none';
+} else {
+  input.addEventListener('input', function () {
+    const query = this.value.toLowerCase().trim();
+    if (query.length < 2) {
+      resultsDiv.innerHTML = '';
+      resultsDiv.style.display = 'none';
+      return;
+    }
+
+    const filtered = pages.filter(function (p) {
+      const searchText = (p.keyword + ' ' + p.category + ' ' + p.subcategory).toLowerCase();
+      return query.split(' ').every(function (word) {
+        return searchText.includes(word);
+      });
+    });
+
+    if (filtered.length === 0) {
+      resultsDiv.innerHTML = '<p class="no-results">No formats found. Try different keywords.</p>';
+      resultsDiv.style.display = 'block';
+      return;
+    }
+
+    resultsDiv.innerHTML = filtered
+      .slice(0, 10)
+      .map(function (p) {
+        return '<a href="/format/' + p.slug + '/" class="search-item">' + p.keyword + '</a>';
+      })
+      .join('');
+    resultsDiv.style.display = 'block';
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.search-container')) {
+      resultsDiv.innerHTML = '';
+      resultsDiv.style.display = 'none';
+    }
+  });
+}
+</script>
+
+<style>
+  .search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+  #format-search {
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  #format-search:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 0.25rem;
+    display: none;
+    z-index: 50;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .search-item {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #1e293b;
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.1s;
+  }
+  .search-item:hover {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+  .search-item:last-child {
+    border-bottom: none;
+  }
+  .no-results {
+    padding: 1rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+</style>

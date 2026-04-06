@@ -1,0 +1,93 @@
+---
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-icon">📋</span>
+        <strong>LetterFormat.in</strong>
+        <p>Free, ready-to-use letter and application formats for students, employees, and the general public. Copy, fill, and submit.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Categories</h4>
+        <a href="/application/leave">Leave Applications</a>
+        <a href="/letter/complaint">Complaint Letters</a>
+        <a href="/application/certificate">Certificate Requests</a>
+        <a href="/application/bank">Bank Letters</a>
+        <a href="/application/government">Government Applications</a>
+        <a href="/application/school">School Applications</a>
+        <a href="/application/employment">Employment Letters</a>
+      </div>
+      <div class="footer-links">
+        <h4>Popular Formats</h4>
+        <a href="/format/application-leave-due-to-fever">Leave Due to Fever</a>
+        <a href="/format/application-sick-leave">Sick Leave</a>
+        <a href="/format/complaint-letter-electricity-board-power-cut">Power Cut Complaint</a>
+        <a href="/format/application-bonafide-certificate">Bonafide Certificate</a>
+        <a href="/format/application-employment-resignation">Resignation Letter</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; {new Date().getFullYear()} LetterFormat.in — All formats are free to use.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #1f2937;
+    color: #d1d5db;
+    margin-top: 4rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+    padding: 3rem 1rem 2rem;
+  }
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .footer-brand .logo-icon {
+    font-size: 1.5rem;
+  }
+  .footer-brand strong {
+    color: #fff;
+    font-size: 1.1rem;
+  }
+  .footer-brand p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  .footer-links h4 {
+    color: #fff;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+  }
+  .footer-links a {
+    display: block;
+    color: #9ca3af;
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 0.2rem 0;
+    transition: color 0.15s;
+  }
+  .footer-links a:hover {
+    color: #60a5fa;
+  }
+  .footer-bottom {
+    border-top: 1px solid #374151;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 700px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

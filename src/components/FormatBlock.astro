@@ -1,0 +1,105 @@
+---
+interface Props {
+  content: string;
+  id: string;
+}
+
+const { content, id } = Astro.props;
+---
+
+<div class="format-block">
+  <div class="format-header">
+    <span class="format-label">📋 Copy-Paste Format</span>
+    <button class="copy-btn" data-target={id} onclick="copyFormat(this)">
+      <span class="copy-icon">📋</span>
+      <span class="copy-text">Copy</span>
+    </button>
+  </div>
+  <pre id={id}><code>{content}</code></pre>
+</div>
+
+<script define:vars={{}} is:inline>
+function copyFormat(btn) {
+  const targetId = btn.getAttribute('data-target');
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  const text = el.textContent || '';
+  navigator.clipboard.writeText(text).then(() => {
+    const textSpan = btn.querySelector('.copy-text');
+    const iconSpan = btn.querySelector('.copy-icon');
+    if (textSpan) textSpan.textContent = 'Copied!';
+    if (iconSpan) iconSpan.textContent = '✅';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      if (textSpan) textSpan.textContent = 'Copy';
+      if (iconSpan) iconSpan.textContent = '📋';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+<style>
+  .format-block {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    overflow: hidden;
+  }
+  .format-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .format-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .copy-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .copy-btn:hover {
+    background: #1d4ed8;
+  }
+  .copy-btn.copied {
+    background: #059669;
+  }
+  .copy-icon {
+    font-size: 0.9rem;
+  }
+  .format-block pre {
+    margin: 0;
+    padding: 1.25rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #1e293b;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+  }
+  @media (max-width: 600px) {
+    .format-block pre {
+      font-size: 0.82rem;
+      padding: 1rem;
+    }
+  }
+</style>

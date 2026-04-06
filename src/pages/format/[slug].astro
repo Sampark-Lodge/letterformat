@@ -1,0 +1,233 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import FormatBlock from '../../components/FormatBlock.astro';
+import { pages } from '../../content/data/pages';
+import { generateFormatHtml, getCategoryLabel, getSubcategoryLabel, capitalizeTitle } from '../../lib/utils';
+
+export function getStaticPaths() {
+  return pages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const keywordDisplay = capitalizeTitle(page.keyword);
+const title = `${keywordDisplay} — Format, Sample & Tips [2026]`;
+const description = `Ready-to-use ${page.keyword}. Copy-paste format with filled sample, step-by-step guide, tips, and FAQs. Free download. Updated 2026.`;
+
+const formatContent = generateFormatHtml(
+  page.recipientTitle,
+  page.sampleInstitution,
+  page.sampleCity,
+  page.sampleDate,
+  page.subjectLine,
+  page.bodyParagraphs,
+  page.closingLine,
+  page.signOff,
+  '[Your Full Name]',
+  page.userSegment === 'student' ? '[Class/Section], Roll No: [Number]' : '[Designation], Employee ID: [ID]'
+);
+
+const sampleContent = generateFormatHtml(
+  page.recipientTitle,
+  page.sampleInstitution,
+  page.sampleCity,
+  page.sampleDate,
+  page.subjectLine,
+  page.sampleBody,
+  page.closingLine,
+  page.signOff,
+  page.sampleName,
+  page.userSegment === 'student' ? 'Class X, Section B, Roll No. 23' : 'Employee ID: EMP-4521'
+);
+
+const schemaMarkup = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "datePublished": "2026-04-01",
+  "dateModified": "2026-04-06",
+  "author": { "@type": "Organization", "name": "LetterFormat.in", "url": "https://letterformat.in" },
+  "publisher": { "@type": "Organization", "name": "LetterFormat.in", "url": "https://letterformat.in" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": Astro.url.href }
+}) + '\n' + JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": page.faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": { "@type": "Answer", "text": faq.a }
+  }))
+});
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={schemaMarkup} />
+  </Fragment>
+  <Header />
+
+  <main class="container page-content">
+    <Breadcrumb items={[
+      { label: 'Home', href: '/' },
+      { label: getCategoryLabel(page.category), href: `/${page.category}/${page.subcategory}` },
+      { label: getSubcategoryLabel(page.subcategory), href: `/${page.category}/${page.subcategory}` },
+      { label: keywordDisplay }
+    ]} />
+
+    <article>
+      <h1>{keywordDisplay} — Format, Sample &amp; How to Write [2026]</h1>
+
+      <p class="intro">
+        Need to write {keywordDisplay.toLowerCase()}? Here's a ready-to-use format you can copy, fill in your details, and submit today.
+      </p>
+      <p class="intro-secondary">
+        Whether you're a {page.userSegment} or someone helping with official paperwork, using the correct format ensures your {page.contentType} gets approved without delays.
+      </p>
+
+      <h2>Quick Format: {keywordDisplay}</h2>
+      <p>Copy the format below, replace the bracketed details with your information, and you're done:</p>
+      <FormatBlock content={formatContent} id="quick-format" />
+
+      <h2>Sample: {keywordDisplay} (Filled Example)</h2>
+      <p>Here's how a completed {keywordDisplay.toLowerCase()} looks with real details:</p>
+      <FormatBlock content={sampleContent} id="sample-format" />
+
+      <h2>How to Write {keywordDisplay}</h2>
+      <p>Follow these steps to customize the format for your situation:</p>
+      <ol class="steps-list">
+        <li><strong>Start with the recipient's details:</strong> Address the {page.contentType} to {page.recipientTitle}. Include the full name of the {page.userSegment === 'student' ? 'school' : page.userSegment === 'employee' ? 'company' : 'office or department'}.</li>
+        <li><strong>Write a clear subject line:</strong> Keep it short and specific — "{page.subjectLine}". Avoid vague subjects like "Leave Request" or "Complaint."</li>
+        <li><strong>State your reason clearly:</strong> {page.subcategory === 'leave' ? 'Mention the type of leave, when it starts, and how long you need. Be specific about the reason — this adds credibility.' : page.subcategory === 'complaint' ? 'Describe the issue with specific dates, locations, and impact. Stick to facts rather than emotional language.' : page.subcategory === 'certificate' ? 'Clearly state which certificate you need and why. Mention the deadline if there is one.' : page.subcategory === 'bank' ? 'Specify the exact service you need from the bank. Include your account number for reference.' : 'Clearly state what you\'re applying for and why. Include all relevant reference numbers.'}</li>
+        <li><strong>Mention relevant dates:</strong> Clearly state the dates involved — whether it's leave duration, complaint timeline, or certificate deadline.</li>
+        <li><strong>Close with a polite request:</strong> End by requesting action and expressing gratitude. This shows professionalism and courtesy.</li>
+      </ol>
+
+      <h2>Tips for Writing {keywordDisplay}</h2>
+      <ul class="tips-list">
+        {page.tips.map(tip => <li>{tip}</li>)}
+      </ul>
+
+      <h2>Common Mistakes to Avoid</h2>
+      <ul class="mistakes-list">
+        {page.mistakes.map(mistake => <li>{mistake}</li>)}
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      {page.faqs.map(faq => (
+        <div class="faq-item">
+          <h3>{faq.q}</h3>
+          <p>{faq.a}</p>
+        </div>
+      ))}
+
+      <h2>Related Formats You May Need</h2>
+      <ul class="related-list">
+        {page.relatedLinks.map(link => (
+          <li><a href={`/format${link.slug}/`}>{link.text}</a></li>
+        ))}
+      </ul>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-content {
+    max-width: 800px;
+    padding: 2rem 1rem;
+  }
+  article h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1f2937;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  .intro {
+    font-size: 1.05rem;
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+  .intro-secondary {
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  article h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+  article p {
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+  .steps-list, .tips-list, .mistakes-list, .related-list {
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .steps-list li, .tips-list li, .mistakes-list li, .related-list li {
+    font-size: 0.95rem;
+    color: #374151;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+  .steps-list li strong {
+    color: #1f2937;
+  }
+  .mistakes-list li {
+    color: #dc2626;
+  }
+  .faq-item {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .faq-item h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.4rem;
+  }
+  .faq-item p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-bottom: 0;
+  }
+  .related-list a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .related-list a:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 600px) {
+    article h1 {
+      font-size: 1.35rem;
+    }
+    article h2 {
+      font-size: 1.15rem;
+    }
+    .page-content {
+      padding: 1.25rem 0.75rem;
+    }
+  }
+</style>

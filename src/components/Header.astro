@@ -1,0 +1,112 @@
+---
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon">📋</span>
+      <span class="logo-text">Letter<span class="logo-accent">Format</span>.in</span>
+    </a>
+    <nav class="main-nav">
+      <a href="/application/leave">Leave</a>
+      <a href="/letter/complaint">Complaints</a>
+      <a href="/application/certificate">Certificates</a>
+      <a href="/application/bank">Bank</a>
+      <a href="/application/government">Govt</a>
+      <a href="/application/school">School</a>
+      <a href="/application/employment">Employment</a>
+    </nav>
+    <button class="mobile-menu-btn" aria-label="Toggle menu" onclick="document.querySelector('.main-nav')?.classList.toggle('open')">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+  .logo-accent {
+    color: #2563eb;
+  }
+  .main-nav {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+  .main-nav a {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .main-nav a:hover {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .mobile-menu-btn span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #374151;
+    border-radius: 1px;
+  }
+  @media (max-width: 900px) {
+    .main-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      flex-direction: column;
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .main-nav.open {
+      display: flex;
+    }
+    .main-nav a {
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+    }
+    .mobile-menu-btn {
+      display: flex;
+    }
+  }
+</style>
