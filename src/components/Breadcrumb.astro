@@ -14,7 +14,13 @@ const { items } = Astro.props;
         ) : (
           <span class="current">{item.label}</span>
         )}
-        {i < items.length - 1 && <span class="sep">›</span>}
+        {i < items.length - 1 && (
+          <span class="sep">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </span>
+        )}
       </li>
     ))}
   </ol>
@@ -22,34 +28,44 @@ const { items } = Astro.props;
 
 <style>
   .breadcrumb {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-lg);
   }
+  
   .breadcrumb ol {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem;
-    font-size: 0.85rem;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.875rem;
   }
+  
   .breadcrumb li {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-xs);
   }
+  
   .breadcrumb a {
-    color: #2563eb;
+    color: var(--color-text-light);
     text-decoration: none;
+    transition: color var(--transition-fast);
   }
+  
   .breadcrumb a:hover {
-    text-decoration: underline;
+    color: var(--color-accent);
   }
+  
   .breadcrumb .current {
-    color: #6b7280;
+    color: var(--color-text);
+    font-weight: 500;
   }
+  
   .breadcrumb .sep {
-    color: #9ca3af;
-    margin: 0 0.15rem;
+    display: flex;
+    align-items: center;
+    color: var(--color-text-muted);
   }
 </style>

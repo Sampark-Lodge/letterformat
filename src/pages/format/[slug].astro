@@ -5,7 +5,7 @@ import Footer from '../../components/Footer.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import FormatBlock from '../../components/FormatBlock.astro';
 import { pages } from '../../content/data/pages';
-import { generateFormatHtml, getCategoryLabel, getSubcategoryLabel, capitalizeTitle } from '../../lib/utils';
+import { generateFormatHtml, getCategoryLabel, getSubcategoryLabel, capitalizeTitle, getCategoryIcon } from '../../lib/utils';
 
 export function getStaticPaths() {
   return pages.map((page) => ({
@@ -72,162 +72,444 @@ const schemaMarkup = JSON.stringify({
   </Fragment>
   <Header />
 
-  <main class="container page-content">
-    <Breadcrumb items={[
-      { label: 'Home', href: '/' },
-      { label: getCategoryLabel(page.category), href: `/${page.category}/${page.subcategory}` },
-      { label: getSubcategoryLabel(page.subcategory), href: `/${page.category}/${page.subcategory}` },
-      { label: keywordDisplay }
-    ]} />
-
-    <article>
-      <h1>{keywordDisplay} — Format, Sample &amp; How to Write [2026]</h1>
-
-      <p class="intro">
-        Need to write {keywordDisplay.toLowerCase()}? Here's a ready-to-use format you can copy, fill in your details, and submit today.
-      </p>
-      <p class="intro-secondary">
-        Whether you're a {page.userSegment} or someone helping with official paperwork, using the correct format ensures your {page.contentType} gets approved without delays.
-      </p>
-
-      <h2>Quick Format: {keywordDisplay}</h2>
-      <p>Copy the format below, replace the bracketed details with your information, and you're done:</p>
-      <FormatBlock content={formatContent} id="quick-format" />
-
-      <h2>Sample: {keywordDisplay} (Filled Example)</h2>
-      <p>Here's how a completed {keywordDisplay.toLowerCase()} looks with real details:</p>
-      <FormatBlock content={sampleContent} id="sample-format" />
-
-      <h2>How to Write {keywordDisplay}</h2>
-      <p>Follow these steps to customize the format for your situation:</p>
-      <ol class="steps-list">
-        <li><strong>Start with the recipient's details:</strong> Address the {page.contentType} to {page.recipientTitle}. Include the full name of the {page.userSegment === 'student' ? 'school' : page.userSegment === 'employee' ? 'company' : 'office or department'}.</li>
-        <li><strong>Write a clear subject line:</strong> Keep it short and specific — "{page.subjectLine}". Avoid vague subjects like "Leave Request" or "Complaint."</li>
-        <li><strong>State your reason clearly:</strong> {page.subcategory === 'leave' ? 'Mention the type of leave, when it starts, and how long you need. Be specific about the reason — this adds credibility.' : page.subcategory === 'complaint' ? 'Describe the issue with specific dates, locations, and impact. Stick to facts rather than emotional language.' : page.subcategory === 'certificate' ? 'Clearly state which certificate you need and why. Mention the deadline if there is one.' : page.subcategory === 'bank' ? 'Specify the exact service you need from the bank. Include your account number for reference.' : 'Clearly state what you\'re applying for and why. Include all relevant reference numbers.'}</li>
-        <li><strong>Mention relevant dates:</strong> Clearly state the dates involved — whether it's leave duration, complaint timeline, or certificate deadline.</li>
-        <li><strong>Close with a polite request:</strong> End by requesting action and expressing gratitude. This shows professionalism and courtesy.</li>
-      </ol>
-
-      <h2>Tips for Writing {keywordDisplay}</h2>
-      <ul class="tips-list">
-        {page.tips.map(tip => <li>{tip}</li>)}
-      </ul>
-
-      <h2>Common Mistakes to Avoid</h2>
-      <ul class="mistakes-list">
-        {page.mistakes.map(mistake => <li>{mistake}</li>)}
-      </ul>
-
-      <h2>Frequently Asked Questions</h2>
-      {page.faqs.map(faq => (
-        <div class="faq-item">
-          <h3>{faq.q}</h3>
-          <p>{faq.a}</p>
+  <main>
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container">
+        <Breadcrumb items={[
+          { label: 'Home', href: '/' },
+          { label: getCategoryLabel(page.category), href: `/${page.category}/${page.subcategory}` },
+          { label: getSubcategoryLabel(page.subcategory), href: `/${page.category}/${page.subcategory}` },
+          { label: keywordDisplay }
+        ]} />
+        
+        <div class="page-header-content">
+          <div class="page-icon">{getCategoryIcon(page.subcategory)}</div>
+          <div class="page-title-wrap">
+            <h1>{keywordDisplay} — Format, Sample &amp; How to Write [2026]</h1>
+            <p class="page-subtitle">Need to write {keywordDisplay.toLowerCase()}? Here's a ready-to-use format you can copy, fill in your details, and submit today.</p>
+          </div>
         </div>
-      ))}
+      </div>
+    </div>
 
-      <h2>Related Formats You May Need</h2>
-      <ul class="related-list">
-        {page.relatedLinks.map(link => (
-          <li><a href={`/format${link.slug}/`}>{link.text}</a></li>
-        ))}
-      </ul>
-    </article>
+    <!-- Content -->
+    <div class="container page-content">
+      <article>
+        <!-- Format Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>Quick Format</h2>
+            <p>Copy the format below, replace the bracketed details with your information, and you're done</p>
+          </div>
+          <FormatBlock content={formatContent} id="quick-format" />
+        </section>
+
+        <!-- Sample Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>Filled Sample</h2>
+            <p>Here's how a completed {keywordDisplay.toLowerCase()} looks with real details</p>
+          </div>
+          <FormatBlock content={sampleContent} id="sample-format" isSample={true} />
+        </section>
+
+        <!-- How to Write Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>How to Write</h2>
+            <p>Follow these steps to customize the format for your situation</p>
+          </div>
+          <div class="steps-card">
+            <ol class="steps-list">
+              <li>
+                <span class="step-label">Start with the recipient's details</span>
+                Address the {page.contentType} to {page.recipientTitle}. Include the full name of the {page.userSegment === 'student' ? 'school' : page.userSegment === 'employee' ? 'company' : 'office or department'}.
+              </li>
+              <li>
+                <span class="step-label">Write a clear subject line</span>
+                Keep it short and specific — "{page.subjectLine}". Avoid vague subjects like "Leave Request" or "Complaint."
+              </li>
+              <li>
+                <span class="step-label">State your reason clearly</span>
+                {page.subcategory === 'leave' ? 'Mention the type of leave, when it starts, and how long you need. Be specific about the reason — this adds credibility.' : page.subcategory === 'complaint' ? 'Describe the issue with specific dates, locations, and impact. Stick to facts rather than emotional language.' : page.subcategory === 'certificate' ? 'Clearly state which certificate you need and why. Mention the deadline if there is one.' : page.subcategory === 'bank' ? 'Specify the exact service you need from the bank. Include your account number for reference.' : 'Clearly state what you\'re applying for and why. Include all relevant reference numbers.'}
+              </li>
+              <li>
+                <span class="step-label">Mention relevant dates</span>
+                Clearly state the dates involved — whether it's leave duration, complaint timeline, or certificate deadline.
+              </li>
+              <li>
+                <span class="step-label">Close with a polite request</span>
+                End by requesting action and expressing gratitude. This shows professionalism and courtesy.
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>Pro Tips</h2>
+            <p>Best practices for writing this {page.contentType}</p>
+          </div>
+          <div class="tips-grid">
+            {page.tips.map(tip => (
+              <div class="tip-card">
+                <div class="tip-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <p>{tip}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Mistakes Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>Common Mistakes to Avoid</h2>
+            <p>Don't make these errors in your {page.contentType}</p>
+          </div>
+          <div class="mistakes-grid">
+            {page.mistakes.map(mistake => (
+              <div class="mistake-card">
+                <div class="mistake-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+                  </svg>
+                </div>
+                <p>{mistake}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="content-section">
+          <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Got questions? We have answers</p>
+          </div>
+          <div class="faq-grid">
+            {page.faqs.map(faq => (
+              <div class="faq-card">
+                <h3>{faq.q}</h3>
+                <p>{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- Related Section -->
+        <section class="content-section related-section">
+          <div class="section-header">
+            <h2>Related Formats</h2>
+            <p>You might also need these</p>
+          </div>
+          <div class="related-grid">
+            {page.relatedLinks.map(link => (
+              <a href={`/format${link.slug}/`} class="related-card">
+                <span>{link.text}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            ))}
+          </div>
+        </section>
+      </article>
+    </div>
   </main>
 
   <Footer />
 </Layout>
 
 <style>
+  .page-header {
+    background: linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 100%);
+    padding: var(--space-xl) 0 var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .page-header-content {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+  
+  .page-icon {
+    font-size: 3rem;
+    flex-shrink: 0;
+  }
+  
+  .page-title-wrap {
+    flex: 1;
+  }
+  
+  .page-header h1 {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+  }
+  
+  .page-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+  
   .page-content {
-    max-width: 800px;
-    padding: 2rem 1rem;
+    max-width: 900px;
+    padding: var(--space-2xl) var(--space-lg);
   }
-  article h1 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #1f2937;
-    margin-bottom: 1rem;
-    line-height: 1.3;
+  
+  .content-section {
+    margin-bottom: var(--space-2xl);
   }
-  .intro {
-    font-size: 1.05rem;
-    color: #374151;
+  
+  .section-header {
+    margin-bottom: var(--space-lg);
+  }
+  
+  .section-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-xs);
+  }
+  
+  .section-header p {
+    color: var(--color-text-light);
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  /* Steps */
+  .steps-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+  }
+  
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: step;
+  }
+  
+  .steps-list li {
+    position: relative;
+    padding-left: 3.5rem;
+    margin-bottom: var(--space-lg);
+    font-size: 1rem;
     line-height: 1.7;
-    margin-bottom: 0.5rem;
+    color: var(--color-text-light);
   }
-  .intro-secondary {
-    font-size: 0.95rem;
-    color: #6b7280;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-  }
-  article h2 {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #1f2937;
-    margin-top: 2.5rem;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #e5e7eb;
-  }
-  article p {
-    font-size: 0.95rem;
-    color: #374151;
-    line-height: 1.7;
-    margin-bottom: 0.75rem;
-  }
-  .steps-list, .tips-list, .mistakes-list, .related-list {
-    padding-left: 1.25rem;
-    margin-bottom: 1rem;
-  }
-  .steps-list li, .tips-list li, .mistakes-list li, .related-list li {
-    font-size: 0.95rem;
-    color: #374151;
-    line-height: 1.7;
-    margin-bottom: 0.5rem;
-  }
-  .steps-list li strong {
-    color: #1f2937;
-  }
-  .mistakes-list li {
-    color: #dc2626;
-  }
-  .faq-item {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 0.75rem;
-  }
-  .faq-item h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin-bottom: 0.4rem;
-  }
-  .faq-item p {
-    font-size: 0.9rem;
-    color: #4b5563;
+  
+  .steps-list li:last-child {
     margin-bottom: 0;
   }
-  .related-list a {
-    color: #2563eb;
+  
+  .steps-list li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  
+  .step-label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+  }
+  
+  /* Tips Grid */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+  
+  .tip-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+  }
+  
+  .tip-card:hover {
+    border-color: #10b981;
+    background: #f0fdf4;
+  }
+  
+  .tip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #10b981;
+    color: white;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  
+  .tip-card p {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin: 0;
+  }
+  
+  /* Mistakes Grid */
+  .mistakes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+  }
+  
+  .mistake-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+  }
+  
+  .mistake-card:hover {
+    border-color: #ef4444;
+    background: #fef2f2;
+  }
+  
+  .mistake-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #ef4444;
+    color: white;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  
+  .mistake-card p {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    margin: 0;
+  }
+  
+  /* FAQ Grid */
+  .faq-grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+  
+  .faq-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    transition: all var(--transition-fast);
+  }
+  
+  .faq-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .faq-card h3 {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-sm);
+  }
+  
+  .faq-card p {
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    margin: 0;
+  }
+  
+  /* Related */
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--space-md);
+  }
+  
+  .related-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     text-decoration: none;
+    color: var(--color-text);
     font-weight: 500;
+    transition: all var(--transition-fast);
   }
-  .related-list a:hover {
-    text-decoration: underline;
+  
+  .related-card:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-light);
+    color: var(--color-accent);
   }
-  @media (max-width: 600px) {
-    article h1 {
-      font-size: 1.35rem;
+  
+  .related-card svg {
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+  }
+  
+  .related-card:hover svg {
+    transform: translateX(4px);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .page-header-content {
+      flex-direction: column;
+      gap: var(--space-md);
     }
-    article h2 {
-      font-size: 1.15rem;
+    
+    .page-header h1 {
+      font-size: 1.5rem;
     }
+    
     .page-content {
-      padding: 1.25rem 0.75rem;
+      padding: var(--space-xl) var(--space-md);
+    }
+    
+    .steps-card {
+      padding: var(--space-lg);
+    }
+    
+    .steps-list li {
+      padding-left: 3rem;
     }
   }
 </style>

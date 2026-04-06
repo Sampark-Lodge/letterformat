@@ -8,13 +8,13 @@ import { getCategoryIcon } from '../lib/utils';
 
 const allPages = pages;
 const categories = [
-  { key: 'leave', label: 'Leave Applications', count: allPages.filter(p => p.subcategory === 'leave').length, icon: '📝', href: '/application/leave' },
-  { key: 'complaint', label: 'Complaint Letters', count: allPages.filter(p => p.subcategory === 'complaint').length, icon: '⚠️', href: '/letter/complaint' },
-  { key: 'certificate', label: 'Certificate Requests', count: allPages.filter(p => p.subcategory === 'certificate').length, icon: '📜', href: '/application/certificate' },
-  { key: 'bank', label: 'Bank Letters', count: allPages.filter(p => p.subcategory === 'bank').length, icon: '🏦', href: '/application/bank' },
-  { key: 'government', label: 'Government Applications', count: allPages.filter(p => p.subcategory === 'government').length, icon: '🏛️', href: '/application/government' },
-  { key: 'school', label: 'School Applications', count: allPages.filter(p => p.subcategory === 'school').length, icon: '🎓', href: '/application/school' },
-  { key: 'employment', label: 'Employment Letters', count: allPages.filter(p => p.subcategory === 'employment').length, icon: '💼', href: '/application/employment' },
+  { key: 'leave', label: 'Leave Applications', count: allPages.filter(p => p.subcategory === 'leave').length, icon: '📝', href: '/application/leave', description: 'Sick leave, casual leave, urgent work & more' },
+  { key: 'complaint', label: 'Complaint Letters', count: allPages.filter(p => p.subcategory === 'complaint').length, icon: '⚠️', href: '/letter/complaint', description: 'Water, electricity, noise & pollution complaints' },
+  { key: 'certificate', label: 'Certificate Requests', count: allPages.filter(p => p.subcategory === 'certificate').length, icon: '📜', href: '/application/certificate', description: 'Bonafide, character, income & domicile' },
+  { key: 'bank', label: 'Bank Letters', count: allPages.filter(p => p.subcategory === 'bank').length, icon: '🏦', href: '/application/bank', description: 'KYC, loan, cheque book & account closure' },
+  { key: 'government', label: 'Government Applications', count: allPages.filter(p => p.subcategory === 'government').length, icon: '🏛️', href: '/application/government', description: 'Aadhaar, PAN, voter ID & ration card' },
+  { key: 'school', label: 'School Applications', count: allPages.filter(p => p.subcategory === 'school').length, icon: '🎓', href: '/application/school', description: 'Scholarship, fee concession & transfer' },
+  { key: 'employment', label: 'Employment Letters', count: allPages.filter(p => p.subcategory === 'employment').length, icon: '💼', href: '/application/employment', description: 'Resignation, experience & offer letter' },
 ];
 
 const recentPages = allPages.slice(0, 8);
@@ -25,7 +25,7 @@ const schemaMarkup = JSON.stringify({
   "name": "LetterFormat.in",
   "url": "https://letterformat.in",
   "description": "Free, ready-to-use letter and application formats for Indian students, employees, and the general public.",
-  "potentialAction": {
+  potentialAction: {
     "@type": "SearchAction",
     "target": "https://letterformat.in/?q={search_term_string}",
     "query-input": "required name=search_term_string"
@@ -41,60 +41,166 @@ const schemaMarkup = JSON.stringify({
   <Header />
 
   <main>
+    <!-- Hero Section -->
     <section class="hero">
-      <div class="container">
+      <div class="hero-bg"></div>
+      <div class="container hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Free formats for Indian users
+        </div>
         <h1>Free Letter &amp; Application Formats</h1>
-        <p>Copy, fill in your details, and submit. No sign-up, no fees — just clean, professional formats ready to use.</p>
-        <SearchBar pages={allPages.map(p => ({ keyword: p.keyword, slug: p.slug, category: p.category, subcategory: p.subcategory }))} />
+        <p class="hero-subtitle">Copy, fill in your details, and submit. No sign-up, no fees — just clean, professional formats ready to use.</p>
+        
+        <div class="hero-search">
+          <div class="search-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+            <input type="search" id="format-search" placeholder="Search formats... (e.g., fever leave, complaint letter, bonafide)" autocomplete="off" />
+          </div>
+          <div id="search-results" class="search-results"></div>
+        </div>
+        
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">{allPages.length}+</span>
+            <span class="stat-label">Formats</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-number">7</span>
+            <span class="stat-label">Categories</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-number">Free</span>
+            <span class="stat-label">To Use</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
       </div>
     </section>
 
-    <section class="container section">
-      <h2>Browse by Category</h2>
-      <div class="category-grid">
-        {categories.map(cat => (
-          <a href={cat.href} class="category-card">
-            <span class="category-icon">{cat.icon}</span>
-            <h3>{cat.label}</h3>
-            <p>{cat.count} formats available</p>
-          </a>
-        ))}
+    <!-- Categories Section -->
+    <section class="section categories-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Browse by Category</h2>
+          <p>Find the perfect format for your needs</p>
+        </div>
+        
+        <div class="category-grid stagger">
+          {categories.map(cat => (
+            <a href={cat.href} class="category-card">
+              <div class="category-card-inner">
+                <div class="category-icon">{cat.icon}</div>
+                <div class="category-info">
+                  <h3>{cat.label}</h3>
+                  <p>{cat.description}</p>
+                </div>
+                <div class="category-count">
+                  <span>{cat.count}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
 
-    <section class="container section">
-      <h2>Popular Formats</h2>
-      <div class="format-list">
-        {recentPages.map(page => (
-          <a href={`/format/${page.slug}/`} class="format-item">
-            <span class="format-item-icon">{getCategoryIcon(page.subcategory)}</span>
-            <div class="format-item-info">
-              <span class="format-item-title">{page.keyword}</span>
-              <span class="format-item-meta">{page.category} · {page.subcategory}</span>
+    <!-- Popular Formats Section -->
+    <section class="section formats-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Popular Formats</h2>
+          <p>Most searched formats this month</p>
+        </div>
+        
+        <div class="format-grid stagger">
+          {recentPages.map(page => (
+            <a href={`/format/${page.slug}/`} class="format-card">
+              <div class="format-card-icon">{getCategoryIcon(page.subcategory)}</div>
+              <div class="format-card-info">
+                <span class="format-card-title">{page.keyword}</span>
+                <span class="format-card-meta">{page.category} · {page.subcategory}</span>
+              </div>
+              <svg class="format-card-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section how-section section-alt">
+      <div class="container">
+        <div class="section-header centered">
+          <h2>How It Works</h2>
+          <p>Get your letter in 3 simple steps</p>
+        </div>
+        
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+              </svg>
             </div>
-            <span class="format-item-arrow">→</span>
-          </a>
-        ))}
+            <h3>Search</h3>
+            <p>Find the format you need using the search bar or browse by category.</p>
+          </div>
+          
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </div>
+            <h3>Copy</h3>
+            <p>Click the copy button to copy the format to your clipboard instantly.</p>
+          </div>
+          
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h3>Fill &amp; Submit</h3>
+            <p>Replace the bracketed details with your information and submit.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="container section how-it-works">
-      <h2>How It Works</h2>
-      <div class="steps">
-        <div class="step">
-          <span class="step-num">1</span>
-          <h3>Search</h3>
-          <p>Find the format you need using the search bar or browse by category.</p>
-        </div>
-        <div class="step">
-          <span class="step-num">2</span>
-          <h3>Copy</h3>
-          <p>Click the copy button to copy the format to your clipboard instantly.</p>
-        </div>
-        <div class="step">
-          <span class="step-num">3</span>
-          <h3>Fill &amp; Submit</h3>
-          <p>Replace the bracketed details with your information and submit.</p>
+    <!-- CTA Section -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-content">
+            <h2>Need a Custom Format?</h2>
+            <p>Don't see what you're looking for? Let us know and we'll add it.</p>
+          </div>
+          <a href="mailto:hello@letterformat.in" class="btn btn-primary">
+            Request Format
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
@@ -103,170 +209,583 @@ const schemaMarkup = JSON.stringify({
   <Footer />
 </Layout>
 
+<script is:inline>
+  // Search functionality
+  const pages = [
+    {"keyword":"application for leave due to fever","slug":"application-leave-due-to-fever","category":"application","subcategory":"leave"},
+    {"keyword":"application for sick leave","slug":"application-sick-leave","category":"application","subcategory":"leave"},
+    {"keyword":"application for casual leave","slug":"application-casual-leave","category":"application","subcategory":"leave"},
+    {"keyword":"application for sister wedding leave","slug":"application-sister-wedding-leave","category":"application","subcategory":"leave"},
+    {"keyword":"application for family function leave","slug":"application-family-function-leave","category":"application","subcategory":"leave"},
+    {"keyword":"application for urgent piece of work","slug":"application-urgent-piece-of-work","category":"application","subcategory":"leave"},
+    {"keyword":"application for going home leave","slug":"application-going-home-leave","category":"application","subcategory":"leave"},
+    {"keyword":"application for medical appointment leave","slug":"application-medical-appointment-leave","category":"application","subcategory":"leave"},
+    {"keyword":"application for dental appointment leave","slug":"application-dental-appointment-leave","category":"application","subcategory":"leave"},
+    {"keyword":"complaint letter about water shortage","slug":"complaint-letter-water-shortage","category":"letter","subcategory":"complaint"},
+    {"keyword":"complaint letter about road damage","slug":"complaint-letter-road-damage","category":"letter","subcategory":"complaint"},
+    {"keyword":"complaint letter about noise pollution","slug":"complaint-letter-noise-pollution","category":"letter","subcategory":"complaint"},
+    {"keyword":"complaint letter about garbage collection","slug":"complaint-letter-garbage-collection","category":"letter","subcategory":"complaint"},
+    {"keyword":"complaint letter about electricity board power cut","slug":"complaint-letter-electricity-board-power-cut","category":"letter","subcategory":"complaint"},
+    {"keyword":"application for bonafide certificate","slug":"application-bonafide-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"application for character certificate","slug":"application-character-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"application for income certificate","slug":"application-income-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"application for domicile certificate","slug":"application-domicile-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"application for bank KYC update","slug":"application-bank-kyc-update","category":"application","subcategory":"bank"},
+    {"keyword":"application for bank loan","slug":"application-bank-loan","category":"application","subcategory":"bank"},
+    {"keyword":"application for cheque book","slug":"application-bank-cheque-book","category":"application","subcategory":"bank"},
+    {"keyword":"letter for bank account closure","slug":"letter-bank-account-closure","category":"letter","subcategory":"bank"},
+    {"keyword":"application for Aadhaar update","slug":"application-aadhaar-update","category":"application","subcategory":"government"},
+    {"keyword":"application for PAN card","slug":"application-pan-card","category":"application","subcategory":"government"},
+    {"keyword":"application for ration card","slug":"application-ration-card","category":"application","subcategory":"government"},
+    {"keyword":"application for voter ID correction","slug":"application-voter-id-correction","category":"application","subcategory":"government"},
+    {"keyword":"application for school scholarship","slug":"application-school-scholarship","category":"application","subcategory":"school"},
+    {"keyword":"application for school fee concession","slug":"application-school-fee-concession","category":"application","subcategory":"school"},
+    {"keyword":"application for employment experience letter","slug":"application-employment-experience-letter","category":"application","subcategory":"employment"},
+    {"keyword":"application for resignation","slug":"application-employment-resignation","category":"application","subcategory":"employment"}
+  ];
+
+  const input = document.getElementById('format-search');
+  const resultsDiv = document.getElementById('search-results');
+
+  if (input && resultsDiv) {
+    input.addEventListener('input', function() {
+      const query = this.value.toLowerCase().trim();
+      if (query.length < 2) {
+        resultsDiv.innerHTML = '';
+        resultsDiv.style.display = 'none';
+        return;
+      }
+
+      const filtered = pages.filter(function(p) {
+        const searchText = (p.keyword + ' ' + p.category + ' ' + p.subcategory).toLowerCase();
+        return query.split(' ').every(function(word) {
+          return searchText.includes(word);
+        });
+      });
+
+      if (filtered.length === 0) {
+        resultsDiv.innerHTML = '<p class="no-results">No formats found. Try different keywords.</p>';
+        resultsDiv.style.display = 'block';
+        return;
+      }
+
+      resultsDiv.innerHTML = filtered
+        .slice(0, 10)
+        .map(function(p) {
+          return '<a href="/format/' + p.slug + '/" class="search-item">' + p.keyword + '</a>';
+        })
+        .join('');
+      resultsDiv.style.display = 'block';
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.hero-search')) {
+        resultsDiv.innerHTML = '';
+        resultsDiv.style.display = 'none';
+      }
+    });
+  }
+</script>
+
 <style>
+  /* Hero Section */
   .hero {
-    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
-    color: #fff;
-    padding: 3.5rem 1rem 3rem;
+    position: relative;
+    background: var(--color-primary);
+    padding: 5rem 0 6rem;
+    overflow: hidden;
+  }
+  
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 80%, rgba(233, 69, 96, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(233, 69, 96, 0.1) 0%, transparent 40%),
+      linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 720px;
+  }
+  
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .hero h1 {
+    font-size: 3.5rem;
+    color: white;
+    margin-bottom: var(--space-md);
+    animation: fadeInUp 0.6s ease 0.1s forwards;
+    opacity: 0;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xl);
+    animation: fadeInUp 0.6s ease 0.2s forwards;
+    opacity: 0;
+  }
+  
+  .hero-search {
+    position: relative;
+    max-width: 560px;
+    margin: 0 auto var(--space-xl);
+    animation: fadeInUp 0.6s ease 0.3s forwards;
+    opacity: 0;
+  }
+  
+  .search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 1.25rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+  }
+  
+  .hero-search input {
+    width: 100%;
+    padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+    font-size: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-fast);
+  }
+  
+  .hero-search input::placeholder {
+    color: var(--color-text-muted);
+  }
+  
+  .hero-search input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.15);
+  }
+  
+  .search-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+  }
+  
+  .search-results :global(.search-item) {
+    display: block;
+    padding: 0.875rem 1.25rem;
+    color: var(--color-text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background var(--transition-fast);
+  }
+  
+  .search-results :global(.search-item:hover) {
+    background: var(--color-bg-alt);
+  }
+  
+  .search-results :global(.no-results) {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xl);
+    animation: fadeInUp 0.6s ease 0.4s forwards;
+    opacity: 0;
+  }
+  
+  .stat {
     text-align: center;
   }
-  .hero h1 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
-  }
-  .hero p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto 1.5rem;
-    line-height: 1.6;
-  }
-  .section {
-    padding: 2.5rem 1rem;
-  }
-  .section h2 {
-    font-size: 1.5rem;
+  
+  .stat-number {
+    display: block;
+    font-size: 1.75rem;
     font-weight: 700;
-    color: #1f2937;
-    margin-bottom: 1.5rem;
+    color: white;
   }
+  
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+  
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+  
+  .hero-shapes {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+  }
+  
+  .shape-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--color-accent);
+    top: -200px;
+    right: -100px;
+  }
+  
+  .shape-2 {
+    width: 300px;
+    height: 300px;
+    background: var(--color-accent);
+    bottom: -150px;
+    left: -50px;
+  }
+  
+  .shape-3 {
+    width: 150px;
+    height: 150px;
+    background: white;
+    top: 50%;
+    left: 10%;
+  }
+  
+  /* Section Styling */
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--space-2xl);
+  }
+  
+  .section-header h2 {
+    margin-bottom: var(--space-sm);
+  }
+  
+  .section-header p {
+    color: var(--color-text-light);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  .section-header.centered {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  /* Categories Section */
+  .categories-section {
+    padding-top: var(--space-3xl);
+  }
+  
   .category-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--space-lg);
   }
+  
   .category-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 1.5rem 1rem;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
+    display: block;
     text-decoration: none;
-    color: #1f2937;
-    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
   }
-  .category-card:hover {
-    border-color: #2563eb;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
-    transform: translateY(-2px);
+  
+  .category-card-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
   }
+  
+  .category-card:hover .category-card-inner {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+  
   .category-icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
-  .category-card h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-  }
-  .category-card p {
-    font-size: 0.8rem;
-    color: #6b7280;
-  }
-  .format-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .format-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    text-decoration: none;
-    color: #1f2937;
-    transition: border-color 0.15s, background 0.15s;
-  }
-  .format-item:hover {
-    border-color: #2563eb;
-    background: #f8fafc;
-  }
-  .format-item-icon {
-    font-size: 1.3rem;
+    font-size: 2.25rem;
     flex-shrink: 0;
   }
-  .format-item-info {
+  
+  .category-info {
     flex: 1;
     min-width: 0;
   }
-  .format-item-title {
+  
+  .category-info h3 {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+  }
+  
+  .category-info p {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+  
+  .category-count {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+  }
+  
+  .category-count span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: var(--color-accent-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+  }
+  
+  .category-count svg {
+    color: var(--color-text-muted);
+  }
+  
+  /* Formats Section */
+  .formats-section {
+    background: var(--color-bg-alt);
+  }
+  
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-md);
+  }
+  
+  .format-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .format-card:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-light);
+  }
+  
+  .format-card-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  
+  .format-card-info {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .format-card-title {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
+    color: var(--color-text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .format-item-meta {
+  
+  .format-card-meta {
     display: block;
-    font-size: 0.75rem;
-    color: #6b7280;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
     margin-top: 0.15rem;
+    text-transform: capitalize;
   }
-  .format-item-arrow {
-    color: #9ca3af;
-    font-size: 1.1rem;
+  
+  .format-card-arrow {
+    color: var(--color-text-muted);
     flex-shrink: 0;
+    transition: transform var(--transition-fast);
   }
-  .how-it-works {
-    background: #f8fafc;
-    border-radius: 12px;
-    margin: 0 1rem;
+  
+  .format-card:hover .format-card-arrow {
+    transform: translateX(4px);
+    color: var(--color-accent);
   }
-  .steps {
+  
+  /* How It Works Section */
+  .how-section {
+    padding: var(--space-3xl) 0;
+  }
+  
+  .steps-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: var(--space-xl);
   }
-  .step {
+  
+  .step-card {
+    position: relative;
     text-align: center;
-    padding: 1rem;
+    padding: var(--space-xl);
   }
-  .step-num {
+  
+  .step-number {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-border);
+    line-height: 1;
+  }
+  
+  .step-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    background: #2563eb;
-    color: #fff;
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 0.75rem;
+    width: 72px;
+    height: 72px;
+    background: var(--color-accent);
+    color: white;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-lg);
+    margin-top: var(--space-md);
   }
-  .step h3 {
-    font-size: 1rem;
+  
+  .step-card h3 {
+    font-family: var(--font-body);
+    font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 0.35rem;
-    color: #1f2937;
+    margin-bottom: var(--space-sm);
   }
-  .step p {
-    font-size: 0.85rem;
-    color: #6b7280;
-    line-height: 1.5;
+  
+  .step-card p {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    margin: 0;
   }
-  @media (max-width: 600px) {
+  
+  /* CTA Section */
+  .cta-section {
+    padding-bottom: var(--space-3xl);
+  }
+  
+  .cta-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2xl) var(--space-2xl);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-xl);
+    gap: var(--space-xl);
+  }
+  
+  .cta-content h2 {
+    color: white;
+    margin-bottom: var(--space-sm);
+  }
+  
+  .cta-content p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  
+  .cta-card .btn {
+    flex-shrink: 0;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 0 4rem;
+    }
+    
     .hero h1 {
-      font-size: 1.5rem;
+      font-size: 2.25rem;
     }
-    .hero p {
-      font-size: 0.95rem;
+    
+    .hero-subtitle {
+      font-size: 1rem;
     }
+    
+    .hero-stats {
+      gap: var(--space-lg);
+    }
+    
     .category-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .steps {
       grid-template-columns: 1fr;
-      gap: 1rem;
+    }
+    
+    .steps-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+    
+    .step-card {
+      padding: var(--space-lg) var(--space-md);
+    }
+    
+    .cta-card {
+      flex-direction: column;
+      text-align: center;
+      padding: var(--space-xl);
     }
   }
 </style>

@@ -26,28 +26,42 @@ const description = `Browse ${subPages.length} free ${getSubcategoryLabel(subcat
 <Layout title={title} description={description}>
   <Header />
 
-  <main class="container page-content">
-    <Breadcrumb items={[
-      { label: 'Home', href: '/' },
-      { label: getCategoryLabel(category), href: `/${category}/${subcategory}` },
-      { label: getSubcategoryLabel(subcategory) }
-    ]} />
-
-    <h1>{getCategoryIcon(subcategory)} {getSubcategoryLabel(subcategory)}</h1>
-    <p class="category-desc">
-      Browse {subPages.length} ready-to-use {getSubcategoryLabel(subcategory).toLowerCase()}. Click any format to view, copy, and customize for your needs.
-    </p>
-
-    <div class="format-list">
-      {subPages.map(page => (
-        <a href={`/format/${page.slug}/`} class="format-item">
-          <div class="format-item-info">
-            <span class="format-item-title">{page.keyword}</span>
-            <span class="format-item-meta">For {page.userSegment === 'student' ? 'Students' : page.userSegment === 'employee' ? 'Employees' : 'General Public'}</span>
+  <main>
+    <!-- Page Header -->
+    <div class="category-header">
+      <div class="container">
+        <Breadcrumb items={[
+          { label: 'Home', href: '/' },
+          { label: getCategoryLabel(category), href: `/${category}/${subcategory}` },
+          { label: getSubcategoryLabel(subcategory) }
+        ]} />
+        
+        <div class="category-header-content">
+          <div class="category-icon">{getCategoryIcon(subcategory)}</div>
+          <div class="category-header-text">
+            <h1>{getSubcategoryLabel(subcategory)}</h1>
+            <p>Browse {subPages.length} ready-to-use formats. Click any format to view, copy, and customize for your needs.</p>
           </div>
-          <span class="format-item-arrow">→</span>
-        </a>
-      ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Formats Grid -->
+    <div class="container page-content">
+      <div class="formats-grid">
+        {subPages.map(page => (
+          <a href={`/format/${page.slug}/`} class="format-card">
+            <div class="format-card-icon">{getCategoryIcon(page.subcategory)}</div>
+            <div class="format-card-info">
+              <span class="format-card-title">{page.keyword}</span>
+              <span class="format-card-meta">For {page.userSegment === 'student' ? 'Students' : page.userSegment === 'employee' ? 'Employees' : 'General Public'}</span>
+            </div>
+            <svg class="format-card-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        ))}
+      </div>
     </div>
   </main>
 
@@ -55,62 +69,117 @@ const description = `Browse ${subPages.length} free ${getSubcategoryLabel(subcat
 </Layout>
 
 <style>
-  .page-content {
-    max-width: 800px;
-    padding: 2rem 1rem;
+  .category-header {
+    background: linear-gradient(180deg, var(--color-bg-alt) 0%, var(--color-bg) 100%);
+    padding: var(--space-xl) 0 var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
   }
-  h1 {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #1f2937;
-    margin-bottom: 0.5rem;
-  }
-  .category-desc {
-    font-size: 1rem;
-    color: #6b7280;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-  }
-  .format-list {
+  
+  .category-header-content {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
   }
-  .format-item {
+  
+  .category-icon {
+    font-size: 3.5rem;
+    flex-shrink: 0;
+  }
+  
+  .category-header-text {
+    flex: 1;
+  }
+  
+  .category-header h1 {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+  }
+  
+  .category-header p {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+  
+  .page-content {
+    padding: var(--space-2xl) var(--space-lg);
+  }
+  
+  .formats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-md);
+  }
+  
+  .format-card {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding: 0.85rem 1rem;
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     text-decoration: none;
-    color: #1f2937;
-    transition: border-color 0.15s, background 0.15s;
+    transition: all var(--transition-base);
   }
-  .format-item:hover {
-    border-color: #2563eb;
-    background: #f8fafc;
+  
+  .format-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
   }
-  .format-item-info {
+  
+  .format-card-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+  }
+  
+  .format-card-info {
     flex: 1;
     min-width: 0;
   }
-  .format-item-title {
+  
+  .format-card-title {
     display: block;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .format-item-meta {
+  
+  .format-card-meta {
     display: block;
-    font-size: 0.8rem;
-    color: #6b7280;
-    margin-top: 0.15rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
   }
-  .format-item-arrow {
-    color: #9ca3af;
-    font-size: 1.1rem;
+  
+  .format-card-arrow {
+    color: var(--color-text-muted);
     flex-shrink: 0;
+    transition: transform var(--transition-fast);
+  }
+  
+  .format-card:hover .format-card-arrow {
+    transform: translateX(4px);
+    color: var(--color-accent);
+  }
+  
+  @media (max-width: 768px) {
+    .category-header-content {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    
+    .category-header h1 {
+      font-size: 1.5rem;
+    }
+    
+    .formats-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
