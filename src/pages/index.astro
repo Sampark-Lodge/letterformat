@@ -8,13 +8,13 @@ import { getCategoryIcon } from '../lib/utils';
 
 const allPages = pages;
 const categories = [
-  { key: 'leave', label: 'Leave Applications', count: allPages.filter(p => p.subcategory === 'leave').length, icon: '📝', href: '/application/leave', description: 'Sick leave, casual leave, urgent work & more' },
-  { key: 'complaint', label: 'Complaint Letters', count: allPages.filter(p => p.subcategory === 'complaint').length, icon: '⚠️', href: '/letter/complaint', description: 'Water, electricity, noise & pollution complaints' },
-  { key: 'certificate', label: 'Certificate Requests', count: allPages.filter(p => p.subcategory === 'certificate').length, icon: '📜', href: '/application/certificate', description: 'Bonafide, character, income & domicile' },
-  { key: 'bank', label: 'Bank Letters', count: allPages.filter(p => p.subcategory === 'bank').length, icon: '🏦', href: '/application/bank', description: 'KYC, loan, cheque book & account closure' },
-  { key: 'government', label: 'Government Applications', count: allPages.filter(p => p.subcategory === 'government').length, icon: '🏛️', href: '/application/government', description: 'Aadhaar, PAN, voter ID & ration card' },
-  { key: 'school', label: 'School Applications', count: allPages.filter(p => p.subcategory === 'school').length, icon: '🎓', href: '/application/school', description: 'Scholarship, fee concession & transfer' },
-  { key: 'employment', label: 'Employment Letters', count: allPages.filter(p => p.subcategory === 'employment').length, icon: '💼', href: '/application/employment', description: 'Resignation, experience & offer letter' },
+  { key: 'leave', label: 'ছুটি আবেদন', count: allPages.filter(p => p.subcategory === 'leave').length, icon: '📝', href: '/application/leave', description: 'অসুস্থতার ছুটি, সাধারণ ছুটি, জরুরি কাজ' },
+  { key: 'complaint', label: 'অভিযোগ চিঠি', count: allPages.filter(p => p.subcategory === 'complaint').length, icon: '⚠️', href: '/letter/complaint', description: 'পানি, বিদ্যুৎ, শব্দ ও দূষণ' },
+  { key: 'certificate', label: 'সার্টিফিকেট আবেদন', count: allPages.filter(p => p.subcategory === 'certificate').length, icon: '📜', href: '/application/certificate', description: 'বোনাফাইড, চরিত্র, আয় ও বসবাস' },
+  { key: 'bank', label: 'ব্যাংক চিঠি', count: allPages.filter(p => p.subcategory === 'bank').length, icon: '🏦', href: '/application/bank', description: 'KYC, লোন, চেক বই ও অ্যাকাউন্ট' },
+  { key: 'government', label: 'সরকারি আবেদন', count: allPages.filter(p => p.subcategory === 'government').length, icon: '🏛️', href: '/application/government', description: 'আধার, প্যান, ভোটার কার্ড ও রেশন' },
+  { key: 'school', label: 'স্কুল আবেদন', count: allPages.filter(p => p.subcategory === 'school').length, icon: '🎓', href: '/application/school', description: 'স্কলারশিপ, ফি মওকুফ ও ট্রান্সফার' },
+  { key: 'employment', label: 'চাকরির চিঠি', count: allPages.filter(p => p.subcategory === 'employment').length, icon: '💼', href: '/application/employment', description: 'পদত্যাগ, অভিজ্ঞতা ও অফার লেটার' },
 ];
 
 const recentPages = allPages.slice(0, 8);
@@ -24,7 +24,7 @@ const schemaMarkup = JSON.stringify({
   "@type": "WebSite",
   "name": "LetterFormat.in",
   "url": "https://letterformat.in",
-  "description": "Free, ready-to-use letter and application formats for Indian students, employees, and the general public.",
+  "description": "বিনামূল্যে ব্যবহারযোগ্য চিঠি ও আবেদন ফরম্যাট।",
   potentialAction: {
     "@type": "SearchAction",
     "target": "https://letterformat.in/?q={search_term_string}",
@@ -34,8 +34,8 @@ const schemaMarkup = JSON.stringify({
 ---
 
 <Layout
-  title="LetterFormat.in — Free Letter & Application Formats | Copy, Fill, Submit"
-  description="Free, ready-to-use letter and application formats for Indian students, employees, and the general public. Copy-paste formats for leave applications, complaint letters, certificates, bank letters, and more."
+  title="LetterFormat.in — বিনামূল্যে চিঠি ও আবেদন ফরম্যাট"
+  description="বিনামূল্যে ব্যবহারযোগ্য চিঠি ও আবেদন ফরম্যাট। ছাত্র, চাকরিজীবী ও সাধারণ মানুষের জন্য কপি-পেস্ট ফরম্যাট।"
   schemaMarkup={schemaMarkup}
 >
   <Header />
@@ -47,17 +47,17 @@ const schemaMarkup = JSON.stringify({
       <div class="container hero-content">
         <div class="hero-badge">
           <span class="badge-dot"></span>
-          Free formats for Indian users
+          ভারতীয় ব্যবহারকারীদের জন্য বিনামূল্যে ফরম্যাট
         </div>
-        <h1>Free Letter &amp; Application Formats</h1>
-        <p class="hero-subtitle">Copy, fill in your details, and submit. No sign-up, no fees — just clean, professional formats ready to use.</p>
+        <h1>বিনামূল্যে চিঠি ও আবেদন ফরম্যাট</h1>
+        <p class="hero-subtitle">আপনার তথ্য পূরণ করুন এবং জমা দিন। কোনো সাইন-আপ নেই, কোনো ফি নেই — শুধু ব্যবহারযোগ্য পেশাদার ফরম্যাট।</p>
         
         <div class="hero-search">
           <div class="search-wrapper">
             <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
             </svg>
-            <input type="search" id="format-search" placeholder="Search formats... (e.g., fever leave, complaint letter, bonafide)" autocomplete="off" />
+            <input type="search" id="format-search" placeholder="ফরম্যাট খুঁজুন... (যেমন: জ্বরের ছুটি, অভিযোগ চিঠি)" autocomplete="off" />
           </div>
           <div id="search-results" class="search-results"></div>
         </div>
@@ -65,17 +65,17 @@ const schemaMarkup = JSON.stringify({
         <div class="hero-stats">
           <div class="stat">
             <span class="stat-number">{allPages.length}+</span>
-            <span class="stat-label">Formats</span>
+            <span class="stat-label">ফরম্যাট</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat">
-            <span class="stat-number">7</span>
-            <span class="stat-label">Categories</span>
+            <span class="stat-number">৭</span>
+            <span class="stat-label">বিভাগ</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat">
-            <span class="stat-number">Free</span>
-            <span class="stat-label">To Use</span>
+            <span class="stat-number">বিনামূল্যে</span>
+            <span class="stat-label">ব্যবহার</span>
           </div>
         </div>
       </div>
@@ -91,8 +91,8 @@ const schemaMarkup = JSON.stringify({
     <section class="section categories-section">
       <div class="container">
         <div class="section-header">
-          <h2>Browse by Category</h2>
-          <p>Find the perfect format for your needs</p>
+          <h2>বিভাগ অনুযায়ী দেখুন</h2>
+          <p>আপনার প্রয়োজনের জন্য সঠিক ফরম্যাট খুঁজুন</p>
         </div>
         
         <div class="category-grid stagger">
@@ -121,8 +121,8 @@ const schemaMarkup = JSON.stringify({
     <section class="section formats-section">
       <div class="container">
         <div class="section-header">
-          <h2>Popular Formats</h2>
-          <p>Most searched formats this month</p>
+          <h2>জনপ্রিয় ফরম্যাট</h2>
+          <p>এই মাসে সবচেয়ে বেশি খোঁজা হওয়া ফরম্যাট</p>
         </div>
         
         <div class="format-grid stagger">
@@ -146,42 +146,42 @@ const schemaMarkup = JSON.stringify({
     <section class="section how-section section-alt">
       <div class="container">
         <div class="section-header centered">
-          <h2>How It Works</h2>
-          <p>Get your letter in 3 simple steps</p>
+          <h2>কিভাবে কাজ করে</h2>
+          <p>৩ সহজ ধাপে আপনার চিঠি পান</p>
         </div>
         
         <div class="steps-grid">
           <div class="step-card">
-            <div class="step-number">01</div>
+            <div class="step-number">০১</div>
             <div class="step-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
               </svg>
             </div>
-            <h3>Search</h3>
-            <p>Find the format you need using the search bar or browse by category.</p>
+            <h3>খুঁজুন</h3>
+            <p>সার্চ বার বা বিভাগ থেকে প্রয়োজনীয় ফরম্যাট খুঁজুন।</p>
           </div>
           
           <div class="step-card">
-            <div class="step-number">02</div>
+            <div class="step-number">০২</div>
             <div class="step-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
               </svg>
             </div>
-            <h3>Copy</h3>
-            <p>Click the copy button to copy the format to your clipboard instantly.</p>
+            <h3>কপি করুন</h3>
+            <p>কপি বাটনে ক্লিক করে ফরম্যাট ক্লিপবোর্ডে কপি করুন।</p>
           </div>
           
           <div class="step-card">
-            <div class="step-number">03</div>
+            <div class="step-number">০৩</div>
             <div class="step-icon">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
               </svg>
             </div>
-            <h3>Fill &amp; Submit</h3>
-            <p>Replace the bracketed details with your information and submit.</p>
+            <h3>পূরণ করুন ও জমা দিন</h3>
+            <p>ব্র্যাকেটের তথ্যগুলো আপনার তথ্য দিয়ে পূরণ করুন এবং জমা দিন।</p>
           </div>
         </div>
       </div>
@@ -192,11 +192,11 @@ const schemaMarkup = JSON.stringify({
       <div class="container">
         <div class="cta-card">
           <div class="cta-content">
-            <h2>Need a Custom Format?</h2>
-            <p>Don't see what you're looking for? Let us know and we'll add it.</p>
+            <h2>কাস্টম ফরম্যাট দরকার?</h2>
+            <p>যা খুঁজছেন তা নেই? আমাদের জানান, আমরা যোগ করব।</p>
           </div>
           <a href="mailto:hello@letterformat.in" class="btn btn-primary">
-            Request Format
+            ফরম্যাট চান
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
@@ -212,36 +212,36 @@ const schemaMarkup = JSON.stringify({
 <script is:inline>
   // Search functionality
   const pages = [
-    {"keyword":"application for leave due to fever","slug":"application-leave-due-to-fever","category":"application","subcategory":"leave"},
-    {"keyword":"application for sick leave","slug":"application-sick-leave","category":"application","subcategory":"leave"},
-    {"keyword":"application for casual leave","slug":"application-casual-leave","category":"application","subcategory":"leave"},
-    {"keyword":"application for sister wedding leave","slug":"application-sister-wedding-leave","category":"application","subcategory":"leave"},
-    {"keyword":"application for family function leave","slug":"application-family-function-leave","category":"application","subcategory":"leave"},
-    {"keyword":"application for urgent piece of work","slug":"application-urgent-piece-of-work","category":"application","subcategory":"leave"},
-    {"keyword":"application for going home leave","slug":"application-going-home-leave","category":"application","subcategory":"leave"},
-    {"keyword":"application for medical appointment leave","slug":"application-medical-appointment-leave","category":"application","subcategory":"leave"},
-    {"keyword":"application for dental appointment leave","slug":"application-dental-appointment-leave","category":"application","subcategory":"leave"},
-    {"keyword":"complaint letter about water shortage","slug":"complaint-letter-water-shortage","category":"letter","subcategory":"complaint"},
-    {"keyword":"complaint letter about road damage","slug":"complaint-letter-road-damage","category":"letter","subcategory":"complaint"},
-    {"keyword":"complaint letter about noise pollution","slug":"complaint-letter-noise-pollution","category":"letter","subcategory":"complaint"},
-    {"keyword":"complaint letter about garbage collection","slug":"complaint-letter-garbage-collection","category":"letter","subcategory":"complaint"},
-    {"keyword":"complaint letter about electricity board power cut","slug":"complaint-letter-electricity-board-power-cut","category":"letter","subcategory":"complaint"},
-    {"keyword":"application for bonafide certificate","slug":"application-bonafide-certificate","category":"application","subcategory":"certificate"},
-    {"keyword":"application for character certificate","slug":"application-character-certificate","category":"application","subcategory":"certificate"},
-    {"keyword":"application for income certificate","slug":"application-income-certificate","category":"application","subcategory":"certificate"},
-    {"keyword":"application for domicile certificate","slug":"application-domicile-certificate","category":"application","subcategory":"certificate"},
-    {"keyword":"application for bank KYC update","slug":"application-bank-kyc-update","category":"application","subcategory":"bank"},
-    {"keyword":"application for bank loan","slug":"application-bank-loan","category":"application","subcategory":"bank"},
-    {"keyword":"application for cheque book","slug":"application-bank-cheque-book","category":"application","subcategory":"bank"},
-    {"keyword":"letter for bank account closure","slug":"letter-bank-account-closure","category":"letter","subcategory":"bank"},
-    {"keyword":"application for Aadhaar update","slug":"application-aadhaar-update","category":"application","subcategory":"government"},
-    {"keyword":"application for PAN card","slug":"application-pan-card","category":"application","subcategory":"government"},
-    {"keyword":"application for ration card","slug":"application-ration-card","category":"application","subcategory":"government"},
-    {"keyword":"application for voter ID correction","slug":"application-voter-id-correction","category":"application","subcategory":"government"},
-    {"keyword":"application for school scholarship","slug":"application-school-scholarship","category":"application","subcategory":"school"},
-    {"keyword":"application for school fee concession","slug":"application-school-fee-concession","category":"application","subcategory":"school"},
-    {"keyword":"application for employment experience letter","slug":"application-employment-experience-letter","category":"application","subcategory":"employment"},
-    {"keyword":"application for resignation","slug":"application-employment-resignation","category":"application","subcategory":"employment"}
+    {"keyword":"অসুস্থতার ছুটির আবেদন","slug":"application-leave-due-to-fever","category":"application","subcategory":"leave"},
+    {"keyword":"অসুস্থতার ছুটির আবেদন","slug":"application-sick-leave","category":"application","subcategory":"leave"},
+    {"keyword":"সাধারণ ছুটির আবেদন","slug":"application-casual-leave","category":"application","subcategory":"leave"},
+    {"keyword":"বোনের বিয়ের ছুটির আবেদন","slug":"application-sister-wedding-leave","category":"application","subcategory":"leave"},
+    {"keyword":"পারিবারিক অনুষ্ঠানে ছুটি","slug":"application-family-function-leave","category":"application","subcategory":"leave"},
+    {"keyword":"জরুরি কাজের জন্য ছুটি","slug":"application-urgent-piece-of-work","category":"application","subcategory":"leave"},
+    {"keyword":"বাড়ি যাওয়ার ছুটি","slug":"application-going-home-leave","category":"application","subcategory":"leave"},
+    {"keyword":"ডাক্তারের অ্যাপয়েন্টমেন্টে ছুটি","slug":"application-medical-appointment-leave","category":"application","subcategory":"leave"},
+    {"keyword":"ডেন্টিস্টের অ্যাপয়েন্টমেন্টে ছুটি","slug":"application-dental-appointment-leave","category":"application","subcategory":"leave"},
+    {"keyword":"পানি সংকটের অভিযোগ","slug":"complaint-letter-water-shortage","category":"letter","subcategory":"complaint"},
+    {"keyword":"রাস্তার ক্ষতির অভিযোগ","slug":"complaint-letter-road-damage","category":"letter","subcategory":"complaint"},
+    {"keyword":"শব্দ দূষণের অভিযোগ","slug":"complaint-letter-noise-pollution","category":"letter","subcategory":"complaint"},
+    {"keyword":"আবর্জনা সংগ্রহের অভিযোগ","slug":"complaint-letter-garbage-collection","category":"letter","subcategory":"complaint"},
+    {"keyword":"বিদ্যুৎ বিভাগের লোডশেডিং অভিযোগ","slug":"complaint-letter-electricity-board-power-cut","category":"letter","subcategory":"complaint"},
+    {"keyword":"বোনাফাইড সার্টিফিকেটের আবেদন","slug":"application-bonafide-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"চরিত্র সার্টিফিকেটের আবেদন","slug":"application-character-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"আয় সার্টিফিকেটের আবেদন","slug":"application-income-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"বসবাস সার্টিফিকেটের আবেদন","slug":"application-domicile-certificate","category":"application","subcategory":"certificate"},
+    {"keyword":"ব্যাংক KYC আপডেটের আবেদন","slug":"application-bank-kyc-update","category":"application","subcategory":"bank"},
+    {"keyword":"ব্যাংক লোনের আবেদন","slug":"application-bank-loan","category":"application","subcategory":"bank"},
+    {"keyword":"চেক বইয়ের আবেদন","slug":"application-bank-cheque-book","category":"application","subcategory":"bank"},
+    {"keyword":"ব্যাংক অ্যাকাউন্ট বন্ধের চিঠি","slug":"letter-bank-account-closure","category":"letter","subcategory":"bank"},
+    {"keyword":"আধার আপডেটের আবেদন","slug":"application-aadhaar-update","category":"application","subcategory":"government"},
+    {"keyword":"প্যান কার্ডের আবেদন","slug":"application-pan-card","category":"application","subcategory":"government"},
+    {"keyword":"রেশন কার্ডের আবেদন","slug":"application-ration-card","category":"application","subcategory":"government"},
+    {"keyword":"ভোটার কার্ড সংশোধনের আবেদন","slug":"application-voter-id-correction","category":"application","subcategory":"government"},
+    {"keyword":"স্কুল স্কলারশিপের আবেদন","slug":"application-school-scholarship","category":"application","subcategory":"school"},
+    {"keyword":"স্কুল ফি মওকুফের আবেদন","slug":"application-school-fee-concession","category":"application","subcategory":"school"},
+    {"keyword":"চাকরির অভিজ্ঞতা পত্রের আবেদন","slug":"application-employment-experience-letter","category":"application","subcategory":"employment"},
+    {"keyword":"পদত্যাগ পত্রের আবেদন","slug":"application-employment-resignation","category":"application","subcategory":"employment"}
   ];
 
   const input = document.getElementById('format-search');
@@ -264,7 +264,7 @@ const schemaMarkup = JSON.stringify({
       });
 
       if (filtered.length === 0) {
-        resultsDiv.innerHTML = '<p class="no-results">No formats found. Try different keywords.</p>';
+        resultsDiv.innerHTML = '<p class="no-results">কোনো ফরম্যাট পাওয়া যায়নি। অন্য কীওয়ার্ড চেষ্টা করুন।</p>';
         resultsDiv.style.display = 'block';
         return;
       }
@@ -396,7 +396,7 @@ const schemaMarkup = JSON.stringify({
     outline: none;
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.15);
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
   }
   
   .search-results {

@@ -19,8 +19,8 @@ export function getStaticPaths() {
 }
 
 const { category, subcategory, pages: subPages } = Astro.props;
-const title = `${getSubcategoryLabel(subcategory)} — Free Formats & Templates [2026]`;
-const description = `Browse ${subPages.length} free ${getSubcategoryLabel(subcategory).toLowerCase()} formats. Copy-paste ready, no sign-up needed.`;
+const title = `${getSubcategoryLabel(subcategory)} — বিনামূল্যে ফরম্যাট ও টেমপ্লেট [2026]`;
+const description = `${subPages.length}টি বিনামূল্যে ${getSubcategoryLabel(subcategory).toLowerCase()} ফরম্যাট দেখুন। কপি-পেস্ট করার জন্য প্রস্তুত।`;
 ---
 
 <Layout title={title} description={description}>
@@ -31,7 +31,7 @@ const description = `Browse ${subPages.length} free ${getSubcategoryLabel(subcat
     <div class="category-header">
       <div class="container">
         <Breadcrumb items={[
-          { label: 'Home', href: '/' },
+          { label: 'হোম', href: '/' },
           { label: getCategoryLabel(category), href: `/${category}/${subcategory}` },
           { label: getSubcategoryLabel(subcategory) }
         ]} />
@@ -40,7 +40,7 @@ const description = `Browse ${subPages.length} free ${getSubcategoryLabel(subcat
           <div class="category-icon">{getCategoryIcon(subcategory)}</div>
           <div class="category-header-text">
             <h1>{getSubcategoryLabel(subcategory)}</h1>
-            <p>Browse {subPages.length} ready-to-use formats. Click any format to view, copy, and customize for your needs.</p>
+            <p>{subPages.length}টি ব্যবহারযোগ্য ফরম্যাট দেখুন। যেকোনো ফরম্যাটে ক্লিক করে দেখুন, কপি করুন এবং আপনার জন্য কাস্টমাইজ করুন।</p>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@ const description = `Browse ${subPages.length} free ${getSubcategoryLabel(subcat
             <div class="format-card-icon">{getCategoryIcon(page.subcategory)}</div>
             <div class="format-card-info">
               <span class="format-card-title">{page.keyword}</span>
-              <span class="format-card-meta">For {page.userSegment === 'student' ? 'Students' : page.userSegment === 'employee' ? 'Employees' : 'General Public'}</span>
+              <span class="format-card-meta">আবেদনকারী: {page.userSegment === 'student' ? 'ছাত্র' : page.userSegment === 'employee' ? 'চাকরিজীবী' : 'সাধারণ'}</span>
             </div>
             <svg class="format-card-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>

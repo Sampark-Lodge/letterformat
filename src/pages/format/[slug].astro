@@ -16,8 +16,8 @@ export function getStaticPaths() {
 
 const { page } = Astro.props;
 const keywordDisplay = capitalizeTitle(page.keyword);
-const title = `${keywordDisplay} — Format, Sample & Tips [2026]`;
-const description = `Ready-to-use ${page.keyword}. Copy-paste format with filled sample, step-by-step guide, tips, and FAQs. Free download. Updated 2026.`;
+const title = `${keywordDisplay} — ফরম্যাট, নমুনা ও টিপস [2026]`;
+const description = `ব্যবহারযোগ্য ${page.keyword}। কপি-পেস্ট ফরম্যাট, পূরণ করা নমুনা, ধাপে ধাপে নির্দেশিকা, টিপস এবং FAQ সহ। বিনামূল্যে। আপডেট 2026।`;
 
 const formatContent = generateFormatHtml(
   page.recipientTitle,
@@ -77,7 +77,7 @@ const schemaMarkup = JSON.stringify({
     <div class="page-header">
       <div class="container">
         <Breadcrumb items={[
-          { label: 'Home', href: '/' },
+          { label: 'হোম', href: '/' },
           { label: getCategoryLabel(page.category), href: `/${page.category}/${page.subcategory}` },
           { label: getSubcategoryLabel(page.subcategory), href: `/${page.category}/${page.subcategory}` },
           { label: keywordDisplay }
@@ -86,8 +86,8 @@ const schemaMarkup = JSON.stringify({
         <div class="page-header-content">
           <div class="page-icon">{getCategoryIcon(page.subcategory)}</div>
           <div class="page-title-wrap">
-            <h1>{keywordDisplay} — Format, Sample &amp; How to Write [2026]</h1>
-            <p class="page-subtitle">Need to write {keywordDisplay.toLowerCase()}? Here's a ready-to-use format you can copy, fill in your details, and submit today.</p>
+            <h1>{keywordDisplay} — ফরম্যাট, নমুনা ও কিভাবে লিখবেন [2026]</h1>
+            <p class="page-subtitle">কি {keywordDisplay.toLowerCase()} লিখতে হবে? এখানে একটি ব্যবহারযোগ্য ফরম্যাট আছে যা আপনি কপি করে আপনার তথ্য পূরণ করে জমা দিতে পারেন।</p>
           </div>
         </div>
       </div>
@@ -99,8 +99,8 @@ const schemaMarkup = JSON.stringify({
         <!-- Format Section -->
         <section class="content-section">
           <div class="section-header">
-            <h2>Quick Format</h2>
-            <p>Copy the format below, replace the bracketed details with your information, and you're done</p>
+            <h2>দ্রুত ফরম্যাট</h2>
+            <p>নিচের ফরম্যাট কপি করুন, ব্র্যাকেটের তথ্যগুলো আপনার তথ্য দিয়ে পূরণ করুন এবং শেষ</p>
           </div>
           <FormatBlock content={formatContent} id="quick-format" />
         </section>
@@ -108,8 +108,8 @@ const schemaMarkup = JSON.stringify({
         <!-- Sample Section -->
         <section class="content-section">
           <div class="section-header">
-            <h2>Filled Sample</h2>
-            <p>Here's how a completed {keywordDisplay.toLowerCase()} looks with real details</p>
+            <h2>পূরণ করা নমুনা</h2>
+            <p>এখানে দেখুন সম্পূর্ণ {keywordDisplay.toLowerCase()} কেমন দেখায়</p>
           </div>
           <FormatBlock content={sampleContent} id="sample-format" isSample={true} />
         </section>
@@ -117,30 +117,30 @@ const schemaMarkup = JSON.stringify({
         <!-- How to Write Section -->
         <section class="content-section">
           <div class="section-header">
-            <h2>How to Write</h2>
-            <p>Follow these steps to customize the format for your situation</p>
+            <h2>কিভাবে লিখবেন</h2>
+            <p>আপনার প্রয়োজন অনুযায়ী ফরম্যাট কাস্টমাইজ করতে এই ধাপগুলো অনুসরণ করুন</p>
           </div>
           <div class="steps-card">
             <ol class="steps-list">
               <li>
-                <span class="step-label">Start with the recipient's details</span>
-                Address the {page.contentType} to {page.recipientTitle}. Include the full name of the {page.userSegment === 'student' ? 'school' : page.userSegment === 'employee' ? 'company' : 'office or department'}.
+                <span class="step-label">গ্রাহকের তথ্য দিয়ে শুরু করুন</span>
+                {page.contentType} {page.recipientTitle}-এর কাছে পাঠান। {page.userSegment === 'student' ? 'স্কুলের' : page.userSegment === 'employee' ? 'কোম্পানির' : 'অফিস বা বিভাগের'} পুরো নাম অন্তর্ভুক্ত করুন।
               </li>
               <li>
-                <span class="step-label">Write a clear subject line</span>
-                Keep it short and specific — "{page.subjectLine}". Avoid vague subjects like "Leave Request" or "Complaint."
+                <span class="step-label">স্পষ্ট বিষয়লাইন লিখুন</span>
+                সংক্ষিপ্ত রাখুন — "{page.subjectLine}"। "ছুটির আবেদন" বা "অভিযোগ" এর মতো অস্পষ্ট বিষয় এড়িয়ে চলুন।
               </li>
               <li>
-                <span class="step-label">State your reason clearly</span>
-                {page.subcategory === 'leave' ? 'Mention the type of leave, when it starts, and how long you need. Be specific about the reason — this adds credibility.' : page.subcategory === 'complaint' ? 'Describe the issue with specific dates, locations, and impact. Stick to facts rather than emotional language.' : page.subcategory === 'certificate' ? 'Clearly state which certificate you need and why. Mention the deadline if there is one.' : page.subcategory === 'bank' ? 'Specify the exact service you need from the bank. Include your account number for reference.' : 'Clearly state what you\'re applying for and why. Include all relevant reference numbers.'}
+                <span class="step-label">আপনার কারণ স্পষ্টভাবে বলুন</span>
+                {page.subcategory === 'leave' ? 'ছুটির ধরন, কখন শুরু এবং কতদিন প্রয়োজন তা উল্লেখ করুন। কারণ নির্দিষ্ট করলে বিশ্বাসযোগ্যতা বাড়ে।' : page.subcategory === 'complaint' ? 'নির্দিষ্ট তারিখ, স্থান এবং প্রভাব সহ সমস্যা বর্ণনা করুন। আবেগপ্রবণ ভাষার বদলে তথ্যের উপর জোর দিন।' : page.subcategory === 'certificate' ? 'কোন সার্টিফিকেট প্রয়োজন এবং কেন তা স্পষ্টভাবে বলুন। কোনো সময়সীমা থাকলে উল্লেখ করুন।' : page.subcategory === 'bank' ? 'ব্যাংক থেকে ঠিক কোন সার্ভিস প্রয়োজন তা নির্দিষ্ট করুন। রেফারেন্সের জন্য আপনার অ্যাকাউন্ট নম্বর অন্তর্ভুক্ত করুন।' : 'আপনি কী আবেদন করছেন এবং কেন তা স্পষ্টভাবে বলুন। সমস্ত প্রাসঙ্গিক রেফারেন্স নম্বর অন্তর্ভুক্ত করুন।'}
               </li>
               <li>
-                <span class="step-label">Mention relevant dates</span>
-                Clearly state the dates involved — whether it's leave duration, complaint timeline, or certificate deadline.
+                <span class="step-label">প্রাসঙ্গিক তারিখগুলো উল্লেখ করুন</span>
+                জড়িত তারিখগুলো স্পষ্টভাবে বলুন — ছুটির সময়কাল, অভিযোগের সময়সীমা বা সার্টিফিকেটের শেষ তারিখ।
               </li>
               <li>
-                <span class="step-label">Close with a polite request</span>
-                End by requesting action and expressing gratitude. This shows professionalism and courtesy.
+                <span class="step-label">ভদ্র অনুরোধ দিয়ে শেষ করুন</span>
+                অনুরোধ জানিয়ে এবং কৃতজ্ঞতা প্রকাশ করে শেষ করুন। এটি পেশাদারিত্ব এবং শ্রেণিমর্যদা দেখায়।
               </li>
             </ol>
           </div>
@@ -149,8 +149,8 @@ const schemaMarkup = JSON.stringify({
         <!-- Tips Section -->
         <section class="content-section">
           <div class="section-header">
-            <h2>Pro Tips</h2>
-            <p>Best practices for writing this {page.contentType}</p>
+            <h2>পেশাদার টিপস</h2>
+            <p>এই {page.contentType} লেখার সেরা অনুশীলন</p>
           </div>
           <div class="tips-grid">
             {page.tips.map(tip => (
@@ -169,8 +169,8 @@ const schemaMarkup = JSON.stringify({
         <!-- Mistakes Section -->
         <section class="content-section">
           <div class="section-header">
-            <h2>Common Mistakes to Avoid</h2>
-            <p>Don't make these errors in your {page.contentType}</p>
+            <h2>সাধারণ ভুল এড়িয়ে চলুন</h2>
+            <p>আপনার {page.contentType}-এ এই ত্রুটিগুলো করবেন না</p>
           </div>
           <div class="mistakes-grid">
             {page.mistakes.map(mistake => (
@@ -189,8 +189,8 @@ const schemaMarkup = JSON.stringify({
         <!-- FAQ Section -->
         <section class="content-section">
           <div class="section-header">
-            <h2>Frequently Asked Questions</h2>
-            <p>Got questions? We have answers</p>
+            <h2>সচরাচর জিজ্ঞাসা</h2>
+            <p>প্রশ্ন আছে? আমাদের উত্তর আছে</p>
           </div>
           <div class="faq-grid">
             {page.faqs.map(faq => (
@@ -205,8 +205,8 @@ const schemaMarkup = JSON.stringify({
         <!-- Related Section -->
         <section class="content-section related-section">
           <div class="section-header">
-            <h2>Related Formats</h2>
-            <p>You might also need these</p>
+            <h2>সম্পর্কিত ফরম্যাট</h2>
+            <p>আপনার এগুলোও প্রয়োজন হতে পারে</p>
           </div>
           <div class="related-grid">
             {page.relatedLinks.map(link => (

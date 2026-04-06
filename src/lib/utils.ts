@@ -41,32 +41,32 @@ export function capitalizeTitle(str: string): string {
 
 export function getCategoryLabel(category: string): string {
   const labels: Record<string, string> = {
-    application: 'Applications',
-    letter: 'Letters',
-    format: 'Formats',
+    application: 'আবেদন',
+    letter: 'চিঠি',
+    format: 'ফরম্যাট',
   };
   return labels[category] || category;
 }
 
 export function getSubcategoryLabel(subcategory: string): string {
   const labels: Record<string, string> = {
-    leave: 'Leave Applications',
-    complaint: 'Complaint Letters',
-    certificate: 'Certificate Requests',
-    bank: 'Bank Letters',
-    government: 'Government Applications',
-    school: 'School Applications',
-    employment: 'Employment Letters',
+    leave: 'ছুটি আবেদন',
+    complaint: 'অভিযোগ চিঠি',
+    certificate: 'সার্টিফিকেট আবেদন',
+    bank: 'ব্যাংক চিঠি',
+    government: 'সরকারি আবেদন',
+    school: 'স্কুল আবেদন',
+    employment: 'চাকরির চিঠি',
   };
   return labels[subcategory] || subcategory;
 }
 
 export function getUserSegmentLabel(segment: string): string {
   const labels: Record<string, string> = {
-    student: 'For Students',
-    employee: 'For Employees',
-    general: 'For General Public',
-    government: 'For Government',
+    student: 'ছাত্রদের জন্য',
+    employee: 'চাকরিজীবীদের জন্য',
+    general: 'সাধারণ মানুষের জন্য',
+    government: 'সরকারি কর্মচারীদের জন্য',
   };
   return labels[segment] || segment;
 }
