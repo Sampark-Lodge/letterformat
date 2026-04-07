@@ -25,12 +25,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Copy HTML files to dist
+      - name: Copy all files to dist
         run: |
-          mkdir -p dist
+          mkdir -p dist/formats dist/public
           cp *.html dist/
-          cp -r formats dist/
-          cp -r *.css dist/ 2>/dev/null || true
+          cp *.xml dist/ 2>/dev/null || true
+          cp *.txt dist/ 2>/dev/null || true
+          cp -r formats/* dist/formats/
+          cp -r public/* dist/ 2>/dev/null || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

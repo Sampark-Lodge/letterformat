@@ -149,8 +149,18 @@
     .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     @media (max-width: 900px) { .page-layout { grid-template-columns: 1fr; } .sidebar { position: static; } .letter-document { padding: 32px 24px; } .breadcrumb { display: none; } }
     @media (max-width: 480px) { .letter-document { padding: 24px 16px; font-size: 0.92rem; } .meta-actions { flex-direction: column; } .action-btn { justify-content: center; } }
+    
+    .ad-container{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-md);padding:12px;margin:16px 0;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center}
+    .ad-container ins{display:block!important}
+    .ad-top-banner{min-height:90px}
+    .ad-bottom-banner{min-height:90px;margin-bottom:0}
+    .ad-in-article{margin:20px 0}
+    .ad-sidebar{min-height:250px}
+    @media(max-width:768px){.ad-top-banner,.ad-bottom-banner{min-height:50px}.ad-sidebar{min-height:250px}}
+    @media print{.ad-container{display:none!important}}
     @media print { .navbar, .format-meta, .tips-box, .sidebar, .letter-toolbar, .toast, .faq-box { display: none !important; } .letter-wrapper { border: none; box-shadow: none; } .letter-document { padding: 0; } body { background: white; } }
   </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
 <body>
 <nav class="navbar">
@@ -174,6 +184,17 @@
     </div>
   </div>
 </nav>
+
+  <!-- Top Banner Ad -->
+  <div class="ad-container ad-top-banner">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 <div class="container">
   <div class="page-layout">
     <div class="main-content">
@@ -223,6 +244,17 @@
             <div class="sign-info"><span class="placeholder" contenteditable="true">[ভোটার আইডি নম্বর] | [মোবাইল নম্বর]</span></div>
           </div>
         </div>
+      
+      <!-- In-Article Ad -->
+      <div class="ad-container ad-in-article">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="1122334455"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      </div>
       </div>
       <div class="tips-box">
         <div class="tips-header"><span class="tips-icon">💡</span><h3>টিপস</h3></div>
@@ -261,10 +293,31 @@
             <div class="related-text"><div class="r-name">অসুস্থতার ছুটি</div><div class="r-views">৯,৮৭৬ বার দেখা</div></div>
           </a>
         </div>
+      
+      <div class="sidebar-card ad-container ad-sidebar">
+        <h3>📢 বিজ্ঞাপন</h3>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="0987654321"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       </div>
     </div>
   </div>
 </div>
+
+  <!-- Bottom Banner Ad -->
+  <div class="ad-container ad-bottom-banner">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="5566778899"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 <div class="toast" id="toast">✅ চিঠি কপি হয়েছে!</div>
 <div id="pdfModal" class="pdf-modal">
   <div class="pdf-modal-content">
