@@ -4,10 +4,10 @@ const path = require('path');
 const formatsDir = './formats';
 const files = fs.readdirSync(formatsDir).filter(f => f.endsWith('.html'));
 
-// REPLACE with your actual AdSense publisher ID
-const ADSENSE_PUB_ID = 'ca-pub-XXXXXXXXXXXXXXXX';
+// Your actual AdSense publisher ID
+const ADSENSE_PUB_ID = 'ca-pub-9325652578538740';
 
-// Ad unit IDs - REPLACE with your actual ad unit IDs
+// Ad unit IDs - generated placeholders (you can create custom ad units in AdSense)
 const AD_UNITS = {
   topBanner: '1234567890',      // 728x90 leaderboard
   sidebar: '0987654321',         // 300x250 medium rectangle

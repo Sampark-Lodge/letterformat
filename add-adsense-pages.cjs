@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ADSENSE_PUB_ID = 'ca-pub-XXXXXXXXXXXXXXXX';
+const ADSENSE_PUB_ID = 'ca-pub-9325652578538740';
 
 // Add AdSense to homepage
 const indexFile = './index.html';
