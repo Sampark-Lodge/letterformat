@@ -41,49 +41,86 @@ const schemaMarkup = JSON.stringify({
   <Header />
 
   <main>
-    <!-- Hero Section -->
+    <!-- Hero Section - White background with red accents per template -->
     <section class="hero">
-      <div class="hero-bg"></div>
+      <div class="hero-bg-pattern"></div>
       <div class="container hero-content">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
+        <div class="hero-tag">
+          <span class="tag-dot"></span>
           ভারতীয় ব্যবহারকারীদের জন্য বিনামূল্যে ফরম্যাট
         </div>
-        <h1>বিনামূল্যে চিঠি ও আবেদন ফরম্যাট</h1>
-        <p class="hero-subtitle">আপনার তথ্য পূরণ করুন এবং জমা দিন। কোনো সাইন-আপ নেই, কোনো ফি নেই — শুধু ব্যবহারযোগ্য পেশাদার ফরম্যাট।</p>
+        <h1>বিনামূল্যে চিঠি ও <span class="highlight">আবেদন ফরম্যাট</span></h1>
+        <p class="hero-desc">আপনার তথ্য পূরণ করুন এবং জমা দিন। কোনো সাইন-আপ নেই, কোনো ফি নেই — শুধু ব্যবহারযোগ্য পেশাদার ফরম্যাট।</p>
         
-        <div class="hero-search">
-          <div class="search-wrapper">
-            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-            </svg>
-            <input type="search" id="format-search" placeholder="ফরম্যাট খুঁজুন... (যেমন: জ্বরের ছুটি, অভিযোগ চিঠি)" autocomplete="off" />
-          </div>
-          <div id="search-results" class="search-results"></div>
+        <!-- Search Bar per template -->
+        <div class="search-bar">
+          <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+          </svg>
+          <input type="search" id="format-search" placeholder="ফরম্যাট খুঁজুন... (যেমন: জ্বরের ছুটি, অভিযোগ চিঠি)" />
+          <button class="search-btn">খুঁজুন</button>
+        </div>
+        <div id="search-results" class="search-results"></div>
+        
+        <!-- Quick chips -->
+        <div class="hero-chips">
+          <span class="chip">জ্বরের ছুটি</span>
+          <span class="chip">সার্টিফিকেট</span>
+          <span class="chip">অভিযোগ</span>
+          <span class="chip">পদত্যাগ</span>
         </div>
         
+        <!-- Stats -->
         <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-number">{allPages.length}+</span>
+          <div class="stat-item">
+            <span class="stat-num"><span>{allPages.length}+</span></span>
             <span class="stat-label">ফরম্যাট</span>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-number">৭</span>
+          <div class="stat-item">
+            <span class="stat-num"><span>৭</span></span>
             <span class="stat-label">বিভাগ</span>
           </div>
-          <div class="stat-divider"></div>
-          <div class="stat">
-            <span class="stat-number">বিনামূল্যে</span>
-            <span class="stat-label">ব্যবহার</span>
+          <div class="stat-item">
+            <span class="stat-num"><span>১০০%</span></span>
+            <span class="stat-label">বিনামূল্যে</span>
           </div>
         </div>
       </div>
       
-      <div class="hero-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
+      <!-- Hero visual with document card - per template -->
+      <div class="hero-visual">
+        <div class="hero-doc-card">
+          <div class="doc-header">
+            <div class="doc-seal">📄</div>
+            <div class="doc-meta">
+              <div class="doc-title-sm">ছুটির আবেদন পত্র</div>
+              <div class="doc-sub-sm">Application Letter</div>
+            </div>
+            <span class="doc-badge">✓ সঠিক ফরম্যাট</span>
+          </div>
+          <div class="doc-lines">
+            <div class="doc-line w-full"></div>
+            <div class="doc-line w-4-5"></div>
+            <div class="doc-line w-3-5"></div>
+            <div class="doc-line w-2-5"></div>
+          </div>
+          <div class="doc-sign">
+            <div class="sign-block">
+              <div class="sign-line"></div>
+              <div class="sign-label">স্বাক্ষর</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Floating badges per template -->
+        <div class="floating-badge top-left">
+          <span class="badge-icon red">✓</span>
+          <span>কপি-পেস্ট</span>
+        </div>
+        <div class="floating-badge bot-right">
+          <span class="badge-icon green">📋</span>
+          <span>বাংলায়</span>
+        </div>
       </div>
     </section>
 
