@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>কাজ থেকে ছুটি বর্ধিতকরণ আবেদন – LetterFormat.in</title>
+  <title>ছুটি বৃদ্ধি আবেদন — LetterFormat.in</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -174,7 +174,7 @@
               <span class="tag gray">📅 ছুটি বর্ধিতকরণ</span>
               <span class="tag green">✅ যাচাইকৃত ফরম্যাট</span>
             </div>
-            <h1 class="format-title">কাজ থেকে ছুটি বর্ধিতকরণ আবেদন</h1>
+            <h1 class="format-title">ছুটি বৃদ্ধি আবেদন</h1>
             <p class="format-title-desc">অনুমোদিত ছুটির সময়সীমা বাড়ানোর জন্য আবেদন করার বাংলা ফরম্যাট। অসুস্থতা, পারিবারিক জরুরি অবস্থা বা অনিবার্য কারণে ছুটি বাড়াতে ব্যবহার করুন।</p>
           </div>
         </div>
@@ -213,19 +213,18 @@
           <div class="letter-date">তারিখ: <span class="placeholder">১০ মে, ২০২৬</span></div>
           <div class="letter-to">
             <span class="to-label">বরাবর</span>
-            <div class="to-name"><span class="placeholder">বিভাগীয় প্রধান / এইচআর ম্যানেজার</span></div>
+            <div class="to-name"><span class="placeholder" contenteditable="true">বিভাগীয় প্রধান</span></div>
             <div class="to-address"><span class="placeholder">কোম্পানির নাম</span><br /><span class="placeholder">ঠিকানা, জেলা, পশ্চিমবঙ্গ — পিনকোড</span></div>
           </div>
           <div class="letter-subject">
             <div class="sub-label">বিষয়</div>
-            <div class="sub-text">অনুমোদিত ছুটির সময়সীমা বৃদ্ধির জন্য আবেদন।</div>
+            <div class="sub-text"><span class="placeholder" contenteditable="true">ছুটি বৃদ্ধির আবেদন</span></div>
           </div>
           <div class="letter-salutation">জনাব / মহাশয়,</div>
           <div class="letter-body">
-            <p>সবিনয় নিবেদন এই যে, আমি <span class="placeholder">আপনার নাম</span>, <span class="placeholder">বিভাগ ও পদ</span>-এ কর্মরত। আমি <span class="placeholder">ছুর ধরন, যেমন: বার্ষিক ছুটি / চিকিৎসা ছুটি</span> নিয়েছিলাম <span class="placeholder">শুরুর তারিখ</span> থেকে <span class="placeholder">অনুমোদিত শেষ তারিখ</span> পর্যন্ত।</p>
-            <p>দুর্ভাগ্যবশত <span class="placeholder">বর্ধিতকরণের কারণ, যেমন: অসুস্থতা দীর্ঘস্থায়ী হয়েছে / পারিবারিক জরুরি অবস্থা / সন্তানের অসুস্থতা</span>-এর কারণে আমি নির্ধারিত তারিখে কর্মস্থলে ফিরতে পারছি না।</p>
-            <p>আমার প্রয়োজন অতিরিক্ত <span class="placeholder">কত দিন</span> দিনের ছুটি, অর্থাৎ <span class="placeholder">নতুন ফেরত আসার তারিখ</span> পর্যন্ত। আমি ইতিমধ্যে আমার দায়িত্ব <span class="placeholder">কলিগের নাম</span>-এর কাছে হস্তান্তর করেছি।</p>
-            <p>অতএব, মহোদয়ের নিকবিনীত অনুরোধ, আমার পরিস্থিতি বিবেচনা করে আমার ছুটির সময়সীমা বৃদ্ধি করে বাধিত করবেন।</p>
+            <p>সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [বিভাগ] বিভাগে [পদবী] হিসেবে কর্মরত। আমাকে [তারিখ] থেকে [তারিখ] পর্যন্ত ছুটি মঞ্জুর করা হয়েছিল।</p>
+            <p>দুর্ভাগ্যবশত, [কারণ]-এর কারণে আমি নির্ধারিত সময়ে ফিরতে পারছি না।</p>
+            <p>অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে আরও [সংখ্যা] দিনের ছুটি মঞ্জুর করে বাধিত করবেন।</p>
           </div>
           <div class="letter-closing">বিনীত,</div>
           <div class="letter-sign-section">
@@ -339,5 +338,6 @@ function showPDFPreview(){const letter=document.getElementById('letterDocument')
       </div>
     </div>
   </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

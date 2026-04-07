@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>পরীক্ষার ফর্ম সংশোধন আবেদন – LetterFormat.in</title>
+  <title>পরীক্ষার ফর্ম সংশোধন আবেদন — LetterFormat.in</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -213,19 +213,18 @@
           <div class="letter-date">তারিখ: <span class="placeholder">২২ এপ্রিল, ২০২৬</span></div>
           <div class="letter-to">
             <span class="to-label">বরাবর</span>
-            <div class="to-name"><span class="placeholder">পরীক্ষা নিয়ন্ত্রক / প্রধান শিক্ষক</span></div>
+            <div class="to-name"><span class="placeholder" contenteditable="true">পরীক্ষা নিয়ন্ত্রক</span></div>
             <div class="to-address"><span class="placeholder">বোর্ড / বিশ্ববিদ্যালয় / বিদ্যালয়ের নাম</span><br /><span class="placeholder">ঠিকানা, জেলা, পশ্চিমবঙ্গ — পিনকোড</span></div>
           </div>
           <div class="letter-subject">
             <div class="sub-label">বিষয়</div>
-            <div class="sub-text"><span class="placeholder">পরীক্ষার নাম ও বছর</span> পরীক্ষার ফর্মে ভুল তথ্য সংশোধনের আবেদন।</div>
+            <div class="sub-text"><span class="placeholder" contenteditable="true">পরীক্ষার ফর্ম সংশোধনের আবেদন</span></div>
           </div>
           <div class="letter-salutation">মহাশয় / মহাশয়া,</div>
           <div class="letter-body">
-            <p>সবিনয় নিবেদন এই যে, আমি <span class="placeholder">আপনার সঠিক নাম</span>, <span class="placeholder">পরীক্ষার নাম ও বছর</span> পরীক্ষায় অংশগ্রহণ করেছিলাম। আমার পরীক্ষার্থী নম্বর <span class="placeholder">রোল নম্বর</span> এবং রেজিস্ট্রেশন নম্বর <span class="placeholder">রেজিস্ট্রেশন নম্বর</span>।</p>
-            <p>আমার পরীক্ষার ফর্মে <span class="placeholder">ভুল তথ্যের ধরন, যেমন: নামের বানান / পিতা-মাতার নাম / জন্ম তারিখ / বিষয় নির্বাচন</span> ভুলভাবে নথিভুক্ত হয়েছে। ভুল তথ্য: <span class="placeholder">ভুল তথ্য লিখুন</span> এবং সঠিক তথ্য: <span class="placeholder">সঠিক তথ্য লিখুন</span>।</p>
-            <p>এই ভুল সংশোধন না হলে আমার ভবিষ্যতের শিক্ষাগত ও পেশাজীবনে সমস্যা হতে পারে। আমি সংশোধনের জন্য প্রয়োজনীয় প্রমাণপত্র (আধার কার্ড / জন্ম শংসাপত্র / পূর্ববর্তী মার্কশিট) সংযুক্ত করেছি।</p>
-            <p>অতএব, মহোদয়ের নিকবিনীত অনুরোধ, আমার আবেদন বিবেচনা করে পরীক্ষার ফর্মের ভুল তথ্য সংশোধন করে বাধিত করবেন।</p>
+            <p>সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [বিভাগ/শ্রেণি]-এর ছাত্র/ছাত্রী। আমি [পরীক্ষার নাম] পরীক্ষার ফর্ম পূরণ করেছি।</p>
+            <p>কিন্তু আমার ফর্মে [ভুল তথ্য] ভুলভাবে উল্লেখ হয়েছে। সঠিক তথ্য হলো [সঠিক তথ্য]।</p>
+            <p>অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমার পরীক্ষার ফর্ম সংশোধন করে বাধিত করবেন।</p>
           </div>
           <div class="letter-closing">আপনার বিশ্বস্ত,</div>
           <div class="letter-sign-section">
@@ -339,5 +338,6 @@ function showPDFPreview(){const letter=document.getElementById('letterDocument')
       </div>
     </div>
   </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

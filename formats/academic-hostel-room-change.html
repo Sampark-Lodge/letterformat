@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>হোস্টেল রুম পরিবর্তন আবেদন – LetterFormat.in</title>
+  <title>হোস্টেল রুম পরিবর্তন আবেদন — LetterFormat.in</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -213,19 +213,18 @@
           <div class="letter-date">তারিখ: <span class="placeholder">১২ এপ্রিল, ২০২৬</span></div>
           <div class="letter-to">
             <span class="to-label">বরাবর</span>
-            <div class="to-name"><span class="placeholder">হোস্টেল সুপারিনটেনডেন্ট মহাশয়</span></div>
+            <div class="to-name"><span class="placeholder" contenteditable="true">হোস্টেল সুপারিনটেনডেন্ট</span></div>
             <div class="to-address"><span class="placeholder">হোস্টেলের নাম</span><br /><span class="placeholder">ঠিকানা, জেলা, পশ্চিমবঙ্গ — পিনকোড</span></div>
           </div>
           <div class="letter-subject">
             <div class="sub-label">বিষয়</div>
-            <div class="sub-text">হোস্টেলের রুম পরিবর্তনের জন্য আবেদন।</div>
+            <div class="sub-text"><span class="placeholder" contenteditable="true">হোস্টেল রুম পরিবর্তনের আবেদন</span></div>
           </div>
           <div class="letter-salutation">মহাশয় / মহাশয়া,</div>
           <div class="letter-body">
-            <p>সবিনয় নিবেদন এই যে, আমি <span class="placeholder">আপনার নাম</span>, <span class="placeholder">বিভাগ ও সেমিস্টার</span>-এর ছাত্র/ছাত্রী। আমি বর্তমানে <span class="placeholder">হোস্টেলের নাম</span> হোস্টেলের রুম নম্বর <span class="placeholder">বর্তমান রুম নম্বর</span>-এ বসবাস করছি।</p>
-            <p>আমার বর্তমান রুমে <span class="placeholder">সমস্যা উল্লেখ করুন, যেমন: পর্যাপ্ত আলো-বাতাস নেই / ছাদ দিয়ে পানি পড়ে / রুমমেটের সাথে সমস্যা / স্বাস্থ্যগত কারণে নিচতলা প্রয়োজন</span>। এই সমস্যার কারণে আমার পড়াশোনা ও স্বাস্থ্যের ক্ষতি হচ্ছে।</p>
-            <p>আমি <span class="placeholder">পছন্দের রুম ধরন, যেমন: নিচতলা / জানালাযুক্ত / একক / শান্ত পাশের</span> একটি রুমে স্থানান্তরিত হতে চাই। হোস্টেলে যদি খালি রুম থাকে তবে আমাকে বিবেচনা করুন।</p>
-            <p>অতএব, মহোদয়ের নিকবিনীত অনুরোধ, আমার সমস্যা বিবেচনা করে আমাকে একটি উপযুক্ত রুমে স্থানান্তরিত করার ব্যবস্থা করলে কৃতজ্ঞ থাকব।</p>
+            <p>সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [হোস্টেলের নাম] হোস্টেলের [রুম নম্বর] নম্বর কক্ষে বসবাস করি।</p>
+            <p>আমার বর্তমান কক্ষে [সমস্যা]-এর কারণে আমার পড়াশোনায় সমস্যা হচ্ছে।</p>
+            <p>অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি ভালো কক্ষে স্থানান্তরিত করে বাধিত করবেন।</p>
           </div>
           <div class="letter-closing">আপনার বিশ্বস্ত,</div>
           <div class="letter-sign-section">
@@ -339,5 +338,6 @@ function showPDFPreview(){const letter=document.getElementById('letterDocument')
       </div>
     </div>
   </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
