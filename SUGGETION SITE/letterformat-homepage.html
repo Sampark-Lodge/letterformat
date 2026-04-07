@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LetterFormat.in – বাংলায় চিঠি ও আবেদনপত্র</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --red: #dc2626;
+      --red-dark: #b91c1c;
+      --red-light: #fee2e2;
+      --red-xlight: #fff5f5;
+      --red-mid: #fca5a5;
+      --white: #ffffff;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+      --shadow-red: 0 8px 32px rgba(220,38,38,0.18);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --font-bn: 'Noto Sans Bengali', sans-serif;
+      --font-bn-serif: 'Noto Serif Bengali', serif;
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-bn);
+      background: var(--white);
+      color: var(--gray-800);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes pulse-ring {
+      0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220,38,38,0.35); }
+      70%  { transform: scale(1);    box-shadow: 0 0 0 12px rgba(220,38,38,0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220,38,38,0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -600px 0; }
+      100% { background-position: 600px 0; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
+    }
+    @keyframes badge-pop {
+      0%   { transform: scale(0.8); opacity: 0; }
+      60%  { transform: scale(1.1); }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    .animate-fade-up   { animation: fadeUp  0.6s ease both; }
+    .animate-fade-up-2 { animation: fadeUp  0.6s 0.12s ease both; }
+    .animate-fade-up-3 { animation: fadeUp  0.6s 0.22s ease both; }
+    .animate-fade-up-4 { animation: fadeUp  0.6s 0.32s ease both; }
+    .animate-fade-in   { animation: fadeIn  0.5s ease both; }
+
+    /* ===== UTILITY ===== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--red-light); color: var(--red);
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 5px 14px; border-radius: 99px;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .section-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--red); display: block; animation: pulse-ring 1.8s infinite; }
+    .section-title { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 800; color: var(--gray-900); margin-bottom: 10px; line-height: 1.3; }
+    .section-sub   { font-size: 1rem; color: var(--gray-500); max-width: 500px; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1.5px solid var(--gray-100);
+      box-shadow: 0 1px 0 var(--gray-100), var(--shadow-sm);
+      transition: box-shadow var(--transition);
+    }
+    .navbar.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 900; font-size: 1.25rem; color: var(--gray-900);
+      letter-spacing: -0.01em;
+    }
+    .logo-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--red); display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-red);
+    }
+    .logo-icon svg { width: 20px; height: 20px; fill: white; }
+    .logo-text span { color: var(--red); }
+    .logo-domain { font-size: 0.7rem; font-weight: 500; color: var(--gray-400); margin-top: -4px; display: block; }
+
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a {
+      padding: 7px 14px; border-radius: var(--radius-sm);
+      font-size: 0.9rem; font-weight: 500; color: var(--gray-600);
+      transition: color var(--transition), background var(--transition);
+    }
+    .nav-links a:hover { background: var(--gray-100); color: var(--gray-900); }
+    .nav-links a.active { color: var(--red); background: var(--red-xlight); font-weight: 600; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--red); color: white;
+      padding: 9px 20px; border-radius: var(--radius-sm);
+      font-size: 0.9rem; font-weight: 600;
+      border: none; cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 8px rgba(220,38,38,0.25);
+      font-family: var(--font-bn);
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: var(--shadow-red); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--red);
+      padding: 9px 20px; border-radius: var(--radius-sm);
+      font-size: 0.9rem; font-weight: 600;
+      border: 1.5px solid var(--red-mid); cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      font-family: var(--font-bn);
+    }
+    .btn-secondary:hover { background: var(--red-xlight); transform: translateY(-1px); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--gray-700); border-radius: 2px; transition: var(--transition); }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--white);
+      padding: 80px 0 60px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(220,38,38,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 90% 50%, rgba(220,38,38,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 60px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--red-light); border: 1px solid var(--red-mid);
+      color: var(--red); border-radius: 99px;
+      padding: 5px 14px; font-size: 0.8rem; font-weight: 700;
+      margin-bottom: 20px; animation: badge-pop 0.5s 0.1s ease both;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 4.5vw, 3.1rem);
+      font-weight: 900; color: var(--gray-900);
+      line-height: 1.2; margin-bottom: 16px;
+      font-family: var(--font-bn);
+    }
+    .hero-title .highlight {
+      color: var(--red);
+      position: relative; display: inline-block;
+    }
+    .hero-title .highlight::after {
+      content: '';
+      position: absolute; bottom: 2px; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      border-radius: 2px; opacity: 0.4;
+    }
+    .hero-desc { font-size: 1.05rem; color: var(--gray-500); margin-bottom: 32px; line-height: 1.75; }
+
+    .search-bar {
+      display: flex; align-items: center;
+      background: white; border: 2px solid var(--gray-200);
+      border-radius: var(--radius-md); overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      margin-bottom: 20px;
+    }
+    .search-bar:focus-within { border-color: var(--red); box-shadow: 0 0 0 4px rgba(220,38,38,0.1), var(--shadow-md); }
+    .search-icon { padding: 0 16px; color: var(--gray-400); flex-shrink: 0; }
+    .search-bar input {
+      flex: 1; border: none; outline: none; padding: 14px 0;
+      font-size: 0.95rem; font-family: var(--font-bn); color: var(--gray-800);
+      background: transparent;
+    }
+    .search-bar input::placeholder { color: var(--gray-400); }
+    .search-btn {
+      margin: 6px; background: var(--red); color: white;
+      border: none; cursor: pointer; padding: 10px 20px;
+      border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 600;
+      font-family: var(--font-bn); white-space: nowrap;
+      transition: background var(--transition);
+    }
+    .search-btn:hover { background: var(--red-dark); }
+
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+    .chip {
+      padding: 5px 12px; border-radius: 99px;
+      background: var(--gray-100); color: var(--gray-600);
+      font-size: 0.82rem; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--gray-200);
+      transition: all var(--transition);
+    }
+    .chip:hover { background: var(--red-light); color: var(--red); border-color: var(--red-mid); }
+
+    .hero-stats { display: flex; gap: 32px; }
+    .stat-item {}
+    .stat-num { font-size: 1.5rem; font-weight: 900; color: var(--gray-900); line-height: 1; }
+    .stat-num span { color: var(--red); }
+    .stat-label { font-size: 0.8rem; color: var(--gray-500); margin-top: 3px; }
+
+    /* Hero Visual */
+    .hero-visual { position: relative; }
+    .hero-doc-card {
+      background: white; border-radius: var(--radius-lg);
+      padding: 28px; box-shadow: var(--shadow-lg);
+      border: 1.5px solid var(--gray-100);
+      animation: float 4s ease-in-out infinite;
+    }
+    .doc-header {
+      display: flex; align-items: center; gap: 12px;
+      padding-bottom: 16px; margin-bottom: 16px;
+      border-bottom: 2px dashed var(--gray-200);
+    }
+    .doc-seal {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--red-light); border: 3px solid var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; flex-shrink: 0;
+    }
+    .doc-meta { flex: 1; }
+    .doc-meta .doc-title-sm { font-size: 0.85rem; font-weight: 700; color: var(--gray-800); }
+    .doc-meta .doc-sub-sm   { font-size: 0.75rem; color: var(--gray-500); }
+    .doc-badge { background: #dcfce7; color: #16a34a; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; }
+    .doc-lines { display: flex; flex-direction: column; gap: 8px; }
+    .doc-line {
+      height: 9px; border-radius: 4px;
+      background: linear-gradient(90deg, var(--gray-200) 0%, var(--gray-100) 100%);
+      animation: shimmer 1.8s infinite linear;
+      background-size: 600px 100%;
+    }
+    .doc-line.w-full  { width: 100%; }
+    .doc-line.w-4-5   { width: 82%; }
+    .doc-line.w-3-5   { width: 62%; }
+    .doc-line.w-2-5   { width: 44%; }
+    .doc-sign { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; }
+    .sign-block { text-align: right; }
+    .sign-line { width: 100px; height: 2px; background: var(--gray-800); margin-bottom: 4px; margin-left: auto; }
+    .sign-label { font-size: 0.75rem; color: var(--gray-500); }
+
+    .floating-badge {
+      position: absolute;
+      background: white; border-radius: var(--radius-md);
+      padding: 10px 14px; box-shadow: var(--shadow-lg);
+      border: 1px solid var(--gray-100);
+      font-size: 0.8rem; font-weight: 600; color: var(--gray-800);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .floating-badge.top-left  { top: -18px; left: -20px; animation: float 3.5s 0.5s ease-in-out infinite; }
+    .floating-badge.bot-right { bottom: -18px; right: -20px; animation: float 3s 1s ease-in-out infinite; }
+    .badge-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+    .badge-icon.red   { background: var(--red-light); }
+    .badge-icon.green { background: #dcfce7; }
+
+    /* ===== CATEGORIES ===== */
+    .categories { padding: 80px 0; background: var(--gray-50); }
+    .section-header { margin-bottom: 48px; }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 16px;
+    }
+    .cat-card {
+      background: white; border-radius: var(--radius-lg);
+      padding: 28px 20px; text-align: center;
+      border: 1.5px solid var(--gray-200);
+      cursor: pointer; transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none; display: block;
+      position: relative; overflow: hidden;
+    }
+    .cat-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--red); transform: scaleX(0);
+      transform-origin: left; transition: transform var(--transition);
+    }
+    .cat-card:hover { border-color: var(--red-mid); box-shadow: var(--shadow-red); transform: translateY(-4px); }
+    .cat-card:hover::before { transform: scaleX(1); }
+    .cat-card:hover .cat-icon { background: var(--red); color: white; }
+    .cat-icon {
+      width: 56px; height: 56px; border-radius: var(--radius-md);
+      background: var(--red-light); color: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin: 0 auto 14px;
+      transition: all var(--transition);
+    }
+    .cat-name { font-size: 1rem; font-weight: 700; color: var(--gray-800); margin-bottom: 4px; }
+    .cat-count { font-size: 0.78rem; color: var(--gray-500); }
+
+    /* ===== POPULAR FORMATS ===== */
+    .popular { padding: 80px 0; }
+    .popular-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+    .formats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+    .format-card {
+      background: white; border-radius: var(--radius-lg);
+      border: 1.5px solid var(--gray-200);
+      overflow: hidden; cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+      text-decoration: none; display: block;
+    }
+    .format-card:hover { border-color: var(--red-mid); box-shadow: var(--shadow-red); transform: translateY(-3px); }
+    .format-card-thumb {
+      background: var(--red-xlight);
+      padding: 20px 24px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .thumb-doc {
+      background: white; border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      padding: 16px; box-shadow: 0 -2px 12px rgba(0,0,0,0.06);
+      min-height: 100px;
+    }
+    .thumb-doc .thumb-line {
+      height: 7px; background: var(--gray-100); border-radius: 3px; margin-bottom: 7px;
+    }
+    .thumb-doc .thumb-line:last-child { width: 55%; }
+    .thumb-doc .thumb-line.sm { width: 70%; }
+    .thumb-doc .thumb-line.title { width: 50%; background: var(--red-light); height: 9px; margin-bottom: 12px; }
+    .format-card-body { padding: 18px 22px 20px; }
+    .format-tag-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .format-tag {
+      font-size: 0.72rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 99px; background: var(--red-light); color: var(--red);
+    }
+    .format-tag.blue   { background: #dbeafe; color: #1d4ed8; }
+    .format-tag.green  { background: #dcfce7; color: #15803d; }
+    .format-tag.purple { background: #ede9fe; color: #6d28d9; }
+    .format-views { font-size: 0.75rem; color: var(--gray-400); margin-left: auto; }
+    .format-name { font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 5px; line-height: 1.4; }
+    .format-desc { font-size: 0.83rem; color: var(--gray-500); line-height: 1.6; }
+    .format-footer {
+      padding: 12px 22px; background: var(--gray-50);
+      border-top: 1px solid var(--gray-100);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .format-footer-left { font-size: 0.8rem; color: var(--gray-500); display: flex; align-items: center; gap: 6px; }
+    .format-arrow {
+      width: 30px; height: 30px; border-radius: 8px;
+      background: var(--red); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      transition: transform var(--transition), background var(--transition);
+    }
+    .format-card:hover .format-arrow { transform: translateX(3px); background: var(--red-dark); }
+
+    /* ===== HOW IT WORKS ===== */
+    .how { padding: 80px 0; background: var(--gray-50); }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 48px; position: relative; }
+    .steps-grid::before {
+      content: '';
+      position: absolute; top: 36px; left: 10%; right: 10%; height: 2px;
+      background: linear-gradient(90deg, var(--red-mid), transparent);
+      border-top: 2px dashed var(--red-mid);
+      opacity: 0.5;
+    }
+    .step-card {
+      background: white; border-radius: var(--radius-lg); padding: 28px 24px;
+      border: 1.5px solid var(--gray-200); text-align: center;
+      box-shadow: var(--shadow-sm); position: relative;
+      transition: all var(--transition);
+    }
+    .step-card:hover { box-shadow: var(--shadow-red); border-color: var(--red-mid); transform: translateY(-3px); }
+    .step-num {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--red); color: white;
+      font-size: 0.8rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 4px white, 0 0 0 6px var(--red-mid);
+    }
+    .step-icon {
+      width: 60px; height: 60px; border-radius: var(--radius-md);
+      background: var(--red-light); color: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin: 10px auto 16px;
+      transition: all var(--transition);
+    }
+    .step-card:hover .step-icon { background: var(--red); color: white; }
+    .step-title { font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px; }
+    .step-desc  { font-size: 0.85rem; color: var(--gray-500); line-height: 1.6; }
+
+    /* ===== TRUST BANNER ===== */
+    .trust { padding: 60px 0; background: var(--red); position: relative; overflow: hidden; }
+    .trust::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px,
+        transparent 1px, transparent 12px
+      );
+    }
+    .trust-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .trust-text h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; color: white; margin-bottom: 8px; }
+    .trust-text p  { color: rgba(255,255,255,0.8); font-size: 1rem; }
+    .trust-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-white {
+      background: white; color: var(--red);
+      padding: 12px 28px; border-radius: var(--radius-sm);
+      font-weight: 700; font-size: 0.95rem;
+      border: none; cursor: pointer; font-family: var(--font-bn);
+      transition: all var(--transition);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline-white {
+      background: transparent; color: white;
+      padding: 12px 28px; border-radius: var(--radius-sm);
+      font-weight: 600; font-size: 0.95rem;
+      border: 2px solid rgba(255,255,255,0.5); cursor: pointer; font-family: var(--font-bn);
+      transition: all var(--transition);
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: white; }
+    .trust-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+    .trust-stat-num   { font-size: 2rem; font-weight: 900; color: white; line-height: 1; }
+    .trust-stat-label { font-size: 0.82rem; color: rgba(255,255,255,0.7); margin-top: 3px; }
+
+    /* ===== FOOTER ===== */
+    .footer { background: var(--gray-900); color: var(--gray-300); padding: 60px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .logo-text-footer { font-size: 1.2rem; font-weight: 900; color: white; margin-bottom: 10px; }
+    .footer-brand .logo-text-footer span { color: var(--red); }
+    .footer-brand p { font-size: 0.85rem; color: var(--gray-400); line-height: 1.7; margin-bottom: 18px; }
+    .footer-social { display: flex; gap: 10px; }
+    .social-btn {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--gray-800); color: var(--gray-400);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; cursor: pointer;
+      transition: all var(--transition); border: 1px solid var(--gray-700);
+    }
+    .social-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: white; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 0.87rem; color: var(--gray-400); transition: color var(--transition); }
+    .footer-col ul li a:hover { color: white; }
+    .footer-bottom {
+      border-top: 1px solid var(--gray-800);
+      padding: 18px 0; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.82rem; color: var(--gray-500); }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a { font-size: 0.82rem; color: var(--gray-500); transition: color var(--transition); }
+    .footer-bottom-links a:hover { color: white; }
+
+    /* ===== MOBILE MENU ===== */
+    .mobile-menu {
+      display: none; position: fixed; top: 66px; left: 0; right: 0; bottom: 0;
+      background: white; z-index: 999; padding: 20px;
+      flex-direction: column; gap: 8px;
+      border-top: 1px solid var(--gray-100);
+      animation: fadeIn 0.2s ease;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      padding: 14px 16px; border-radius: var(--radius-sm);
+      font-size: 1rem; font-weight: 500; color: var(--gray-700);
+      display: block; border: 1px solid var(--gray-100);
+    }
+    .mobile-menu a:hover { background: var(--red-xlight); color: var(--red); border-color: var(--red-mid); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 50px 0 40px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { display: none; }
+      .hero-stats { gap: 20px; }
+      .categories { padding: 60px 0; }
+      .popular { padding: 60px 0; }
+      .how { padding: 60px 0; }
+      .trust-inner { flex-direction: column; text-align: center; }
+      .trust-stats { justify-content: center; }
+      .trust-actions { justify-content: center; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .steps-grid::before { display: none; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .formats-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
+            <path d="M8 14h8v1H8zm0 3h5v1H8z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">Letter<span>Format</span></div>
+          <span class="logo-domain">.in</span>
+        </div>
+      </a>
+
+      <div class="nav-links">
+        <a href="#" class="active">হোম</a>
+        <a href="#categories">বিভাগসমূহ</a>
+        <a href="#popular">জনপ্রিয় ফরম্যাট</a>
+        <a href="#how">কীভাবে ব্যবহার করবেন</a>
+      </div>
+
+      <div class="nav-cta" style="display:flex;gap:8px;align-items:center;">
+        <button class="btn-secondary">🔍 খোঁজুন</button>
+        <button class="btn-primary">বিনামূল্যে শুরু করুন</button>
+      </div>
+
+      <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="toggleMenu()">🏠 হোম</a>
+  <a href="#categories" onclick="toggleMenu()">📂 বিভাগসমূহ</a>
+  <a href="#popular" onclick="toggleMenu()">⭐ জনপ্রিয় ফরম্যাট</a>
+  <a href="#how" onclick="toggleMenu()">📖 কীভাবে ব্যবহার করবেন</a>
+  <a href="letterformat-sample.html" onclick="toggleMenu()" style="background:var(--red-xlight);color:var(--red);border-color:var(--red-mid);">📄 নমুনা দেখুন</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <!-- Left -->
+      <div>
+        <div class="hero-tag animate-fade-in">
+          🇮🇳 ভারতের জন্য তৈরি • বাংলায় সেরা
+        </div>
+
+        <h1 class="hero-title animate-fade-up">
+          পেশাদার চিঠি ও<br />
+          আবেদনপত্র<br />
+          <span class="highlight">বাংলায় লিখুন</span>
+        </h1>
+
+        <p class="hero-desc animate-fade-up-2">
+          ছুটির আবেদন, অভিযোগ পত্র, ব্যাংক আবেদন—সব ধরনের সরকারি ও বেসরকারি চিঠির সঠিক বাংলা ফরম্যাট একটি জায়গায় পাবেন।
+        </p>
+
+        <div class="search-bar animate-fade-up-3">
+          <div class="search-icon">🔍</div>
+          <input type="text" placeholder="যেমন: ছুটির আবেদন, নিয়োগপত্র, অভিযোগ..." />
+          <button class="search-btn">খোঁজুন</button>
+        </div>
+
+        <div class="hero-chips animate-fade-up-3">
+          <span class="chip">✈️ ছুটির আবেদন</span>
+          <span class="chip">🏦 ব্যাংক আবেদন</span>
+          <span class="chip">🏫 স্কুল আবেদন</span>
+          <span class="chip">📋 অভিযোগ পত্র</span>
+          <span class="chip">💼 চাকরির আবেদন</span>
+        </div>
+
+        <div class="hero-stats animate-fade-up-4">
+          <div class="stat-item">
+            <div class="stat-num">৫০০<span>+</span></div>
+            <div class="stat-label">ফরম্যাট উপলব্ধ</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">২<span>লক্ষ+</span></div>
+            <div class="stat-label">ব্যবহারকারী</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">১০০<span>%</span></div>
+            <div class="stat-label">বিনামূল্যে</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Visual -->
+      <div class="hero-visual animate-fade-in">
+        <div style="position:relative; max-width:380px; margin:0 auto;">
+          <div class="floating-badge top-left">
+            <div class="badge-icon red">✅</div>
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--gray-900);">অনুমোদিত ফরম্যাট</div>
+              <div style="font-size:0.7rem;color:var(--gray-500);">সরকারি মানদণ্ড অনুযায়ী</div>
+            </div>
+          </div>
+
+          <div class="hero-doc-card">
+            <div class="doc-header">
+              <div class="doc-seal">🏛️</div>
+              <div class="doc-meta">
+                <div class="doc-title-sm">ছুটির আবেদন পত্র</div>
+                <div class="doc-sub-sm">প্রধান শিক্ষক বরাবর</div>
+              </div>
+              <div class="doc-badge">✓ প্রস্তুত</div>
+            </div>
+            <div class="doc-lines">
+              <div class="doc-line w-full"></div>
+              <div class="doc-line w-4-5"></div>
+              <div class="doc-line w-full"></div>
+              <div class="doc-line w-3-5"></div>
+              <div class="doc-line w-full"></div>
+              <div class="doc-line w-4-5"></div>
+              <div class="doc-line w-2-5"></div>
+            </div>
+            <div class="doc-sign">
+              <div class="sign-block">
+                <div class="sign-line"></div>
+                <div class="sign-label">আবেদনকারীর স্বাক্ষর</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="floating-badge bot-right">
+            <div class="badge-icon green">📥</div>
+            <div>
+              <div style="font-size:0.78rem;font-weight:700;color:var(--gray-900);">কপি করুন & ব্যবহার করুন</div>
+              <div style="font-size:0.7rem;color:var(--gray-500);">মাত্র ৩০ সেকেন্ডে প্রস্তুত</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATEGORIES ===== -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">বিভাগসমূহ</div>
+      <h2 class="section-title">কোন ধরনের চিঠি প্রয়োজন?</h2>
+      <p class="section-sub">আপনার প্রয়োজন অনুযায়ী বিভাগ বেছে নিন এবং সঠিক ফরম্যাটটি খুঁজে পান।</p>
+    </div>
+
+    <div class="categories-grid">
+      <a href="#" class="cat-card">
+        <div class="cat-icon">🌴</div>
+        <div class="cat-name">ছুটি</div>
+        <div class="cat-count">৮৫টি ফরম্যাট</div>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon">📢</div>
+        <div class="cat-name">অভিযোগ</div>
+        <div class="cat-count">৬২টি ফরম্যাট</div>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon">📜</div>
+        <div class="cat-name">সার্টিফিকেট</div>
+        <div class="cat-count">৪৮টি ফরম্যাট</div>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon">🏦</div>
+        <div class="cat-name">ব্যাংক</div>
+        <div class="cat-count">৭৩টি ফরম্যাট</div>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon">🏛️</div>
+        <div class="cat-name">সরকারি</div>
+        <div class="cat-count">৯১টি ফরম্যাট</div>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon">🏫</div>
+        <div class="cat-name">স্কুল</div>
+        <div class="cat-count">৫৬টি ফরম্যাট</div>
+      </a>
+      <a href="#" class="cat-card">
+        <div class="cat-icon">💼</div>
+        <div class="cat-name">চাকরি</div>
+        <div class="cat-count">৬৮টি ফরম্যাট</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== POPULAR FORMATS ===== -->
+<section class="popular" id="popular">
+  <div class="container">
+    <div class="popular-header">
+      <div>
+        <div class="section-tag">জনপ্রিয় ফরম্যাট</div>
+        <h2 class="section-title">সর্বাধিক ব্যবহৃত ফরম্যাটগুলি</h2>
+      </div>
+      <a href="#" class="btn-secondary">সব দেখুন →</a>
+    </div>
+
+    <div class="formats-grid">
+
+      <!-- Card 1 -->
+      <a href="letterformat-sample.html" class="format-card">
+        <div class="format-card-thumb">
+          <div class="thumb-doc">
+            <div class="thumb-line title"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+          </div>
+        </div>
+        <div class="format-card-body">
+          <div class="format-tag-row">
+            <span class="format-tag">ছুটি</span>
+            <span class="format-views">👁 ১২,৪৫৬ বার দেখা হয়েছে</span>
+          </div>
+          <div class="format-name">ছুটির আবেদন পত্র (প্রধান শিক্ষক বরাবর)</div>
+          <div class="format-desc">স্কুল বা কলেজের প্রধান শিক্ষকের কাছে ছুটির জন্য সঠিক বাংলা আবেদন পত্র।</div>
+        </div>
+        <div class="format-footer">
+          <span class="format-footer-left">📅 আজই ব্যবহার করুন</span>
+          <div class="format-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="#" class="format-card">
+        <div class="format-card-thumb">
+          <div class="thumb-doc">
+            <div class="thumb-line title"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+          </div>
+        </div>
+        <div class="format-card-body">
+          <div class="format-tag-row">
+            <span class="format-tag blue">ব্যাংক</span>
+            <span class="format-views">👁 ৯,৮৭৩ বার দেখা হয়েছে</span>
+          </div>
+          <div class="format-name">ব্যাংক অ্যাকাউন্ট খোলার আবেদন পত্র</div>
+          <div class="format-desc">নতুন সেভিংস অ্যাকাউন্ট খোলার জন্য শাখা ব্যবস্থাপক বরাবর আবেদন।</div>
+        </div>
+        <div class="format-footer">
+          <span class="format-footer-left">🏦 ব্যাংক বিভাগ</span>
+          <div class="format-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="format-card">
+        <div class="format-card-thumb">
+          <div class="thumb-doc">
+            <div class="thumb-line title"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+          </div>
+        </div>
+        <div class="format-card-body">
+          <div class="format-tag-row">
+            <span class="format-tag green">চাকরি</span>
+            <span class="format-views">👁 ৮,২৩১ বার দেখা হয়েছে</span>
+          </div>
+          <div class="format-name">চাকরির আবেদন পত্র (সরকারি পদের জন্য)</div>
+          <div class="format-desc">সরকারি বিভিন্ন পদে আবেদনের জন্য পেশাদার বাংলা কভার লেটার ফরম্যাট।</div>
+        </div>
+        <div class="format-footer">
+          <span class="format-footer-left">💼 চাকরি বিভাগ</span>
+          <div class="format-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="#" class="format-card">
+        <div class="format-card-thumb">
+          <div class="thumb-doc">
+            <div class="thumb-line title"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+          </div>
+        </div>
+        <div class="format-card-body">
+          <div class="format-tag-row">
+            <span class="format-tag purple">অভিযোগ</span>
+            <span class="format-views">👁 ৭,৬৪৫ বার দেখা হয়েছে</span>
+          </div>
+          <div class="format-name">অভিযোগ পত্র (থানায় জমা দেওয়ার জন্য)</div>
+          <div class="format-desc">পুলিশ স্টেশনে অভিযোগ দায়ের করার জন্য সঠিক বাংলা ফরম্যাট।</div>
+        </div>
+        <div class="format-footer">
+          <span class="format-footer-left">📢 অভিযোগ বিভাগ</span>
+          <div class="format-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Card 5 -->
+      <a href="#" class="format-card">
+        <div class="format-card-thumb">
+          <div class="thumb-doc">
+            <div class="thumb-line title"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+          </div>
+        </div>
+        <div class="format-card-body">
+          <div class="format-tag-row">
+            <span class="format-tag">সরকারি</span>
+            <span class="format-views">👁 ৬,৯১২ বার দেখা হয়েছে</span>
+          </div>
+          <div class="format-name">রেশন কার্ডের জন্য আবেদন পত্র</div>
+          <div class="format-desc">খাদ্য দপ্তরে রেশন কার্ড পেতে সঠিক সরকারি আবেদন পত্রের ফরম্যাট।</div>
+        </div>
+        <div class="format-footer">
+          <span class="format-footer-left">🏛️ সরকারি বিভাগ</span>
+          <div class="format-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Card 6 -->
+      <a href="#" class="format-card">
+        <div class="format-card-thumb">
+          <div class="thumb-doc">
+            <div class="thumb-line title"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+            <div class="thumb-line"></div>
+            <div class="thumb-line sm"></div>
+          </div>
+        </div>
+        <div class="format-card-body">
+          <div class="format-tag-row">
+            <span class="format-tag blue">সার্টিফিকেট</span>
+            <span class="format-views">👁 ৫,৩৩৮ বার দেখা হয়েছে</span>
+          </div>
+          <div class="format-name">চরিত্র সনদপত্রের জন্য আবেদন</div>
+          <div class="format-desc">স্থানীয় প্রশাসনের কাছে চরিত্র সার্টিফিকেট পাওয়ার সঠিক ফরম্যাট।</div>
+        </div>
+        <div class="format-footer">
+          <span class="format-footer-left">📜 সার্টিফিকেট বিভাগ</span>
+          <div class="format-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how" id="how">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:0;">
+      <div class="section-tag" style="display:inline-flex;">কীভাবে ব্যবহার করবেন</div>
+      <h2 class="section-title" style="margin-bottom:8px;">মাত্র ৩টি ধাপে চিঠি প্রস্তুত করুন</h2>
+      <p class="section-sub" style="margin:0 auto;">কোনো রেজিস্ট্রেশন ছাড়াই তাৎক্ষণিকভাবে পেশাদার চিঠির ফরম্যাট পান।</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">১</div>
+        <div class="step-icon">🔍</div>
+        <div class="step-title">বিভাগ বা ফরম্যাট খুঁজুন</div>
+        <div class="step-desc">আপনার প্রয়োজনীয় ধরনের চিঠিটি সার্চ করুন অথবা বিভাগ থেকে বেছে নিন।</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">২</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">ফরম্যাট দেখুন ও কপি করুন</div>
+        <div class="step-desc">সম্পূর্ণ ফরম্যাটটি দেখুন এবং এক ক্লিকে কপি করুন বা ডাউনলোড করুন।</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">৩</div>
+        <div class="step-icon">✏️</div>
+        <div class="step-title">তথ্য পরিবর্তন করে ব্যবহার করুন</div>
+        <div class="step-desc">আপনার নিজের তথ্য দিয়ে পূরণ করুন এবং সাথে সাথে ব্যবহার করুন।</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST BANNER ===== -->
+<section class="trust">
+  <div class="container">
+    <div class="trust-inner">
+      <div class="trust-text">
+        <h2>আজই শুরু করুন — সম্পূর্ণ বিনামূল্যে</h2>
+        <p>হাজারো বাংলা ব্যবহারকারী প্রতিদিন LetterFormat.in ব্যবহার করছেন।</p>
+      </div>
+      <div class="trust-stats">
+        <div>
+          <div class="trust-stat-num">৫০০+</div>
+          <div class="trust-stat-label">ফরম্যাট</div>
+        </div>
+        <div>
+          <div class="trust-stat-num">২লক্ষ+</div>
+          <div class="trust-stat-label">ব্যবহারকারী</div>
+        </div>
+        <div>
+          <div class="trust-stat-num">৪.৯★</div>
+          <div class="trust-stat-label">রেটিং</div>
+        </div>
+      </div>
+      <div class="trust-actions">
+        <button class="btn-white">সব ফরম্যাট দেখুন</button>
+        <button class="btn-outline-white">নমুনা দেখুন</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text-footer">Letter<span>Format</span>.in</div>
+        <p>বাংলায় সব ধরনের পেশাদার চিঠি ও আবেদনপত্রের সঠিক ফরম্যাট একটি জায়গায়। সরকারি, স্কুল, ব্যাংক — সব বিভাগের চিঠি বিনামূল্যে পান।</p>
+        <div class="footer-social">
+          <div class="social-btn">f</div>
+          <div class="social-btn">𝕏</div>
+          <div class="social-btn">in</div>
+          <div class="social-btn">📧</div>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>বিভাগসমূহ</h4>
+        <ul>
+          <li><a href="#">🌴 ছুটির আবেদন</a></li>
+          <li><a href="#">📢 অভিযোগ পত্র</a></li>
+          <li><a href="#">📜 সার্টিফিকেট</a></li>
+          <li><a href="#">🏦 ব্যাংক আবেদন</a></li>
+          <li><a href="#">🏛️ সরকারি চিঠি</a></li>
+          <li><a href="#">🏫 স্কুল আবেদন</a></li>
+          <li><a href="#">💼 চাকরির আবেদন</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>জনপ্রিয়</h4>
+        <ul>
+          <li><a href="#">ছুটির আবেদন পত্র</a></li>
+          <li><a href="#">ব্যাংক অ্যাকাউন্ট আবেদন</a></li>
+          <li><a href="#">চরিত্র সনদপত্র</a></li>
+          <li><a href="#">রেশন কার্ড আবেদন</a></li>
+          <li><a href="#">চাকরির দরখাস্ত</a></li>
+          <li><a href="#">পুলিশ অভিযোগ পত্র</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>সাহায্য</h4>
+        <ul>
+          <li><a href="#">কীভাবে ব্যবহার করবেন</a></li>
+          <li><a href="#">আমাদের সম্পর্কে</a></li>
+          <li><a href="#">যোগাযোগ করুন</a></li>
+          <li><a href="#">গোপনীয়তা নীতি</a></li>
+          <li><a href="#">ব্যবহারের শর্তাবলী</a></li>
+          <li><a href="#">নতুন ফরম্যাট অনুরোধ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© ২০২৪ LetterFormat.in — সর্বস্বত্ব সংরক্ষিত। ভারতে তৈরি 🇮🇳</p>
+      <div class="footer-bottom-links">
+        <a href="#">গোপনীয়তা</a>
+        <a href="#">শর্তাবলী</a>
+        <a href="#">যোগাযোগ</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('open');
+  }
+
+  // Smooth chip interaction
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      const input = document.querySelector('.search-bar input');
+      input.value = this.textContent.replace(/^[^\w\u0980-\u09FF]+/, '').trim();
+      input.focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Intersection observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.cat-card, .format-card, .step-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = `opacity 0.5s ${i * 0.06}s ease, transform 0.5s ${i * 0.06}s ease`;
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
