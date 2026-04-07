@@ -5,10 +5,24 @@ interface Props {
   title: string;
   description: string;
   canonical?: string;
+  ogImage?: string;
+  schemaType?: string;
+  publishDate?: string;
+  modifiedDate?: string;
 }
 
-const { title, description, canonical } = Astro.props;
+const { 
+  title, 
+  description, 
+  canonical, 
+  ogImage = '/og-image.png',
+  schemaType = 'WebPage',
+  publishDate,
+  modifiedDate
+} = Astro.props;
 const canonicalUrl = canonical || Astro.url.href;
+const siteUrl = 'https://letterformat.in';
+const fullTitle = title.includes('LetterFormat') ? title : `${title} | LetterFormat.in`;
 ---
 
 <!doctype html>
@@ -17,22 +31,105 @@ const canonicalUrl = canonical || Astro.url.href;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="keywords" content="letter format, application format, leave application, complaint letter, বাংলা চিঠি, আবেদন ফরম্যাট, ভারত" />
+    <meta name="author" content="LetterFormat.in" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Bengali" />
     <link rel="canonical" href={canonicalUrl} />
-    <title>{title}</title>
-
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
+    
+    <!-- Title -->
+    <title>{fullTitle}</title>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="article" />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
     <meta property="og:site_name" content="LetterFormat.in" />
-
+    <meta property="og:locale" content="bn_IN" />
+    
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#dc2626" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="LetterFormat.in" />
+    
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="LetterFormat.in RSS" href="/sitemap-index.xml" />
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": schemaType,
+      "name": fullTitle,
+      "description": description,
+      "url": canonicalUrl,
+      "inLanguage": "bn",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "LetterFormat.in",
+        "url": siteUrl
+      },
+      ...(publishDate && { "datePublished": publishDate }),
+      ...(modifiedDate && { "dateModified": modifiedDate }),
+      "publisher": {
+        "@type": "Organization",
+        "name": "LetterFormat.in",
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/favicon.svg`
+        }
+      },
+      "mainEntity": {
+        "@type": "WebPage",
+        "url": canonicalUrl
+      }
+    })} />
+    
+    <!-- Organization Schema for Homepage -->
+    {schemaType === 'WebSite' && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "LetterFormat.in",
+        "url": siteUrl,
+        "description": "Free letter and application formats for Indian users in Bengali",
+        "sameAs": [
+          "https://twitter.com/letterformat",
+          "https://github.com/Sampark-Lodge/letterformat"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "hello@letterformat.in",
+          "contactType": "customer service"
+        }
+      })} />
+    )}
+    
+    <!-- FAQ Schema for format pages -->
+    {schemaType === 'Article' && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": []
+      })} />
+    )}
+    
+    <!-- Plausible Analytics (Privacy-friendly, GDPR-compliant) -->
+    <script defer data-domain="letterformat.in" src="https://plausible.io/js/script.tagged-events.js"></script>
+    
     <slot name="head" />
   </head>
   <body>
