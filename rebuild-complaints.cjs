@@ -1,21 +1,153 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+
+const formatsDir = './formats';
+
+const complaintPages = {
+  'complaint-letter-electricity-board-power-cut.html': {
+    title: 'বিদ্যুৎ বিভাগে লোডশেডিং অভিযোগ',
+    desc: 'বিদ্যুৎ বিভাগে লোডশেডিং বা বিদ্যুৎ সমস্যার অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'অভিযোগ', catIcon: '📢', subcategory: 'বিদ্যুৎ',
+    recipient: 'নির্বাহী প্রকৌশলী', institution: '[বিদ্যুৎ বিভাগ, জেলা]', city: '[শহর, জেলা]',
+    subject: 'লোডশেডিং ও বিদ্যুৎ সমস্যার অভিযোগ', salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমাদের এলাকায় গত [সংখ্যা] দিন ধরে ঘন ঘন লোডশেডিং হচ্ছে।',
+      'দিনে [সংখ্যা] ঘণ্টা এবং রাতে [সংখ্যা] ঘণ্টা বিদ্যুৎ থাকে না। এই সমস্যার কারণে আমাদের দৈনন্দিন জীবন মারাত্মকভাবে ব্যাহত হচ্ছে।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাদের এলাকায় নিয়মিত বিদ্যুৎ সরবরাহের ব্যবস্থা করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন', signName: '[আপনার নাম]', signInfo: '[ঠিকানা] | [মোবাইল নম্বর]',
+    tips: ['লোডশেডিংয়ের সময়কাল উল্লেখ করুন', 'এলাকার নাম স্পষ্ট করুন', 'প্রতিবেশীদের স্বাক্ষর সংগ্রহ করুন'],
+    mistakes: ['সময়কাল না দেওয়া', 'এলাকার নাম না বলা', 'প্রতিবেশীদের স্বাক্ষর না সংগ্রহ করা'],
+    faqs: [{q:'অভিযোগ জানাতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আবেদন পত্র, প্রতিবেশীদের স্বাক্ষর।'}]
+  },
+  'complaint-letter-water-shortage.html': {
+    title: 'পানি সংকটের অভিযোগ',
+    desc: 'পানি সংকটের জন্য অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'অভিযোগ', catIcon: '📢', subcategory: 'পানি',
+    recipient: 'নির্বাহী প্রকৌশলী', institution: '[পানি সরবরাহ বিভাগ]', city: '[শহর, জেলা]',
+    subject: 'পানি সংকটের অভিযোগ', salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমাদের এলাকায় গত [সংখ্যা] দিন ধরে পানির সংকট চলছে।',
+      'পাইপলাইন থেকে পর্যাপ্ত পানি আসছে না। এই সমস্যার কারণে আমাদের দৈনন্দিন জীবন মারাত্মকভাবে ব্যাহত হচ্ছে।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাদের এলাকায় নিয়মিত পানি সরবরাহের ব্যবস্থা করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন', signName: '[আপনার নাম]', signInfo: '[ঠিকানা] | [মোবাইল নম্বর]',
+    tips: ['সংকটের সময়কাল উল্লেখ করুন', 'এলাকার নাম স্পষ্ট করুন', 'প্রতিবেশীদের স্বাক্ষর সংগ্রহ করুন'],
+    mistakes: ['সময়কাল না দেওয়া', 'এলাকার নাম না বলা', 'প্রতিবেশীদের স্বাক্ষর না সংগ্রহ করা'],
+    faqs: [{q:'অভিযোগ জানাতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আবেদন পত্র, প্রতিবেশীদের স্বাক্ষর।'}]
+  },
+  'complaint-letter-road-damage.html': {
+    title: 'রাস্তার ক্ষতির অভিযোগ',
+    desc: 'রাস্তার ক্ষতির জন্য অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'অভিযোগ', catIcon: '📢', subcategory: 'রাস্তা',
+    recipient: 'নির্বাহী প্রকৌশলী', institution: '[পৌরসভা / পাবলিক ওয়ার্কস]', city: '[শহর, জেলা]',
+    subject: 'রাস্তার ক্ষতি মেরামতের অভিযোগ', salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমাদের এলাকার রাস্তা অত্যন্ত খারাপ অবস্থায় রয়েছে।',
+      'রাস্তায় বড় বড় গর্ত এবং ভাঙাচোরা অংশ রয়েছে। বর্ষাকালে এই সমস্যা আরও বেড়ে যায়।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাদের এলাকার রাস্তা মেরামতের ব্যবস্থা করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন', signName: '[আপনার নাম]', signInfo: '[ঠিকানা] | [মোবাইল নম্বর]',
+    tips: ['রাস্তার অবস্থার ছবি সংযুক্ত করুন', 'এলাকার নাম স্পষ্ট করুন', 'প্রতিবেশীদের স্বাক্ষর সংগ্রহ করুন'],
+    mistakes: ['রাস্তার অবস্থার ছবি না সংযুক্ত করা', 'এলাকার নাম না বলা', 'প্রতিবেশীদের স্বাক্ষর না সংগ্রহ করা'],
+    faqs: [{q:'অভিযোগ জানাতে কতদিন লাগে?', a:'সাধারণত ৭-১৫ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আবেদন পত্র, রাস্তার ছবি, প্রতিবেশীদের স্বাক্ষর।'}]
+  },
+  'complaint-letter-garbage-collection.html': {
+    title: 'আবর্জনা সংগ্রহের অভিযোগ',
+    desc: 'আবর্জনা সংগ্রহ না হওয়ার জন্য অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'অভিযোগ', catIcon: '📢', subcategory: 'আবর্জনা',
+    recipient: 'পৌরসভার কমিশনার', institution: '[পৌরসভা]', city: '[শহর, জেলা]',
+    subject: 'আবর্জনা সংগ্রহ না হওয়ার অভিযোগ', salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমাদের এলাকায় গত [সংখ্যা] দিন ধরে আবর্জনা সংগ্রহ করা হচ্ছে না।',
+      'রাস্তায় আবর্জনা জমে থাকায় পরিবেশ দূষণ হচ্ছে এবং রোগবালাই ছড়ানোর আশঙ্কা রয়েছে।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাদের এলাকায় নিয়মিত আবর্জনা সংগ্রহের ব্যবস্থা করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন', signName: '[আপনার নাম]', signInfo: '[ঠিকানা] | [মোবাইল নম্বর]',
+    tips: ['সংকটের সময়কাল উল্লেখ করুন', 'এলাকার নাম স্পষ্ট করুন', 'আবর্জনার ছবি সংযুক্ত করুন'],
+    mistakes: ['সময়কাল না দেওয়া', 'এলাকার নাম না বলা', 'আবর্জনার ছবি না সংযুক্ত করা'],
+    faqs: [{q:'অভিযোগ জানাতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আবেদন পত্র, আবর্জনার ছবি।'}]
+  },
+  'complaint-letter-noise-pollution.html': {
+    title: 'শব্দ দূষণের অভিযোগ',
+    desc: 'শব্দ দূষণের জন্য অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'অভিযোগ', catIcon: '📢', subcategory: 'শব্দ দূষণ',
+    recipient: 'পুলিশ ভারপ্রাপ্ত কর্মকর্তা', institution: '[থানা]', city: '[শহর, জেলা]',
+    subject: 'শব্দ দূষণের অভিযোগ', salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমাদের এলাকায় [উৎস] থেকে অত্যধিক শব্দ দূষণ হচ্ছে।',
+      'এই শব্দ দূষণের কারণে আমাদের ঘুমের ব্যাঘাত হচ্ছে এবং শিশুদের পড়াশোনায় সমস্যা হচ্ছে।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, শব্দ দূষণ রোধে প্রয়োজনীয় ব্যবস্থা গ্রহণ করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন', signName: '[আপনার নাম]', signInfo: '[ঠিকানা] | [মোবাইল নম্বর]',
+    tips: ['শব্দের উৎস উল্লেখ করুন', 'সময়কাল উল্লেখ করুন', 'প্রতিবেশীদের স্বাক্ষর সংগ্রহ করুন'],
+    mistakes: ['শব্দের উৎস না বলা', 'সময়কাল না দেওয়া', 'প্রতিবেশীদের স্বাক্ষর না সংগ্রহ করা'],
+    faqs: [{q:'অভিযোগ জানাতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আবেদন পত্র, শব্দের রেকর্ডিং, প্রতিবেশীদের স্বাক্ষর।'}]
+  },
+  'complaint-letter-neighbor-noise.html': {
+    title: 'প্রতিবেশীর শব্দের অভিযোগ',
+    desc: 'প্রতিবেশীর শব্দের জন্য অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'অভিযোগ', catIcon: '📢', subcategory: 'প্রতিবেশী',
+    recipient: 'পুলিশ ভারপ্রাপ্ত কর্মকর্তা', institution: '[থানা]', city: '[শহর, জেলা]',
+    subject: 'প্রতিবেশীর শব্দের অভিযোগ', salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমার প্রতিবেশী [প্রতিবেশীর নাম/ঠিকানা] থেকে অত্যধিক শব্দ হচ্ছে।',
+      'তারা [সময়] সময়ে উচ্চস্বরে মিউজিক/অন্যান্য শব্দ করেন যার কারণে আমাদের ঘুমের ব্যাঘাত হচ্ছে।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, প্রতিবেশীর শব্দ দূষণ রোধে প্রয়োজনীয় ব্যবস্থা গ্রহণ করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন', signName: '[আপনার নাম]', signInfo: '[ঠিকানা] | [মোবাইল নম্বর]',
+    tips: ['প্রতিবেশীর ঠিকানা উল্লেখ করুন', 'শব্দের সময় উল্লেখ করুন', 'প্রমাণ সংযুক্ত করুন'],
+    mistakes: ['প্রতিবেশীর ঠিকানা না দেওয়া', 'শব্দের সময় না বলা', 'প্রমাণ না সংযুক্ত করা'],
+    faqs: [{q:'অভিযোগ জানাতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আবেদন পত্র, শব্দের রেকর্ডিং।'}]
+  },
+  'complaint-letter-illegal-parking.html': {
+    title: 'অবৈধ পার্কিংয়ের অভিযোগ',
+    desc: 'অবৈধ পার্কিংয়ের জন্য অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'অভিযোগ', catIcon: '📢', subcategory: 'পার্কিং',
+    recipient: 'ট্রাফিক পুলিশ অফিসার', institution: '[ট্রাফিক পুলিশ]', city: '[শহর, জেলা]',
+    subject: 'অবৈধ পার্কিংয়ের অভিযোগ', salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমাদের এলাকায় [স্থান] অবৈধ পার্কিংয়ের সমস্যা চলছে।',
+      'গাড়ি রাস্তায় পার্ক করার কারণে যানবাহন চলাচলে সমস্যা হচ্ছে এবং জরুরি যানবাহন চলাচলে বাধা সৃষ্টি হচ্ছে।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, অবৈধ পার্কিং রোধে প্রয়োজনীয় ব্যবস্থা গ্রহণ করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন', signName: '[আপনার নাম]', signInfo: '[ঠিকানা] | [মোবাইল নম্বর]',
+    tips: ['পার্কিংয়ের স্থান উল্লেখ করুন', 'সমস্যা স্পষ্ট করুন', 'ছবি সংযুক্ত করুন'],
+    mistakes: ['পার্কিংয়ের স্থান না দেওয়া', 'সমস্যা স্পষ্ট না করা', 'ছবি না সংযুক্ত করা'],
+    faqs: [{q:'অভিযোগ জানাতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আবেদন পত্র, পার্কিংয়ের ছবি।'}]
+  }
+};
+
+// Template function - EXACT same structure as SUGGETION SITE template
+function generatePage(slug, data) {
+  const siteUrl = 'https://sampark-lodge.github.io/letterformat';
+  const pageUrl = `${siteUrl}/formats/${slug}`;
+  const bodyHtml = data.body.map(p => `<p>${p}</p>`).join('\n            ');
+  const tipsHtml = data.tips.map((tip, i) => 
+    `<div class="tip-item"><div class="tip-num">${i + 1}</div><div class="tip-text">${tip}</div></div>`
+  ).join('\n          ');
+  const faqsHtml = data.faqs.map(faq => 
+    `<div class="faq-item"><h3>❓ ${faq.q}</h3><p>${faq.a}</p></div>`
+  ).join('\n          ');
+
+  return `<!DOCTYPE html>
 <html lang="bn">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>অবৈধ পার্কিংয়ের অভিযোগ — LetterFormat.in</title>
-  <meta name="description" content="বিনামূল্যে অবৈধ পার্কিংয়ের অভিযোগ। কপি-পেস্ট ফরম্যাট, এডিটেবল টেমপ্লেট, পূরণ করা নমুনা, টিপস সহ। আপডেট ২০২৬।" />
-  <link rel="canonical" href="https://sampark-lodge.github.io/letterformat/formats/complaint-letter-illegal-parking.html" />
-  <meta property="og:title" content="অবৈধ পার্কিংয়ের অভিযোগ — LetterFormat.in" />
-  <meta property="og:description" content="বিনামূল্যে অবৈধ পার্কিংয়ের অভিযোগ। কপি-পেস্ট ফরম্যাট, এডিটেবল টেমপ্লেট।" />
-  <meta property="og:url" content="https://sampark-lodge.github.io/letterformat/formats/complaint-letter-illegal-parking.html" />
+  <title>${data.title} — LetterFormat.in</title>
+  <meta name="description" content="বিনামূল্যে ${data.title}। কপি-পেস্ট ফরম্যাট, এডিটেবল টেমপ্লেট, পূরণ করা নমুনা, টিপস সহ। আপডেট ২০২৬।" />
+  <link rel="canonical" href="${pageUrl}" />
+  <meta property="og:title" content="${data.title} — LetterFormat.in" />
+  <meta property="og:description" content="বিনামূল্যে ${data.title}। কপি-পেস্ট ফরম্যাট, এডিটেবল টেমপ্লেট।" />
+  <meta property="og:url" content="${pageUrl}" />
   <meta property="og:type" content="article" />
   <meta property="og:locale" content="bn_IN" />
   <meta property="og:site_name" content="LetterFormat.in" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="অবৈধ পার্কিংয়ের অভিযোগ — LetterFormat.in" />
-  <meta name="twitter:description" content="বিনামূল্যে অবৈধ পার্কিংয়ের অভিযোগ। কপি-পেস্ট ফরম্যাট।" />
-  <meta name="keywords" content="অবৈধ পার্কিংয়ের অভিযোগ, বাংলা অভিযোগ, চিঠি ফরম্যাট, LetterFormat.in" />
+  <meta name="twitter:title" content="${data.title} — LetterFormat.in" />
+  <meta name="twitter:description" content="বিনামূল্যে ${data.title}। কপি-পেস্ট ফরম্যাট।" />
+  <meta name="keywords" content="${data.title}, বাংলা অভিযোগ, চিঠি ফরম্যাট, LetterFormat.in" />
   <meta name="author" content="LetterFormat.in" />
   <meta name="robots" content="index, follow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -163,9 +295,9 @@
       <div class="breadcrumb">
         <a href="../index.html">হোম</a>
         <span class="breadcrumb-sep">›</span>
-        <a href="../complaint.html">অভিযোগ</a>
+        <a href="../complaint.html">${data.category}</a>
         <span class="breadcrumb-sep">›</span>
-        <span>অবৈধ পার্কিংয়ের অভিযোগ</span>
+        <span>${data.title}</span>
       </div>
       <div class="nav-actions">
         <button class="btn-sm ghost" onclick="window.print()">🖨️ প্রিন্ট</button>
@@ -179,12 +311,12 @@
     <div class="main-content">
       <div class="format-meta">
         <div class="meta-tags">
-          <span class="tag red">📢 অভিযোগ</span>
-          <span class="tag gray">পার্কিং</span>
+          <span class="tag red">${data.catIcon} ${data.category}</span>
+          <span class="tag gray">${data.subcategory}</span>
           <span class="tag green">✅ যাচাইকৃত ফরম্যাট</span>
         </div>
-        <h1 class="format-title">অবৈধ পার্কিংয়ের অভিযোগ</h1>
-        <p class="format-title-desc">অবৈধ পার্কিংয়ের জন্য অভিযোগ পত্রের সঠিক বাংলা ফরম্যাট।</p>
+        <h1 class="format-title">${data.title}</h1>
+        <p class="format-title-desc">${data.desc}</p>
         <div class="meta-stats">
           <div class="meta-stat">👁 <strong>১২,৪৫৬</strong> বার দেখা হয়েছে</div>
           <div class="meta-stat">📥 <strong>৮,২৩৪</strong> বার কপি হয়েছে</div>
@@ -205,35 +337,30 @@
           <div class="letter-date">তারিখ: <span class="placeholder" contenteditable="true">১ জানুয়ারি ২০২৬</span></div>
           <div class="letter-to">
             <span class="to-label">বরাবর</span>
-            <div class="to-name"><span class="placeholder" contenteditable="true">ট্রাফিক পুলিশ অফিসার</span></div>
-            <div class="to-address"><span class="placeholder" contenteditable="true">[ট্রাফিক পুলিশ]</span><br><span class="placeholder" contenteditable="true">[শহর, জেলা]</span></div>
+            <div class="to-name"><span class="placeholder" contenteditable="true">${data.recipient}</span></div>
+            <div class="to-address"><span class="placeholder" contenteditable="true">${data.institution}</span><br><span class="placeholder" contenteditable="true">${data.city}</span></div>
           </div>
           <div class="letter-subject">
             <div class="sub-label">বিষয়</div>
-            <div class="sub-text"><span class="placeholder" contenteditable="true">অবৈধ পার্কিংয়ের অভিযোগ</span></div>
+            <div class="sub-text"><span class="placeholder" contenteditable="true">${data.subject}</span></div>
           </div>
-          <div class="letter-salutation">মহোদয়,</div>
-          <div class="letter-body"><p>সবিনয় নিবেদন এই যে, আমি [আপনার নাম], [ঠিকানা] এর বাসিন্দা। আমাদের এলাকায় [স্থান] অবৈধ পার্কিংয়ের সমস্যা চলছে।</p>
-            <p>গাড়ি রাস্তায় পার্ক করার কারণে যানবাহন চলাচলে সমস্যা হচ্ছে এবং জরুরি যানবাহন চলাচলে বাধা সৃষ্টি হচ্ছে।</p>
-            <p>অতএব, বিনীত অনুরোধ জানাচ্ছি যে, অবৈধ পার্কিং রোধে প্রয়োজনীয় ব্যবস্থা গ্রহণ করে বাধিত করবেন।</p></div>
-          <div class="letter-closing">বিনীত নিবেদন,</div>
+          <div class="letter-salutation">${data.salutation}</div>
+          <div class="letter-body">${bodyHtml}</div>
+          <div class="letter-closing">${data.closing},</div>
           <div class="letter-sign-section">
             <div class="sign-line"></div>
-            <div class="sign-name"><span class="placeholder" contenteditable="true">[আপনার নাম]</span></div>
-            <div class="sign-info"><span class="placeholder" contenteditable="true">[ঠিকানা] | [মোবাইল নম্বর]</span></div>
+            <div class="sign-name"><span class="placeholder" contenteditable="true">${data.signName}</span></div>
+            <div class="sign-info"><span class="placeholder" contenteditable="true">${data.signInfo}</span></div>
           </div>
         </div>
       </div>
       <div class="tips-box">
         <div class="tips-header"><span class="tips-icon">💡</span><h3>টিপস</h3></div>
-        <div class="tip-item"><div class="tip-num">1</div><div class="tip-text">পার্কিংয়ের স্থান উল্লেখ করুন</div></div>
-          <div class="tip-item"><div class="tip-num">2</div><div class="tip-text">সমস্যা স্পষ্ট করুন</div></div>
-          <div class="tip-item"><div class="tip-num">3</div><div class="tip-text">ছবি সংযুক্ত করুন</div></div>
+        ${tipsHtml}
       </div>
       <div class="faq-box">
         <h3 style="font-size:0.95rem;font-weight:700;color:var(--gray-900);margin-bottom:14px;">❓ সচরাচর জিজ্ঞাসা</h3>
-        <div class="faq-item"><h3>❓ অভিযোগ জানাতে কতদিন লাগে?</h3><p>সাধারণত ৩-৭ কর্মদিবস।</p></div>
-          <div class="faq-item"><h3>❓ কী কী কাগজপত্র লাগে?</h3><p>আবেদন পত্র, পার্কিংয়ের ছবি।</p></div>
+        ${faqsHtml}
       </div>
     </div>
     <div class="sidebar">
@@ -290,4 +417,15 @@ function showToast(){const t=document.getElementById('toast');t.classList.add('s
 validateForm();
 </script>
 </body>
-</html>
+</html>`;
+}
+
+// Generate all complaint pages
+Object.entries(complaintPages).forEach(([slug, data]) => {
+  const html = generatePage(slug, data);
+  const filePath = path.join(formatsDir, slug);
+  fs.writeFileSync(filePath, html);
+  console.log(`✓ ${slug}`);
+});
+
+console.log(`\n✅ Generated ${Object.keys(complaintPages).length} complaint pages with proper Bengali content`);

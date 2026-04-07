@@ -1,0 +1,535 @@
+const fs = require('fs');
+const path = require('path');
+
+const formatsDir = './formats';
+
+// Read template for structure reference
+const template = fs.readFileSync('./SUGGETION SITE/letterformat-sample.html', 'utf-8');
+
+// Bengali content for remaining pages
+const pages = {
+  'application-name-change.html': {
+    title: 'নাম পরিবর্তনের আবেদন',
+    desc: 'নাম পরিবর্তনের জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'নাম পরিবর্তন',
+    recipient: 'জেলা ম্যাজিস্ট্রেট / তহশিলদার',
+    institution: '[জেলা প্রশাসকের কার্যালয়]',
+    city: '[শহর, জেলা]',
+    subject: 'নাম পরিবর্তনের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [বর্তমান নাম], পিতা/স্বামী [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা।',
+      'আমি আমার নাম [বর্তমান নাম] থেকে [নতুন নাম] করতে চাই। এই নাম পরিবর্তনের কারণ হলো [কারণ]।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমার নাম পরিবর্তনের আবেদন গ্রহণ করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতা/স্বামীর নাম] | [ঠিকানা]',
+    tips: ['নাম পরিবর্তনের কারণ স্পষ্ট করুন', 'আধার কার্ড কপি সংযুক্ত করুন', 'শপথনামা সংযুক্ত করুন'],
+    mistakes: ['কারণ না বলা', 'কাগজপত্র না সংযুক্ত করা', 'ভুল তথ্য দেওয়া'],
+    faqs: [{q:'নাম পরিবর্তনে কতদিন লাগে?', a:'সাধারণত ১৫-৩০ দিন।'},{q:'কী কী কাগজপত্র লাগে?', a:'আধার কার্ড, শপথনামা, নাম পরিবর্তনের কারণ।'}]
+  },
+  'application-character-certificate.html': {
+    title: 'চরিত্র সনদপত্র আবেদন',
+    desc: 'চরিত্র সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'চরিত্র সনদ',
+    recipient: 'ওয়ার্ড কমিশনার / চেয়ারম্যান',
+    institution: '[পৌরসভা / ইউনিয়ন পরিষদ]',
+    city: '[শহর, জেলা]',
+    subject: 'চরিত্র সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা/স্বামী [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমি এই এলাকায় গত [সংখ্যা] বছর ধরে বসবাস করছি।',
+      'আমি [কাজের ধরন]-এর জন্য চরিত্র সনদপত্র প্রয়োজন। আমার চরিত্র ও আচরণ সর্বদা সন্তোষজনক।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি চরিত্র সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতা/স্বামীর নাম] | [ঠিকানা]',
+    tips: ['বসবাসের সময়কাল উল্লেখ করুন', 'পরিচয় পত্র সংযুক্ত করুন', 'সনদপত্রের উদ্দেশ্য জানান'],
+    mistakes: ['বসবাসের সময়কাল না বলা', 'পরিচয় পত্র না সংযুক্ত করা', 'উদ্দেশ্য না জানানো'],
+    faqs: [{q:'চরিত্র সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আধার কার্ড, ভোটার আইডি, বসবাসের প্রমাণ।'}]
+  },
+  'application-income-certificate.html': {
+    title: 'আয় সনদপত্র আবেদন',
+    desc: 'আয় সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'আয় সনদ',
+    recipient: 'তহশিলদার / ম্যাজিস্ট্রেট',
+    institution: '[তহশিল অফিস]',
+    city: '[শহর, জেলা]',
+    subject: 'আয় সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা/স্বামী [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমার পরিবারের বার্ষিক আয় [টাকার পরিমাণ] টাকা।',
+      'আমি [কাজের ধরন]-এর জন্য আয় সনদপত্র প্রয়োজন।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি আয় সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতা/স্বামীর নাম] | [ঠিকানা]',
+    tips: ['বার্ষিক আয় স্পষ্টভাবে উল্লেখ করুন', 'আয়ের উৎস উল্লেখ করুন', 'প্রয়োজনীয় কাগজপত্র সংযুক্ত করুন'],
+    mistakes: ['আয়ের পরিমাণ না দেওয়া', 'আয়ের উৎস না বলা', 'কাগজপত্র না সংযুক্ত করা'],
+    faqs: [{q:'আয় সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৭-১৫ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আধার কার্ড, আয়ের প্রমাণ, ভোটার আইডি।'}]
+  },
+  'application-domicile-certificate.html': {
+    title: 'ডমিসাইল সনদপত্র আবেদন',
+    desc: 'ডমিসাইল সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'ডমিসাইল',
+    recipient: 'তহশিলদার / ম্যাজিস্ট্রেট',
+    institution: '[তহশিল অফিস]',
+    city: '[শহর, জেলা]',
+    subject: 'ডমিসাইল সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা/স্বামী [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমি এই জেলায় গত [সংখ্যা] বছর ধরে বসবাস করছি।',
+      'আমি [কাজের ধরন]-এর জন্য ডমিসাইল সনদপত্র প্রয়োজন।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি ডমিসাইল সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতা/স্বামীর নাম] | [ঠিকানা]',
+    tips: ['বসবাসের সময়কাল উল্লেখ করুন', 'ঠিকানার প্রমাণ সংযুক্ত করুন', 'সনদপত্রের উদ্দেশ্য জানান'],
+    mistakes: ['বসবাসের সময়কাল না বলা', 'ঠিকানার প্রমাণ না সংযুক্ত করা', 'উদ্দেশ্য না জানানো'],
+    faqs: [{q:'ডমিসাইল সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৭-১৫ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আধার কার্ড, ভোটার আইডি, ঠিকানার প্রমাণ।'}]
+  },
+  'application-birth-certificate.html': {
+    title: 'জন্ম সনদপত্র আবেদন',
+    desc: 'জন্ম সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'জন্ম সনদ',
+    recipient: 'রেজিস্ট্রার / ওয়ার্ড কমিশনার',
+    institution: '[পৌরসভা / ইউনিয়ন পরিষদ]',
+    city: '[শহর, জেলা]',
+    subject: 'জন্ম সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা [নাম], মাতা [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমার জন্ম তারিখ [জন্ম তারিখ] এবং জন্মস্থান [জন্মস্থান]।',
+      'আমি [কাজের ধরন]-এর জন্য জন্ম সনদপত্র প্রয়োজন।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি জন্ম সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতার নাম] | [ঠিকানা]',
+    tips: ['জন্ম তারিখ স্পষ্টভাবে উল্লেখ করুন', 'জন্মস্থান উল্লেখ করুন', 'পিতা-মাতার নাম উল্লেখ করুন'],
+    mistakes: ['জন্ম তারিখ না দেওয়া', 'জন্মস্থান না বলা', 'পিতা-মাতার নাম না দেওয়া'],
+    faqs: [{q:'জন্ম সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৭-১৫ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'পিতা-মাতার পরিচয় পত্র, জন্ম তারিখের প্রমাণ।'}]
+  },
+  'application-death-certificate.html': {
+    title: 'মৃত্যু সনদপত্র আবেদন',
+    desc: 'মৃত্যু সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'মৃত্যু সনদ',
+    recipient: 'রেজিস্ট্রার / ওয়ার্ড কমিশনার',
+    institution: '[পৌরসভা / ইউনিয়ন পরিষদ]',
+    city: '[শহর, জেলা]',
+    subject: 'মৃত্যু সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], মৃত [মৃতের নাম] এর [সম্পর্ক]। মৃতের মৃত্যু তারিখ [মৃত্যু তারিখ] এবং মৃত্যুস্থান [মৃত্যুস্থান]।',
+      'আমি [কাজের ধরন]-এর জন্য মৃত্যু সনদপত্র প্রয়োজন।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি মৃত্যু সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[মৃতের সাথে সম্পর্ক] | [ঠিকানা]',
+    tips: ['মৃত্যু তারিখ স্পষ্টভাবে উল্লেখ করুন', 'মৃত্যুস্থান উল্লেখ করুন', 'মৃতের সাথে সম্পর্ক উল্লেখ করুন'],
+    mistakes: ['মৃত্যু তারিখ না দেওয়া', 'মৃত্যুস্থান না বলা', 'সম্পর্ক না উল্লেখ করা'],
+    faqs: [{q:'মৃত্যু সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৭-১৫ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'মৃতের পরিচয় পত্র, মৃত্যু তারিখের প্রমাণ, আবেদনকারীর পরিচয় পত্র।'}]
+  },
+  'application-caste-certificate.html': {
+    title: 'কাস্ট সনদপত্র আবেদন',
+    desc: 'কাস্ট সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'কাস্ট সনদ',
+    recipient: 'তহশিলদার / ম্যাজিস্ট্রেট',
+    institution: '[তহশিল অফিস]',
+    city: '[শহর, জেলা]',
+    subject: 'কাস্ট সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা/স্বামী [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমি [কাস্ট/শ্রেণী] সম্প্রদায়ের অন্তর্ভুক্ত।',
+      'আমি [কাজের ধরন]-এর জন্য কাস্ট সনদপত্র প্রয়োজন।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি কাস্ট সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতা/স্বামীর নাম] | [ঠিকানা]',
+    tips: ['কাস্ট/শ্রেণী স্পষ্টভাবে উল্লেখ করুন', 'পিতার কাস্ট সনদপত্র সংযুক্ত করুন', 'কাজের ধরন উল্লেখ করুন'],
+    mistakes: ['কাস্ট/শ্রেণী না বলা', 'পিতার সনদপত্র না সংযুক্ত করা', 'কাজের ধরন না উল্লেখ করা'],
+    faqs: [{q:'কাস্ট সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৭-১৫ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'আধার কার্ড, পিতার কাস্ট সনদপত্র, ভোটার আইডি।'}]
+  },
+  'application-marriage-certificate.html': {
+    title: 'বিবাহ সনদপত্র আবেদন',
+    desc: 'বিবাহ সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'বিবাহ সনদ',
+    recipient: 'রেজিস্ট্রার / ম্যাজিস্ট্রেট',
+    institution: '[রেজিস্ট্রার অফিস]',
+    city: '[শহর, জেলা]',
+    subject: 'বিবাহ সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমার বিবাহ হয়েছে [বিবাহের তারিখ] তারিখে [স্বামী/স্ত্রীর নাম] এর সাথে।',
+      'আমি [কাজের ধরন]-এর জন্য বিবাহ সনদপত্র প্রয়োজন।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি বিবাহ সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতার নাম] | [ঠিকানা]',
+    tips: ['বিবাহের তারিখ স্পষ্টভাবে উল্লেখ করুন', 'স্বামী/স্ত্রীর নাম উল্লেখ করুন', 'বিবাহের প্রমাণ সংযুক্ত করুন'],
+    mistakes: ['বিবাহের তারিখ না দেওয়া', 'স্বামী/স্ত্রীর নাম না বলা', 'বিবাহের প্রমাণ না সংযুক্ত করা'],
+    faqs: [{q:'বিবাহ সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৭-১৫ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'বিবাহের প্রমাণ, উভয়ের পরিচয় পত্র, সাক্ষীদের সনদ।'}]
+  },
+  'application-police-clearance-certificate.html': {
+    title: 'পুলিশ ক্লিয়ারেন্স সার্টিফিকেট আবেদন',
+    desc: 'পুলিশ ক্লিয়ারেন্স সার্টিফিকেট পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'পুলিশ ক্লিয়ারেন্স',
+    recipient: 'পুলিশ সুপার / থানা ভারপ্রাপ্ত কর্মকর্তা',
+    institution: '[পুলিশ সুপার অফিস / থানা]',
+    city: '[শহর, জেলা]',
+    subject: 'পুলিশ ক্লিয়ারেন্স সার্টিফিকেট প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা/স্বামী [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমি [কাজের ধরন]-এর জন্য পুলিশ ক্লিয়ারেন্স সার্টিফিকেট প্রয়োজন।',
+      'আমি এই এলাকায় গত [সংখ্যা] বছর ধরে বসবাস করছি এবং আমার বিরুদ্ধে কোনো ফৌজদারি মামলা নেই।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি পুলিশ ক্লিয়ারেন্স সার্টিফিকেট প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতা/স্বামীর নাম] | [ঠিকানা]',
+    tips: ['বসবাসের সময়কাল উল্লেখ করুন', 'কাজের ধরন উল্লেখ করুন', 'পরিচয় পত্র সংযুক্ত করুন'],
+    mistakes: ['বসবাসের সময়কাল না বলা', 'কাজের ধরন না উল্লেখ করা', 'পরিচয় পত্র না সংযুক্ত করা'],
+    faqs: [{q:'পুলিশ ক্লিয়ারেন্স পেতে কতদিন লাগে?', a:'সাধারণত ১৫-৩০ দিন।'},{q:'কী কী কাগজপত্র লাগে?', a:'আধার কার্ড, পাসপোর্ট সাইজ ছবি, ঠিকানার প্রমাণ।'}]
+  },
+  'application-rent-certificate.html': {
+    title: 'ভাড়া সনদপত্র আবেদন',
+    desc: 'ভাড়া সনদপত্র পাওয়ার জন্য আবেদন পত্রের সঠিক বাংলা ফরম্যাট।',
+    category: 'সার্টিফিকেট', catIcon: '📜', subcategory: 'ভাড়া সনদ',
+    recipient: 'ওয়ার্ড কমিশনার / চেয়ারম্যান',
+    institution: '[পৌরসভা / ইউনিয়ন পরিষদ]',
+    city: '[শহর, জেলা]',
+    subject: 'ভাড়া সনদপত্র প্রদানের আবেদন',
+    salutation: 'মহোদয়,',
+    body: [
+      'সবিনয় নিবেদন এই যে, আমি [আপনার নাম], পিতা/স্বামী [নাম], ঠিকানা [ঠিকানা] এর বাসিন্দা। আমি এই এলাকায় [ভাড়া বাড়ির ঠিকানা] ঠিকানায় ভাড়া বাসায় বসবাস করছি।',
+      'আমি [কাজের ধরন]-এর জন্য ভাড়া সনদপত্র প্রয়োজন।',
+      'অতএব, বিনীত অনুরোধ জানাচ্ছি যে, আমাকে একটি ভাড়া সনদপত্র প্রদান করে বাধিত করবেন।'
+    ],
+    closing: 'বিনীত নিবেদন',
+    signName: '[আপনার নাম]',
+    signInfo: '[পিতা/স্বামীর নাম] | [ঠিকানা]',
+    tips: ['ভাড়া বাড়ির ঠিকানা উল্লেখ করুন', 'ভাড়া চুক্তি সংযুক্ত করুন', 'কাজের ধরন উল্লেখ করুন'],
+    mistakes: ['ভাড়া বাড়ির ঠিকানা না দেওয়া', 'ভাড়া চুক্তি না সংযুক্ত করা', 'কাজের ধরন না উল্লেখ করা'],
+    faqs: [{q:'ভাড়া সনদপত্র পেতে কতদিন লাগে?', a:'সাধারণত ৩-৭ কর্মদিবস।'},{q:'কী কী কাগজপত্র লাগে?', a:'ভাড়া চুক্তি, আধার কার্ড, বাড়ি মালিকের সনদ।'}]
+  }
+};
+
+// Template for each page - EXACT same structure as template
+function generatePage(slug, data) {
+  const siteUrl = 'https://sampark-lodge.github.io/letterformat';
+  const pageUrl = `${siteUrl}/formats/${slug}`;
+  
+  const bodyHtml = data.body.map(p => `<p>${p}</p>`).join('\n            ');
+  const tipsHtml = data.tips.map((tip, i) => 
+    `<div class="tip-item"><div class="tip-num">${i + 1}</div><div class="tip-text">${tip}</div></div>`
+  ).join('\n          ');
+  
+  const faqsHtml = data.faqs.map(faq => 
+    `<div class="faq-item"><h3>❓ ${faq.q}</h3><p>${faq.a}</p></div>`
+  ).join('\n          ');
+
+  return `<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${data.title} — LetterFormat.in</title>
+  <meta name="description" content="বিনামূল্যে ${data.title}। কপি-পেস্ট ফরম্যাট, এডিটেবল টেমপ্লেট, পূরণ করা নমুনা, টিপস সহ। আপডেট ২০২৬।" />
+  <link rel="canonical" href="${pageUrl}" />
+  <meta property="og:title" content="${data.title} — LetterFormat.in" />
+  <meta property="og:description" content="বিনামূল্যে ${data.title}। কপি-পেস্ট ফরম্যাট, এডিটেবল টেমপ্লেট।" />
+  <meta property="og:url" content="${pageUrl}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="bn_IN" />
+  <meta property="og:site_name" content="LetterFormat.in" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${data.title} — LetterFormat.in" />
+  <meta name="twitter:description" content="বিনামূল্যে ${data.title}। কপি-পেস্ট ফরম্যাট।" />
+  <meta name="keywords" content="${data.title}, বাংলা আবেদন, চিঠি ফরম্যাট, LetterFormat.in" />
+  <meta name="author" content="LetterFormat.in" />
+  <meta name="robots" content="index, follow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800;900&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #dc2626; --red-dark: #b91c1c; --red-light: #fee2e2;
+      --red-xlight: #fff5f5; --red-mid: #fca5a5;
+      --white: #fff; --gray-50: #f9fafb; --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb; --gray-300: #d1d5db; --gray-400: #9ca3af;
+      --gray-500: #6b7280; --gray-600: #4b5563; --gray-700: #374151;
+      --gray-800: #1f2937; --gray-900: #111827;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+      --shadow-red: 0 8px 32px rgba(220,38,38,0.18);
+      --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px;
+      --font-bn: 'Noto Sans Bengali', sans-serif;
+      --font-bn-serif: 'Noto Serif Bengali', serif;
+      --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-bn); background: var(--gray-50); color: var(--gray-800); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+    .navbar { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(14px); border-bottom: 1.5px solid var(--gray-100); box-shadow: var(--shadow-sm); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1.15rem; color: var(--gray-900); }
+    .logo-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--red); display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 18px; height: 18px; fill: white; }
+    .logo-text span { color: var(--red); }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--gray-500); }
+    .breadcrumb a { color: var(--red); font-weight: 500; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb-sep { color: var(--gray-300); }
+    .nav-actions { display: flex; gap: 8px; }
+    .btn-sm { padding: 7px 14px; border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; border: none; cursor: pointer; font-family: var(--font-bn); transition: all var(--transition); }
+    .btn-sm.primary { background: var(--red); color: white; box-shadow: 0 2px 8px rgba(220,38,38,0.25); }
+    .btn-sm.primary:hover { background: var(--red-dark); }
+    .btn-sm.ghost { background: var(--gray-100); color: var(--gray-700); }
+    .btn-sm.ghost:hover { background: var(--gray-200); }
+    .page-layout { display: grid; grid-template-columns: 1fr 360px; gap: 28px; padding: 32px 0 60px; align-items: start; }
+    .main-content { animation: fadeUp 0.5s ease both; }
+    .format-meta { background: white; border-radius: var(--radius-lg); padding: 28px; border: 1.5px solid var(--gray-200); box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .meta-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .tag { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 99px; display: inline-flex; align-items: center; gap: 4px; }
+    .tag.red { background: var(--red-light); color: var(--red); }
+    .tag.gray { background: var(--gray-100); color: var(--gray-600); }
+    .tag.green { background: #dcfce7; color: #15803d; }
+    .format-title { font-size: 1.5rem; font-weight: 900; color: var(--gray-900); margin-bottom: 8px; line-height: 1.3; }
+    .format-title-desc { font-size: 0.9rem; color: var(--gray-500); line-height: 1.6; }
+    .meta-stats { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+    .meta-stat { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--gray-500); }
+    .meta-stat strong { color: var(--gray-800); font-weight: 600; }
+    .meta-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .action-btn { display: flex; align-items: center; gap: 7px; padding: 10px 20px; border-radius: var(--radius-sm); font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; font-family: var(--font-bn); transition: all var(--transition); }
+    .action-btn.copy { background: var(--red); color: white; box-shadow: var(--shadow-red); }
+    .action-btn.copy:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .action-btn.print { background: var(--gray-100); color: var(--gray-700); border: 1.5px solid var(--gray-200); }
+    .action-btn.print:hover { background: var(--gray-200); }
+    .action-btn.download { background: white; color: var(--gray-700); border: 1.5px solid var(--gray-200); }
+    .action-btn.download:hover { background: var(--gray-50); border-color: var(--gray-300); }
+    .letter-wrapper { background: white; border-radius: var(--radius-lg); border: 1.5px solid var(--gray-200); box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 20px; }
+    .letter-toolbar { background: var(--gray-50); border-bottom: 1.5px solid var(--gray-200); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
+    .toolbar-label { font-size: 0.8rem; font-weight: 700; color: var(--gray-600); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+    .toolbar-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: pulse 1.5s infinite; }
+    .toolbar-copy-btn { padding: 5px 12px; background: var(--red); color: white; border: none; border-radius: 6px; font-size: 0.76rem; font-weight: 700; cursor: pointer; font-family: var(--font-bn); transition: background var(--transition); }
+    .toolbar-copy-btn:hover { background: var(--red-dark); }
+    .letter-document { padding: 48px 56px; font-family: var(--font-bn-serif); font-size: 1rem; line-height: 2; color: var(--gray-900); min-height: 600px; }
+    .letter-document.editable { outline: none; }
+    .letter-document:focus { background: #fffbfb; }
+    .letter-date { text-align: right; margin-bottom: 28px; font-size: 0.95rem; }
+    .letter-to { margin-bottom: 28px; }
+    .letter-to .to-label { font-weight: 700; color: var(--gray-600); font-size: 0.85rem; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .letter-to .to-name { font-size: 1.05rem; font-weight: 700; color: var(--gray-900); }
+    .letter-to .to-address { color: var(--gray-600); font-size: 0.95rem; }
+    .letter-subject { margin-bottom: 28px; padding: 14px 20px; background: var(--red-xlight); border-left: 4px solid var(--red); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .letter-subject .sub-label { font-size: 0.78rem; font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+    .letter-subject .sub-text { font-weight: 700; font-size: 1rem; color: var(--gray-900); }
+    .letter-salutation { margin-bottom: 20px; font-weight: 600; }
+    .letter-body { margin-bottom: 32px; }
+    .letter-body p { margin-bottom: 16px; text-align: justify; font-size: 1rem; }
+    .letter-body .placeholder { background: rgba(220,38,38,0.08); border-bottom: 2px dashed var(--red-mid); padding: 0 4px; border-radius: 3px; color: var(--red-dark); cursor: text; display: inline; }
+    .letter-closing { margin-bottom: 56px; }
+    .letter-sign-section { display: flex; flex-direction: column; align-items: flex-start; }
+    .sign-line { width: 140px; height: 2px; background: var(--gray-700); margin-bottom: 6px; }
+    .sign-name { font-weight: 700; font-size: 1rem; }
+    .sign-info { font-size: 0.88rem; color: var(--gray-500); }
+    .validation-error{border:2px solid #ef4444!important;background:rgba(239,68,68,0.05)!important}
+    .validation-success{border:2px solid #10b981!important}
+    .validation-bar{background:white;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+    .validation-status{display:flex;align-items:center;gap:8px}
+    .validation-icon{font-size:1.2rem}
+    .validation-text{font-size:0.85rem;color:var(--gray-700)}
+    .validation-progress{width:200px;height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden}
+    .validation-progress-bar{height:100%;background:var(--red);border-radius:3px;transition:width 0.3s ease}
+    .validation-bar.complete{border-color:#10b981}
+    .validation-bar.complete .validation-progress-bar{background:#10b981}
+    .pdf-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center}.pdf-modal.active{display:flex}.pdf-modal-content{background:white;border-radius:var(--radius-lg);width:90%;max-width:800px;max-height:90vh;overflow:hidden}.pdf-modal-header{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid var(--gray-200)}.pdf-modal-header h3{font-size:1rem;font-weight:700;color:var(--gray-900)}.pdf-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--gray-500)}.pdf-preview{padding:24px;max-height:60vh;overflow-y:auto;background:#f9f9f9}.pdf-actions{padding:16px 24px;border-top:1px solid var(--gray-200);display:flex;justify-content:flex-end}.pdf-download-btn{background:var(--red);color:white;border:none;padding:10px 20px;border-radius:var(--radius-sm);font-weight:600;cursor:pointer;font-family:var(--font-bn)}.pdf-download-btn:hover{background:var(--red-dark)}
+    .tips-box { background: white; border-radius: var(--radius-lg); padding: 22px; border: 1.5px solid var(--gray-200); box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .tips-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .tips-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--gray-900); }
+    .tip-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+    .tip-num { flex-shrink:0; width:20px; height:20px; border-radius:50%; background:var(--red); color:white; font-size:0.68rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:2px; }
+    .tip-text { font-size:0.84rem; color:var(--gray-600); line-height:1.5; }
+    .faq-box { background: white; border-radius: var(--radius-lg); padding: 22px; border: 1.5px solid var(--gray-200); box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .faq-item { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-100); }
+    .faq-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .faq-item h3 { font-size: 0.9rem; font-weight: 700; color: var(--gray-800); margin-bottom: 8px; }
+    .faq-item p { font-size: 0.85rem; color: var(--gray-600); line-height: 1.6; }
+    .sidebar { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 18px; animation: fadeUp 0.5s 0.1s ease both; }
+    .sidebar-card { background: white; border-radius: var(--radius-lg); padding: 22px; border: 1.5px solid var(--gray-200); box-shadow: var(--shadow-sm); }
+    .sidebar-card h3 { font-size: 0.88rem; font-weight: 700; color: var(--gray-900); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }
+    .quick-actions { display: flex; flex-direction: column; gap: 8px; }
+    .quick-action-btn { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--gray-200); background: white; cursor: pointer; transition: all var(--transition); font-family: var(--font-bn); font-size: 0.88rem; font-weight: 600; color: var(--gray-700); }
+    .quick-action-btn:hover { border-color: var(--red-mid); background: var(--red-xlight); color: var(--red); }
+    .quick-action-btn.primary { background: var(--red); color: white; border-color: var(--red); font-size: 0.9rem; }
+    .quick-action-btn.primary:hover { background: var(--red-dark); border-color: var(--red-dark); }
+    .related-list { display: flex; flex-direction: column; gap: 10px; }
+    .related-item { display: flex; align-items: center; gap: 10px; cursor: pointer; padding: 10px 12px; border-radius: var(--radius-sm); border: 1px solid var(--gray-100); transition: all var(--transition); }
+    .related-item:hover { border-color: var(--red-mid); background: var(--red-xlight); }
+    .related-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--red-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .related-text .r-name { font-size: 0.83rem; font-weight: 600; color: var(--gray-800); line-height: 1.3; }
+    .related-text .r-views { font-size: 0.73rem; color: var(--gray-400); }
+    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--gray-900); color: white; padding: 12px 24px; border-radius: var(--radius-md); font-size: 0.9rem; font-weight: 600; box-shadow: var(--shadow-lg); z-index: 999; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease; opacity: 0; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    @media (max-width: 900px) { .page-layout { grid-template-columns: 1fr; } .sidebar { position: static; } .letter-document { padding: 32px 24px; } .breadcrumb { display: none; } }
+    @media (max-width: 480px) { .letter-document { padding: 24px 16px; font-size: 0.92rem; } .meta-actions { flex-direction: column; } .action-btn { justify-content: center; } }
+    @media print { .navbar, .format-meta, .tips-box, .sidebar, .letter-toolbar, .toast, .faq-box { display: none !important; } .letter-wrapper { border: none; box-shadow: none; } .letter-document { padding: 0; } body { background: white; } }
+  </style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/><path d="M8 14h8v1H8zm0 3h5v1H8z"/></svg></div>
+        <div class="logo-text">Letter<span>Format</span>.in</div>
+      </a>
+      <div class="breadcrumb">
+        <a href="../index.html">হোম</a>
+        <span class="breadcrumb-sep">›</span>
+        <a href="../${data.category.toLowerCase().replace(/[^a-z]/g,'')}.html">${data.category}</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>${data.title}</span>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-sm ghost" onclick="window.print()">🖨️ প্রিন্ট</button>
+        <button class="btn-sm primary" onclick="copyLetter()">📋 কপি করুন</button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="page-layout">
+    <div class="main-content">
+      <div class="format-meta">
+        <div class="meta-tags">
+          <span class="tag red">${data.catIcon} ${data.category}</span>
+          <span class="tag gray">${data.subcategory}</span>
+          <span class="tag green">✅ যাচাইকৃত ফরম্যাট</span>
+        </div>
+        <h1 class="format-title">${data.title}</h1>
+        <p class="format-title-desc">${data.desc}</p>
+        <div class="meta-stats">
+          <div class="meta-stat">👁 <strong>১২,৪৫৬</strong> বার দেখা হয়েছে</div>
+          <div class="meta-stat">📥 <strong>৮,২৩৪</strong> বার কপি হয়েছে</div>
+          <div class="meta-stat">⭐ <strong>৪.৯/৫</strong> রেটিং</div>
+        </div>
+        <div class="meta-actions">
+          <button class="action-btn copy" onclick="copyLetter()">📋 পুরো চিঠি কপি করুন</button>
+          <button class="action-btn print" onclick="window.print()">🖨️ প্রিন্ট করুন</button>
+          <button class="action-btn download" onclick="showPDFPreview()">📄 PDF ডাউনলোড</button>
+        </div>
+      </div>
+      <div class="letter-wrapper">
+        <div class="letter-toolbar">
+          <div class="toolbar-label"><div class="toolbar-dot"></div>ফরম্যাট — লাল অংশে ক্লিক করে আপনার তথ্য লিখুন</div>
+          <button class="toolbar-copy-btn" onclick="copyLetter()">কপি করুন</button>
+        </div>
+        <div class="letter-document editable" id="letterDocument" contenteditable="true">
+          <div class="letter-date">তারিখ: <span class="placeholder" contenteditable="true">১ জানুয়ারি ২০২৬</span></div>
+          <div class="letter-to">
+            <span class="to-label">বরাবর</span>
+            <div class="to-name"><span class="placeholder" contenteditable="true">${data.recipient}</span></div>
+            <div class="to-address"><span class="placeholder" contenteditable="true">${data.institution}</span><br><span class="placeholder" contenteditable="true">${data.city}</span></div>
+          </div>
+          <div class="letter-subject">
+            <div class="sub-label">বিষয়</div>
+            <div class="sub-text"><span class="placeholder" contenteditable="true">${data.subject}</span></div>
+          </div>
+          <div class="letter-salutation">${data.salutation}</div>
+          <div class="letter-body">${bodyHtml}</div>
+          <div class="letter-closing">${data.closing},</div>
+          <div class="letter-sign-section">
+            <div class="sign-line"></div>
+            <div class="sign-name"><span class="placeholder" contenteditable="true">${data.signName}</span></div>
+            <div class="sign-info"><span class="placeholder" contenteditable="true">${data.signInfo}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tips-box">
+        <div class="tips-header"><span class="tips-icon">💡</span><h3>টিপস</h3></div>
+        ${tipsHtml}
+      </div>
+      <div class="faq-box">
+        <h3 style="font-size:0.95rem;font-weight:700;color:var(--gray-900);margin-bottom:14px;">❓ সচরাচর জিজ্ঞাসা</h3>
+        ${faqsHtml}
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <h3>⚡ দ্রুত কাজ</h3>
+        <div class="quick-actions">
+          <button class="quick-action-btn primary" onclick="copyLetter()"><span class="qa-icon">📋</span> পুরো চিঠি কপি</button>
+          <button class="quick-action-btn" onclick="window.print()"><span class="qa-icon">🖨️</span> প্রিন্ট করুন</button>
+          <button class="quick-action-btn" onclick="showPDFPreview()"><span class="qa-icon">📄</span> PDF ডাউনলোড</button>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <h3>📂 সম্পর্কিত ফরম্যাট</h3>
+        <div class="related-list">
+          <a href="application-leave-due-to-fever.html" class="related-item">
+            <div class="related-icon">📝</div>
+            <div class="related-text"><div class="r-name">জ্বরের ছুটি</div><div class="r-views">১২,৪৫৬ বার দেখা</div></div>
+          </a>
+          <a href="application-bonafide-certificate.html" class="related-item">
+            <div class="related-icon">📜</div>
+            <div class="related-text"><div class="r-name">বোনাফাইড সার্টিফিকেট</div><div class="r-views">১০,২৩৪ বার দেখা</div></div>
+          </a>
+          <a href="application-sick-leave.html" class="related-item">
+            <div class="related-icon">🏥</div>
+            <div class="related-text"><div class="r-name">অসুস্থতার ছুটি</div><div class="r-views">৯,৮৭৬ বার দেখা</div></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast">✅ চিঠি কপি হয়েছে!</div>
+<div id="pdfModal" class="pdf-modal">
+  <div class="pdf-modal-content">
+    <div class="pdf-modal-header">
+      <h3>📄 PDF প্রিভিউ</h3>
+      <button class="pdf-close" onclick="closePDFModal()">×</button>
+    </div>
+    <div class="pdf-preview" id="pdfPreview"></div>
+    <div class="pdf-actions">
+      <button class="pdf-download-btn" onclick="generatePDF()">📥 PDF ডাউনলোড করুন</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function showPDFPreview(){const letter=document.getElementById('letterDocument');if(!letter){alert('Letter not found');return;}const clone=letter.cloneNode(true);clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));clone.querySelectorAll('.placeholder').forEach(el=>{el.style.background='transparent';el.style.borderBottom='1px solid #ccc';el.style.color='#000';});const preview=document.getElementById('pdfPreview');if(preview){preview.innerHTML='';preview.appendChild(clone);}const modal=document.getElementById('pdfModal');if(modal)modal.classList.add('active');}
+function closePDFModal(){const modal=document.getElementById('pdfModal');if(modal)modal.classList.remove('active');}
+function generatePDF(){const preview=document.getElementById('pdfPreview');if(!preview||!preview.innerHTML.trim()){alert('Preview is empty. Please fill the letter first.');return;}const opt={margin:[0.5,0.5,0.5,0.5],filename:'letterformat.pdf',image:{type:'jpeg',quality:0.98},html2canvas:{scale:2,useCORS:true,letterRendering:true},jsPDF:{unit:'in',format:'a4',orientation:'portrait'}};html2pdf().set(opt).from(preview).save().then(()=>{closePDFModal();});}
+function validateForm(){const placeholders=document.querySelectorAll('.placeholder');let filled=0;placeholders.forEach((ph)=>{const text=ph.textContent.trim();if(text&&!text.startsWith('[')&&!text.endsWith(']')){filled++;ph.classList.remove('validation-error');ph.classList.add('validation-success');}else{ph.classList.remove('validation-success');}});const total=placeholders.length;const percent=Math.round((filled/total)*100);const bar=document.getElementById('validationBar');if(bar){document.getElementById('validationProgressBar').style.width=percent+'%';const statusText=bar.querySelector('.validation-text');const statusIcon=bar.querySelector('.validation-icon');if(filled===total){bar.classList.add('complete');statusIcon.textContent='✅';statusText.textContent='সব তথ্য পূরণ হয়েছে!';}else{bar.classList.remove('complete');statusIcon.textContent='⚠️';statusText.textContent=filled+'/'+total+' ঘর পূরণ হয়েছে';}}return filled===total;}
+document.querySelectorAll('.placeholder').forEach(ph=>{ph.addEventListener('blur',function(){const text=this.textContent.trim();if(text&&text.length>0){this.textContent=text.charAt(0).toUpperCase()+text.slice(1);}});ph.addEventListener('input',function(){validateForm();});});
+function copyLetter(){if(!validateForm()){alert('অনুগ্রহ করে সব লাল ঘর পূরণ করুন!');return;}const doc=document.getElementById('letterDocument');const clone=doc.cloneNode(true);clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));const text=clone.innerText;navigator.clipboard.writeText(text).then(()=>showToast()).catch(()=>{const range=document.createRange();range.selectNodeContents(doc);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);document.execCommand('copy');sel.removeAllRanges();showToast();});}
+function showToast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+validateForm();
+</script>
+</body>
+</html>`;
+}
+
+// Generate all pages
+Object.entries(pages).forEach(([slug, data]) => {
+  const html = generatePage(slug, data);
+  const filePath = path.join(formatsDir, slug);
+  fs.writeFileSync(filePath, html);
+  console.log(`✓ ${slug}`);
+});
+
+console.log(`\n✅ Generated ${Object.keys(pages).length} pages with proper Bengali content and template`);
