@@ -8,54 +8,197 @@
 }
 
 :root {
-  /* Color Palette - White & Red Theme */
-  --color-primary: #1a1a1a;
-  --color-primary-dark: #0a0a0a;
-  --color-accent: #dc2626;
-  --color-accent-hover: #b91c1c;
-  --color-accent-light: #fef2f2;
+  /* Color Palette - Generated from ui-design-system */
+  /* Primary Red: #dc2626 */
+  --color-primary: #dc2626;
+  --color-primary-dark: #b91c1c;
+  --color-primary-light: #f87171;
   
-  --color-text: #1f1f1f;
-  --color-text-light: #525252;
-  --color-text-muted: #a3a3a3;
+  /* Secondary: Teal */
+  --color-secondary: #14b8a6;
+  --color-secondary-dark: #0d9488;
+  --color-secondary-light: #5eead4;
   
+  /* Neutral/Grayscale */
+  --color-neutral-50: #f9fafb;
+  --color-neutral-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+  
+  /* Semantic Colors */
+  --color-success: #10b981;
+  --color-success-light: #34d399;
+  --color-success-dark: #059669;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fbbd24;
+  --color-warning-dark: #d97706;
+  --color-error: #dc2626;
+  --color-error-light: #f87171;
+  --color-error-dark: #b91c1c;
+  --color-info: #3b82f6;
+  --color-info-light: #60a5fa;
+  --color-info-dark: #2563eb;
+  
+  /* Surface Colors */
   --color-bg: #ffffff;
-  --color-bg-alt: #fafafa;
+  --color-bg-alt: #f3f4f6;
   --color-bg-card: #ffffff;
-  --color-bg-dark: #1a1a1a;
+  --color-bg-overlay: rgba(0, 0, 0, 0.5);
+  --color-divider: #e5e7eb;
   
-  --color-border: #e5e5e5;
-  --color-border-light: #f5f5f5;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
-  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+  /* Text Colors */
+  --color-text: #1f2937;
+  --color-text-light: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-text-inverse: #ffffff;
   
   /* Typography */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Merriweather", Georgia, serif;
+  --font-mono: "Fira Code", Consolas, "Libero Mono", monospace;
   
-  /* Spacing */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
+  /* Spacing (8pt grid) */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 56px;
+  --space-11: 64px;
+  --space-12: 72px;
+  --space-13: 80px;
+  --space-14: 96px;
+  --space-15: 112px;
+  --space-16: 128px;
+  --space-17: 160px;
+  --space-18: 192px;
+  --space-20: 256px;
+  --space-22: 384px;
+  
+  /* Semantic spacing */
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-2);
+  --space-md: var(--space-4);
+  --space-lg: var(--space-6);
+  --space-xl: var(--space-10);
+  --space-2xl: var(--space-18);
+  --space-3xl: var(--space-22);
+  --space-section: var(--space-20);
   
   /* Border Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Border Width */
+  --border-none: 0px;
+  --border-thin: 1px;
+  --border: 1px;
+  --border-medium: 2px;
+  --border-thick: 4px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  
+  /* Typography Scale */
+  --font-size-xs: 10px;
+  --font-size-sm: 13px;
+  --font-size-base: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 25px;
+  --font-size-2xl: 31px;
+  --font-size-3xl: 39px;
+  --font-size-4xl: 49px;
+  --font-size-5xl: 61px;
+  
+  /* Font Weights */
+  --font-weight-thin: 100;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+  
+  /* Line Heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+  
+  /* Letter Spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+  
+  /* Text Styles */
+  --font-size-h1: 48px;
+  --font-size-h2: 36px;
+  --font-size-h3: 28px;
+  --font-size-h4: 24px;
+  --font-size-h5: 20px;
+  --font-size-h6: 16px;
   
   /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-base: 0.25s ease;
-  --transition-slow: 0.4s ease;
+  --transition-instant: 0ms;
+  --transition-fast: 150ms;
+  --transition: 250ms;
+  --transition-slow: 350ms;
+  --transition-slower: 500ms;
+  
+  /* Animation Easing */
+  --ease-linear: linear;
+  --ease: ease;
+  --ease-in: ease-in;
+  --ease-out: ease-out;
+  --ease-in-out: ease-in-out;
+  --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Breakpoints */
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  
+  /* Z-Index */
+  --z-index-hide: -1;
+  --z-index-base: 0;
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-overlay: 1030;
+  --z-index-modal: 1040;
+  --z-index-popover: 1050;
+  --z-index-tooltip: 1060;
+  --z-index-notification: 1070;
 }
 
 html {
