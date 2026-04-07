@@ -67,7 +67,7 @@
     .sub-text{font-weight:700;font-size:1rem;color:var(--gray-900)}
     .letter-salutation{margin-bottom:16px;font-weight:600}
     .letter-body p{margin-bottom:14px;text-align:justify}
-    .placeholder{background:rgba(220,38,38,0.08);border-bottom:2px dashed var(--red-mid);padding:0 4px;border-radius:3px;color:var(--red-dark)}
+    .placeholder{background:rgba(220,38,38,0.08);border-bottom:2px dashed var(--red-mid);padding:0 4px;border-radius:3px;color:var(--red-dark);cursor:text;outline:none;transition:all 0.2s}.placeholder:hover{background:rgba(220,38,38,0.12)}.placeholder:focus{background:rgba(220,38,38,0.15);border-bottom-style:solid;box-shadow:0 0 0 3px rgba(220,38,38,0.1)}
     .letter-closing{margin-bottom:48px}
     .sign-section{display:flex;flex-direction:column}
     .sign-line{width:140px;height:2px;background:var(--gray-700);margin-bottom:6px}
@@ -99,7 +99,7 @@
     .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
     @media(max-width:900px){.page-layout{grid-template-columns:1fr}.sidebar{position:static}.letter-document{padding:24px}}
     @media(max-width:480px){.letter-document{padding:16px;font-size:0.88rem}.meta-actions{flex-direction:column}}
-    @media print{.navbar,.sidebar,.letter-toolbar,.toast,.meta-actions{display:none!important}.letter-wrapper{border:none;box-shadow:none}.body{background:white}}
+    @media print{.navbar,.sidebar,.letter-toolbar,.toast,.meta-actions{display:none!important}.letter-wrapper{border:none;box-shadow:none}.body{background:white}.placeholder{background:none;border-bottom:none;color:inherit;cursor:default}}
   </style>
 </head>
 <body>
@@ -146,19 +146,19 @@
       </div>
       <div class="letter-wrapper">
         <div class="letter-toolbar">
-          <div class="toolbar-label"><div class="toolbar-dot"></div>ফরম্যাট — লাল অংশ পরিবর্তন করুন</div>
+          <div class="toolbar-label"><div class="toolbar-dot"></div>ফরম্যাট — লাল অংশে ক্লিক করে আপনার তথ্য লিখুন</div>
           <button class="toolbar-copy-btn" onclick="copyLetter()">কপি করুন</button>
         </div>
-        <div class="letter-document" id="letterDocument">
-          <div class="letter-date">তারিখ: <span class="placeholder">16/03/2026</span></div>
+        <div class="letter-document" id="letterDocument" contenteditable="true">
+          <div class="letter-date">তারিখ: <span class="placeholder" contenteditable="true">16/03/2026</span></div>
           <div class="letter-to">
             <span class="to-label">বরাবর</span>
-            <div class="to-name"><span class="placeholder">The Principal</span></div>
-            <div class="to-address"><span class="placeholder">Amity International School</span><br><span class="placeholder">Noida</span></div>
+            <div class="to-name"><span class="placeholder" contenteditable="true">The Principal</span></div>
+            <div class="to-address"><span class="placeholder" contenteditable="true">Amity International School</span><br><span class="placeholder" contenteditable="true">Noida</span></div>
           </div>
           <div class="letter-subject">
             <div class="sub-label">বিষয়</div>
-            <div class="sub-text"><span class="placeholder">Application for Urgent Piece of Work</span></div>
+            <div class="sub-text"><span class="placeholder" contenteditable="true">Application for Urgent Piece of Work</span></div>
           </div>
           <div class="letter-salutation">মহাশয়/মহাশয়া,</div>
           <div class="letter-body"><p>I am writing to request a leave of absence for [number] day(s) on [date(s)] due to an urgent piece of work that requires my immediate attention.</p>
@@ -167,7 +167,7 @@
           <div class="letter-closing">Thanking you,</div>
           <div class="sign-section">
             <div class="sign-line"></div>
-            <div class="sign-name"><span class="placeholder">Arjun Reddy</span></div>
+            <div class="sign-name"><span class="placeholder" contenteditable="true">Arjun Reddy</span></div>
           </div>
         </div>
       </div>
@@ -192,6 +192,6 @@
   </div>
 </div>
 <div class="toast" id="toast">✅ চিঠি কপি হয়েছে!</div>
-<script>function copyLetter(){const doc=document.getElementById('letterDocument');const text=doc.innerText;navigator.clipboard.writeText(text).then(()=>showToast()).catch(()=>{const range=document.createRange();range.selectNodeContents(doc);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);document.execCommand('copy');sel.removeAllRanges();showToast()})};function showToast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}</script>
+<script>function copyLetter(){const doc=document.getElementById('letterDocument');const clone=doc.cloneNode(true);clone.querySelectorAll('[contenteditable]').forEach(el=>{el.removeAttribute('contenteditable')});const text=clone.innerText;navigator.clipboard.writeText(text).then(()=>showToast()).catch(()=>{const range=document.createRange();range.selectNodeContents(doc);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);document.execCommand('copy');sel.removeAllRanges();showToast()})};function showToast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}</script>
 </body>
 </html>
