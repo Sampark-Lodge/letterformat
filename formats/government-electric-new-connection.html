@@ -156,6 +156,30 @@
     .related-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--red-light); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
     .related-text .r-name { font-size: 0.83rem; font-weight: 600; color: var(--gray-800); line-height: 1.3; }
     .related-text .r-views { font-size: 0.73rem; color: var(--gray-400); }
+    
+    /* Rating Section */
+    .rating-stars { display: flex; gap: 4px; font-size: 1.2rem; color: #f59e0b; margin-bottom: 8px; }
+    .rating-count { font-size: 0.82rem; color: var(--gray-500); }
+    .rating-bar-row { margin-bottom: 6px; }
+    .rating-bar-label { font-size: 0.75rem; color: var(--gray-500); margin-bottom: 3px; display: flex; justify-content: space-between; }
+    .rating-bar-track { height: 6px; background: var(--gray-100); border-radius: 3px; overflow: hidden; }
+    .rating-bar-fill { height: 100%; background: #f59e0b; border-radius: 3px; }
+    
+    /* Info Card Blue */
+    .info-card { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: var(--radius-lg); padding: 20px; }
+    .info-card h3 { font-size: 0.88rem; font-weight: 700; color: #1e40af; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .info-card p { font-size: 0.83rem; color: #3b82f6; line-height: 1.6; }
+    
+    /* Better Tips Box */
+    .tips-box { background: white; border-radius: var(--radius-lg); padding: 22px; border: 1.5px solid var(--gray-200); box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .tips-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .tips-header h3 { font-size: 0.95rem; font-weight: 700; color: var(--gray-900); }
+    .tips-icon { font-size: 1.2rem; }
+    .tip-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+    .tip-num { flex-shrink:0; width:20px; height:20px; border-radius:50%; background:var(--red); color:white; font-size:0.68rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:2px; }
+    .tip-text { font-size:0.84rem; color:var(--gray-600); line-height:1.5; }
+    
+    .qa-icon { font-size: 1rem; width: 22px; text-align: center; }
 
     .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--gray-900); color: white; padding: 12px 24px; border-radius: var(--radius-md); font-size: 0.9rem; font-weight: 600; box-shadow: var(--shadow-lg); z-index: 999; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease; opacity: 0; }
     .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -308,7 +332,10 @@
       </div>
 
       <div class="tips-box">
-        <div class="tips-header"><span>💡</span><h3>ব্যবহারে টিপস</h3></div>
+        <div class="tips-header">
+          <span class="tips-icon">💡</span>
+          <h3>ব্যবহারে টিপস</h3>
+        </div>
         <div class="tip-item"><span class="tip-num">১</span><span class="tip-text">আবেদনের আগে নিকটস্থ বিদ্যুৎ অফিসে গিয়ে ফর্ম সংগ্রহ করুন বা অনলাইনে আবেদন করুন।</span></div>
         <div class="tip-item"><span class="tip-num">২</span><span class="tip-text">সকল প্রয়োজনীয় ডকুমেন্টের ফটোকপি প্রস্তুত রাখুন।</span></div>
         <div class="tip-item"><span class="tip-num">৩</span><span class="tip-text">আবেদনের পর ট্র্যাকিং নম্বর সংরক্ষণ করুন এবং নিয়মিত অনুসরণ করুন।</span></div>
@@ -356,13 +383,85 @@
     </div>
 
     <aside class="sidebar">
+      <!-- Quick Actions -->
       <div class="sidebar-card">
-        <h3>⚡ আরও সরকারি সেবা</h3>
+        <h3>⚡ দ্রুত কাজ করুন</h3>
+        <div class="quick-actions">
+          <button class="quick-action-btn primary" onclick="copyLetter()">
+            <span class="qa-icon">📋</span> পুরো চিঠি কপি করুন
+          </button>
+          <button class="quick-action-btn" onclick="window.print()">
+            <span class="qa-icon">🖨️</span> প্রিন্ট করুন
+          </button>
+          <button class="quick-action-btn" onclick="shareWhatsApp()">
+            <span class="qa-icon">📤</span> WhatsApp-এ শেয়ার করুন
+          </button>
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="sidebar-card">
+        <h3>⭐ ব্যবহারকারীদের মতামত</h3>
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-count">৪.৯ — ২,৩৪৫টি রেটিং</div>
+        <div style="margin-top:14px;">
+          <div class="rating-bar-row">
+            <div class="rating-bar-label"><span>৫ তারা</span><span>৮৯%</span></div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:89%"></div></div>
+          </div>
+          <div class="rating-bar-row">
+            <div class="rating-bar-label"><span>৪ তারা</span><span>৮%</span></div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:8%"></div></div>
+          </div>
+          <div class="rating-bar-row">
+            <div class="rating-bar-label"><span>৩ তারা</span><span>২%</span></div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:2%"></div></div>
+          </div>
+          <div class="rating-bar-row">
+            <div class="rating-bar-label"><span>১-২ তারা</span><span>১%</span></div>
+            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:1%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Card -->
+      <div class="sidebar-card info-card">
+        <h3>ℹ️ এই ফরম্যাট সম্পর্কে</h3>
+        <p>নতুন বিদ্যুৎ সংযোগের জন্য প্রয়োজনীয় সকল তথ্য এই ফরম্যাটে অন্তর্ভুক্ত করা হয়েছে। আবেদনের আগে প্রয়োজনীয় ডকুমেন্ট প্রস্তুত রাখুন।</p>
+      </div>
+
+      <!-- Related Formats -->
+      <div class="sidebar-card">
+        <h3>📂 সম্পর্কিত ফরম্যাট</h3>
         <div class="related-list">
-          <a href="government-electric-load-extension.html" class="related-item"><div class="related-icon">⚡</div><div class="related-text"><div class="r-name">লোড বাড়ানোর আবেদন</div></div></a>
-          <a href="government-electric-meter-replacement.html" class="related-item"><div class="related-icon">🔧</div><div class="related-text"><div class="r-name">মিটার পরিবর্তনের আবেদন</div></div></a>
-          <a href="government-electric-bill-correction.html" class="related-item"><div class="related-icon">📝</div><div class="related-text"><div class="r-name">বিল সংশোধনের আবেদন</div></div></a>
-          <a href="government-electric-reconnection.html" class="related-item"><div class="related-icon">🔌</div><div class="related-text"><div class="r-name">সংযোগ পুনঃস্থাপন</div></div></a>
+          <a href="government-electric-load-extension.html" class="related-item">
+            <div class="related-icon">⚡</div>
+            <div class="related-text">
+              <div class="r-name">লোড বাড়ানোর আবেদন</div>
+              <div class="r-views">১২,৬২৮ বার দেখা হয়েছে</div>
+            </div>
+          </a>
+          <a href="government-electric-meter-replacement.html" class="related-item">
+            <div class="related-icon">🔧</div>
+            <div class="related-text">
+              <div class="r-name">মিটার পরিবর্তনের আবেদন</div>
+              <div class="r-views">১২,৯৩২ বার দেখা হয়েছে</div>
+            </div>
+          </a>
+          <a href="government-electric-bill-correction.html" class="related-item">
+            <div class="related-icon">📝</div>
+            <div class="related-text">
+              <div class="r-name">বিল সংশোধনের আবেদন</div>
+              <div class="r-views">১২,৭২২ বার দেখা হয়েছে</div>
+            </div>
+          </a>
+          <a href="government-electric-reconnection.html" class="related-item">
+            <div class="related-icon">🔌</div>
+            <div class="related-text">
+              <div class="r-name">সংযোগ পুনঃস্থাপন</div>
+              <div class="r-views">১০,৪৫১ বার দেখা হয়েছে</div>
+            </div>
+          </a>
         </div>
       </div>
       
