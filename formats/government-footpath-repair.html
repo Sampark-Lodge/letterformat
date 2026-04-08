@@ -180,18 +180,26 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "পাসপোর্ট আবেদনের স্ট্যাটাস কিভাবে জানবেন?",
+        "name": "ফুটপাথ মেরামতের জন্য কোন বিভাগে আবেদন করতে হবে?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "মন্ত্রণালয়ের ওয়েবসাইটে ট্র্যাকিং নম্বর দিয়ে অথবা কল সেন্টারে ফোন করে স্ট্যাটাস জানা যায়।"
+          "text": "পৌরসভার প্রকৌশল বিভাগ বা স্থানীয় সরকার প্রকৌশল অধিদপ্তরে আবেদন করতে হবে।"
         }
       },
       {
         "@type": "Question",
-        "name": "পাসপোর্ট আবেদনে কতদিন লাগে?",
+        "name": "ফুটপাথ মেরামতে কতদিন সময় লাগে?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "সাধারণত ১৫-৩০ দিন। তবে ঈদ বা পূজার সময় বেশি সময় লাগতে পারে।"
+          "text": "অনুমোদনের পর সাধারণত ১৫-৩০ কার্যদিবসের মধ্যে মেরামত কাজ শুরু হয়।"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ফুটপাথ মেরামতের খরচ কে বহন করে?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "সরকারি বাজেট থেকে এই খরচ বহন করা হয়, নাগরিকদের কোনো টাকা দিতে হয় না।"
         }
       }
     ]
@@ -205,14 +213,14 @@
     <div class="nav-inner">
       <a href="../index.html" class="logo">
         <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/><path d="M8 14h8v1H8zm0 3h5v1H8z"/></svg></div>
-        <div class="logo-text">Letter<span>ফুটপাথ মেরামতের আবেদন</span>.in</div>
+        <div class="logo-text">Letter<span>Format</span>.in</div>
       </a>
       <div class="breadcrumb">
         <a href="../index.html">হোম</a>
         <span class="breadcrumb-sep">›</span>
         <a href="../government.html">সরকারি</a>
         <span class="breadcrumb-sep">›</span>
-        <span>পাসপোর্ট স্ট্যাটাস জানতে</span>
+        <span>ফুটপাথ মেরামতের আবেদন</span>
       </div>
       <div class="nav-actions">
         <button class="btn-sm ghost" onclick="window.print()">🖨️ প্রিন্ট</button>
@@ -239,7 +247,7 @@
       <div class="format-meta">
         <div class="meta-tags">
           <span class="tag red">🌴 সরকারি</span>
-          <span class="tag gray">পাসপোর্ট</span>
+          <span class="tag gray">অবকাঠামো</span>
           <span class="tag green">✅ যাচাইকৃত ফরম্যাট</span>
         </div>
         <h1 class="format-title">ফুটপাথ মেরামতের আবেদন</h1>
@@ -262,21 +270,21 @@
           <button class="toolbar-copy-btn" onclick="copyLetter()">কপি করুন</button>
         </div>
         <div class="letter-document editable" id="letterDocument" contenteditable="true">
-          <div class="letter-date">তারিখ: <span class="placeholder" contenteditable="true">ফুটপাথ মেরামতের আবেদন</span></div>
+          <div class="letter-date">তারিখ: <span class="placeholder" contenteditable="true">১ জানুয়ারি ২০২৬</span></div>
           <div class="letter-to">
             <span class="to-label">বরাবর</span>
-            <div class="to-name"><span class="placeholder" contenteditable="true">পাসপোর্ট অফিসার / উপজেলা নির্বাহী কর্মকর্তা</span></div>
-            <div class="to-address"><span class="placeholder" contenteditable="true">[পাসপোর্ট অফিস / উপজেলা প্রশাসন কার্যালয়]<br>[শহর, জেলা]</span></div>
+            <div class="to-name"><span class="placeholder" contenteditable="true">পৌরসভার প্রকৌশলী / উপজেলা নির্বাহী কর্মকর্তা</span></div>
+            <div class="to-address"><span class="placeholder" contenteditable="true">[পৌরসভা কার্যালয় / উপজেলা প্রশাসন]<br>[শহর, জেলা]</span></div>
           </div>
           <div class="letter-subject">
             <div class="sub-label">বিষয়</div>
-            <div class="sub-text"><span class="placeholder" contenteditable="true">পাসপোর্ট স্ট্যাটাস জানতে</span></div>
+            <div class="sub-text"><span class="placeholder" contenteditable="true">ফুটপাথ মেরামতের জন্য আবেদন</span></div>
           </div>
           <div class="letter-salutation">মহোদয়,</div>
-          <div class="letter-body"><p>সবিনয় নিবেদন এই যে, আমি <span class="placeholder" contenteditable="true">[আপনার নাম]</span>, পিতা/স্বামীর নাম <span class="placeholder" contenteditable="true">[পিতা/স্বামীর নাম]</span>, স্থায়ী ঠিকানা <span class="placeholder" contenteditable="true">[আপনার সম্পূর্ণ ঠিকানা]</span>। আমি গত <span class="placeholder" contenteditable="true">[তারিখ]</span> তারিখে অনলাইনের মাধ্যমে পাসপোর্টের জন্য আবেদন করিয়াছি এবং আমার আবেদন নম্বর <span class="placeholder" contenteditable="true">[আবেদন নম্বর]</span>।</p>
-            <p>আমার পাসপোর্ট আবেদনটি বর্তমানে কোন পর্যায়ে রহিয়াছে এবং উহার বর্তমান অবস্থা সম্পর্কে আমি অবগত নহি। আমার জরুরি প্রয়োজনে পাসপোর্টটি প্রয়োজন হওয়ায় আমি উহার সর্বশেষ অগ্রগতি জানিতে ইচ্ছুক। পাসপোর্ট অফিসের ওয়েবসাইটে আমি বারবার চেষ্টা করিয়াছি কিন্তু সঠিক তথ্য পাই নাই।</p>
-            <p>আমার আবেদনপত্রের সাথে সকল প্রয়োজনীয় কাগজপত্র, যেমন—জন্মসনদ, নাগরিকত্ব সনদ, পাসপোর্ট আকারের ছবি এবং আবেদন ফি জমার রসিদ সংযুক্ত রহিয়াছে। পুলিশ ভেরিফিকেশন প্রক্রিয়া সম্পন্ন হইয়াছে কিনা তাহাও জানাইতে অনুরোধ করিব।</p>
-            <p>অতএব, মহোদয়ের নিকট বিনীত প্রার্থনা যে, আমার পাসপোর্ট আবেদনের বর্তমান অবস্থা ও অগ্রগতি সম্পর্কে আমাকে অবহিত করিয়া বাধিত করিবেন এবং সম্ভব হইলে দ্রুত পাসপোর্ট প্রদানের ব্যবস্থা গ্রহণ করিয়া বিশেষভাবে উপকৃত করিবেন।</p></div>
+          <div class="letter-body"><p>সবিনয় নিবেদন এই যে, আমি <span class="placeholder" contenteditable="true">[আপনার নাম]</span>, পিতা/স্বামীর নাম <span class="placeholder" contenteditable="true">[পিতা/স্বামীর নাম]</span>, স্থায়ী ঠিকানা <span class="placeholder" contenteditable="true">[আপনার সম্পূর্ণ ঠিকানা]</span>। আমি এলাকার <span class="placeholder" contenteditable="true">[ফুটপাথের স্থান]</span> এ ফুটপাথ মেরামতের জন্য আবেদন করিতেছি।</p>
+            <p>উক্ত স্থানের ফুটপাথ এখন অত্যন্ত খারাপ অবস্থায় আছে। ফুটপাথের পাথর ভেঙে গেছে এবং many places গর্ত হয়ে গেছে। এই কারণে পথচারীরা, বিশেষ করে বয়স্ক মানুষ, শিশু এবং প্রতিবন্ধী ব্যক্তিদের চলাচলে অত্যন্ত কষ্ট হচ্ছে। বৃষ্টির সময় এই গর্তে পানি জমে কাদা হয়ে যায়।</p>
+            <p>এই ফুটপাথ দিয়ে প্রতিদিন অনেক মানুষ হাসপাতাল, স্কুল ও বাজারে যাতায়াত করেন। কিন্তু খারাপ ফুটপাথের কারণে তাদের নিরাপত্তা হুমকিতে আছে। গত মাসে এই ফুটপাথে হাঁটতে গিয়ে একজন বয়স্ক মানুষ পড়ে আহত হয়েছেন।</p>
+            <p>অতএব, মহোদয়ের নিকট বিনীত প্রার্থনা যে, উক্ত ফুটপাথ মেরামতের ব্যবস্থা গ্রহণ করিয়া পথচারীদের নিরাপত্তা নিশ্চিত করিবেন এবং আমাকে অবহিত করিবেন।</p></div>
           <div class="letter-closing">বিনীত নিবেদন,</div>
           <div class="letter-sign-section">
             <div class="sign-line"></div>
@@ -288,18 +296,17 @@
 
       <div class="tips-box">
         <div class="tips-header"><span class="tips-icon">💡</span><h3>টিপস</h3></div>
-        <div class="tip-item"><div class="tip-num">1</div><div class="tip-text">আবেদন নম্বর ও আবেদনের তারিখ সঠিকভাবে উল্লেখ করুন</div></div>
-          <div class="tip-item"><div class="tip-num">2</div><div class="tip-text">পাসপোর্ট অফিসের ওয়েবসাইটে আগে অনলাইনে চেক করুন</div></div>
-          <div class="tip-item"><div class="tip-num">3</div><div class="tip-text">পুলিশ ভেরিফিকেশনের স্ট্যাটাস আলাদাভাবে জানতে চাহিতে পারেন</div></div>
-          <div class="tip-item"><div class="tip-num">4</div><div class="tip-text">জরুরি পাসপোর্টের ক্ষেত্রে তাৎক্ষণিক সেবা শাখায় যোগাযোগ করুন</div></div>
+        <div class="tip-item"><div class="tip-num">1</div><div class="tip-text">ফুটপাথের ক্ষতিগ্রস্ত অংশের ছবি তুলে রাখুন</div></div>
+        <div class="tip-item"><div class="tip-num">2</div><div class="tip-text">ক্ষতির তারিখ ও সময় সঠিকভাবে উল্লেখ করুন</div></div>
+        <div class="tip-item"><div class="tip-num">3</div><div class="tip-text">স্থানীয় বাসিন্দাদের স্বাক্ষর সংগ্রহ করুন</div></div>
       </div>
 
       <div class="faq-box">
         <h3 style="font-size:0.95rem;font-weight:700;color:var(--gray-900);margin-bottom:14px;">❓ সচরাচর জিজ্ঞাসা</h3>
-          <div class="faq-item"><h3>❓ মেরামতে কতদিন?</h3><p>সাধারণত ৭-১৫ কর্মদিবসের মধ্যে।</p></div>
-          <div class="faq-item"><h3>❓ নতুন ফুটপাথ হবে কি?</h3><p>প্রয়োজনীয় ডকুমেন্ট ও ফি জমা দিতে হবে।</p></div>
-          <div class="faq-item"><h3>❓ খরচ কে বহন করবে?</h3><p>ফি নির্ভর করে সেবার ধরনের উপর।</p></div>
-  </div>
+          <div class="faq-item"><h3>❓ ফুটপাথ মেরামতের জন্য কোন বিভাগে আবেদন করতে হবে?</h3><p>পৌরসভার প্রকৌশল বিভাগ বা স্থানীয় সরকার প্রকৌশল অধিদপ্তরে আবেদন করতে হবে।</p></div>
+          <div class="faq-item"><h3>❓ ফুটপাথ মেরামতে কতদিন সময় লাগে?</h3><p>অনুমোদনের পর সাধারণত ১৫-৩০ কার্যদিবসের মধ্যে মেরামত কাজ শুরু হয়।</p></div>
+          <div class="faq-item"><h3>❓ ফুটপাথ মেরামতের খরচ কে বহন করে?</h3><p>সরকারি বাজেট থেকে এই খরচ বহন করা হয়, নাগরিকদের কোনো টাকা দিতে হয় না।</p></div>
+      </div>
 </div>
 
 
