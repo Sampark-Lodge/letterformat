@@ -23,7 +23,8 @@ files.forEach(file => {
   
   // 1. Add AdSense script before </head>
   if (!content.includes('adsbygoogle.js')) {
-    const adsenseScript = `  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_PUB_ID}" crossorigin="anonymous"></script>\n`;
+    const adsenseScript = `  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9325652578538740"
+     crossorigin="anonymous"></script>;
     content = content.replace('</head>', adsenseScript + '</head>');
   }
   
